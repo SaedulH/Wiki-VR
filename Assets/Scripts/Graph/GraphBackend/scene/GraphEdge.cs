@@ -35,9 +35,9 @@ namespace Graph
 
             
             // Set width
-            float width = 0.08f + 0.02f; // [0.02 -> 0.1]
-            LineRenderer.startWidth = width;
-            LineRenderer.endWidth = width;
+            //float width = 0.08f + 0.02f; // [0.02 -> 0.1]
+            LineRenderer.startWidth = 0.5f;
+            LineRenderer.endWidth = 0.25f;
 
             sourceRb = firstNode.GetComponent<Rigidbody>();
             targetRb = secondNode.GetComponent<Rigidbody>();

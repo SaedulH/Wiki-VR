@@ -14,15 +14,20 @@ namespace Graph
 
         private const float MAX_VELOCITY_MAGNITUDE = 1000f;
 
+        public static GraphNode thisNode;
+
         [SerializeField]
         private StringSO SO;
+
+        [SerializeField]
+        private UIcheckerSO uIcheckerSO;
     
         [SerializeField]
-        [Tooltip("prefab used for the cat canvas.")]
+        [Tooltip("prefab used for the loadcat canvas.")]
         private GameObject LoadCat;
 
         [SerializeField]
-        [Tooltip("prefab used for the page canvas.")] 
+        [Tooltip("prefab used for the loadpage canvas.")] 
         private GameObject LoadPage; 
 
         #endregion
@@ -38,7 +43,7 @@ namespace Graph
             //Draggable = GetComponent<Draggable>();
             //Rigidbody.freezeRotation = true;          
             //wait5();
-
+            thisNode = this;
         }
 
         IEnumerator wait5()
@@ -62,7 +67,8 @@ namespace Graph
             if(node.Label == "Category")
             {
             GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor",Color.red);
-            GetComponentInChildren<Transform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            
+            GetComponentInChildren<Transform>().localScale = new Vector3(2f, 2f, 2f);
             }
             else
             {
@@ -113,22 +119,13 @@ namespace Graph
 
         
         /// <summary>
-        /// Updates the forces applied to the node.
-        /// </summary>    
-        private void Update()
-        {
+        /// Apply initial position to the node.
+        /// </summary>
+		public void SetPosition(Vector3 position)
+		{
+			gameObject.transform.position = position;
+		}
 
-            /*Rigidbody.velocity = Vector3.zero;
-
-            Vector3 velocity = Vector3.zero;
-             if (Forces != null)
-                foreach (var force in Forces)
-                    velocity += force;
-
-            velocity = velocity.normalized * Mathf.Clamp(velocity.magnitude, 0f, MAX_VELOCITY_MAGNITUDE);
-
-            Rigidbody.AddForce(velocity);*/
-        }        
 
         #endregion
 
@@ -139,44 +136,59 @@ namespace Graph
             
             if(Node.Label == "Category")
             {
-                
-                SO.Cat = Node.Title;
-                Debug.Log("this is the category: "+SO.Cat);
-                showLoad();
+        
+                Debug.Log("this is the category: "+Node.Title);
+                showLoad("Category");
             }
             else
             {   
                 SO.PageName = Node.Title;
                 Debug.Log("This is the page: "+ Node.Title);
-                showPage();
+                showLoad("Page");
             }
         }
 
-        public void showLoad()
+        public void showLoad(string type)
         {
+            uIcheckerSO.showingUI = true;
+            if(type == "Category")
+            {
 
             GameObject ConfirmCanvas = Instantiate(LoadCat, new Vector3(0, 0, 0), Quaternion.identity);
             var categoryname = ConfirmCanvas.transform.Find("Canvas").Find("catName");
-            categoryname.GetComponent<TextMeshProUGUI>().text = SO.Cat+"?";
+            categoryname.GetComponent<TextMeshProUGUI>().text = Node.Title;
 
-            ConfirmCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2f;
+            ConfirmCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.25f;
             ConfirmCanvas.transform.rotation = Camera.main.transform.rotation;
-            Debug.Log("showing cat canvas");
+            Debug.Log("showing cat canvas");  
+
+            }
+            else if(type == "Page")
+            {
+
+            GameObject ConfirmCanvas = Instantiate(LoadPage, new Vector3(0, 0, 0), Quaternion.identity);
+            var pagename = ConfirmCanvas.transform.Find("Canvas").Find("PageName");
+            pagename.GetComponent<TextMeshProUGUI>().text = SO.PageName;
+
+            ConfirmCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.25f;
+            ConfirmCanvas.transform.rotation = Camera.main.transform.rotation;
+            Debug.Log("showing page canvas");                 
+            }
+
         }
 
-        public void showPage()
-        {   
+        // public void showPage()
+        // {   
 
-            GameObject PageCanvas = Instantiate(LoadPage, new Vector3(-150, 0, -150), Quaternion.identity);
-            var Pagename = PageCanvas.transform.Find("Pagename");
-            Pagename.GetComponent<TextMeshProUGUI>().text = SO.PageName;
+        //     GameObject PageCanvas = Instantiate(HexaPage, new Vector3(-150, 0, -150), Quaternion.identity);
+        //     var Pagename = PageCanvas.transform.Find("Pagename");
+        //     Pagename.GetComponent<TextMeshProUGUI>().text = SO.PageName;
             
-            Camera.main.transform.position = PageCanvas.transform.position + Vector3.up;
+        //     Camera.main.transform.position = new Vector3(-150, 2, -150);
 
-
-            Debug.Log("Show page canvas");
+        //     Debug.Log("Show page canvas");
             
-        }
+        // }
         
             #endregion
         }

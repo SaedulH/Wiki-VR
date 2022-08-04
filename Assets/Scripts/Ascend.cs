@@ -2,31 +2,44 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class Ascend : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference AscendReference;
 
     [SerializeField]
-    private GameObject player;
-
-    Vector3 moveDirection = new Vector3(0, 5, 0);
+    private float AscendForce = 75F;
     
+    [SerializeField]
+    private Rigidbody _Abody;
 
-    void Start()
+    void Awake()
     {
+        _Abody = GetComponent<Rigidbody>();
         AscendReference.asset.Enable();
-        AscendReference.action.performed += OnAscend;
+        //AscendReference.action.started += OnAscend;
     }
 
-    public void OnAscend(InputAction.CallbackContext context)
+    void Update()
     {
-        moveDirection = transform.TransformDirection(moveDirection);
-        player.transform.position += moveDirection;
+        float Avalue = AscendReference.action.ReadValue<float>();
+        OnAscend(Avalue);
     }
 
-    private void OnDestroy()
+    public void OnAscend(float Avalue)
     {
-        AscendReference.action.performed -= OnAscend;
+
+        if(Avalue == 1)
+        {
+            _Abody.AddForce(Vector3.up * AscendForce);
+        }
+        else
+        {
+            //do nothing
+        }            
+
     }
+
 }

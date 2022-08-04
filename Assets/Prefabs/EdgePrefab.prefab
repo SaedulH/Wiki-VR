@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce5c2abb0a65ec440aeac724a82b23ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sourceRb: {fileID: 0}
+  targetRb: {fileID: 0}
   _Edge:
     Type: 
     StartNodeID: 0

@@ -15,16 +15,37 @@ public class ShowCanvas : MonoBehaviour
     private GameObject LoadPage;  
 
     [SerializeField]
+    private TextMeshProUGUI ItemName;
+
+    [SerializeField]
     private StringSO SO;
+
+    [SerializeField]
+    private UIcheckerSO uIcheckerSO;
 
     public void loadnewCat()
     {
+        SO.SecondLastCat = SO.LastCat;
+        SO.LastCat = SO.Cat;
+        SO.Cat = ItemName.text;
+        
         SceneManager.LoadScene("FDG");
     }
 
-    public void back()
+    public void loadnewPage()
     {
-        Destroy(LoadCat);
+        SO.PageName = ItemName.text;
+        SceneManager.LoadScene("WikiPage");
     }
 
+    public void backfromCat()
+    {
+        uIcheckerSO.showingUI = false;
+        Destroy(LoadCat);
+    }
+    public void backfromPage()
+    {
+        uIcheckerSO.showingUI = false;
+        Destroy(LoadPage);
+    }
 }

@@ -7,24 +7,28 @@ namespace Graph
 	public class ForceDirectedLayout : MonoBehaviour
 	{
 		
-		private float speed = 5;
-
         private GraphRenderer graphComponents;
 
-        private float iterator = 0;
-        private float MaxIterations = 1500;  
- 
+        private float iterator = 0; 
+
+        public bool graphReady = false;
 
         public void DoIterations()
 		{
 
-            while(iterator <= MaxIterations)
+            while(iterator <= GraphRenderer.Current.MaxIterations)
             {
                 iterator += Time.deltaTime * 200f;
                 
                 ApplyForce();
+        
             }
 
+            if(iterator >=  GraphRenderer.Current.MaxIterations)
+            {
+                fixRotation();
+                graphReady = true;
+            }
 		}
 
         public void cycleLayout()
@@ -40,9 +44,16 @@ namespace Graph
             graphComponents = GetComponent<GraphRenderer>();
         }
 
-        public void ApplyForce() {
+        public void fixRotation()
+        {
+            foreach(GraphNode node in graphComponents.GraphNodes.Values)
+            {
+                node.transform.localRotation = Quaternion.Euler(0,0,0);
+            }
+        }
 
-                       
+        public void ApplyForce() {
+                      
             foreach (GraphNode n1 in graphComponents.GraphNodes.Values)
             {
                 foreach (GraphNode n2 in graphComponents.GraphNodes.Values)
@@ -52,12 +63,23 @@ namespace Graph
                         float xDist = n1.transform.position.x - n2.transform.position.x;
                         float yDist = n1.transform.position.y - n2.transform.position.y;
                         float zDist = n1.transform.position.z - n2.transform.position.z;
-                        float dist = (float)Mathf.Sqrt(xDist * xDist + yDist * yDist + zDist * zDist);
+                        float dist = Vector3.Distance(n1.transform.position, n2.transform.position);
 
                         if (dist > 0)
                         {
-                            float repulsiveF = GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
-                            n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * speed);
+                            if(n1.Node.Label == n2.Node.Label && n1.Node.Label == "Category")
+                            {
+                                float repulsiveF = 5F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
+                                n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
+
+                            }
+                            else
+                            {
+                                float repulsiveF = GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
+                                n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
+                            }
+
+
                         }
                     }
                 }
@@ -71,14 +93,15 @@ namespace Graph
                 float xDist = nf.transform.position.x - nt.transform.position.x;
                 float yDist = nf.transform.position.y - nt.transform.position.y;
                 float zDist = nf.transform.position.z - nt.transform.position.z;
-                float dist = (float)Mathf.Sqrt(xDist * xDist + yDist * yDist + zDist * zDist);
+                float dist = Vector3.Distance(nf.transform.position, nt.transform.position);
 
-                float attractiveF = dist * dist / GraphRenderer.Current.k;
+                float attractiveF = (5F* dist * dist)/ GraphRenderer.Current.k;
 
                 if (dist > 0)
                 {
-                    nf.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF) * speed);
-                    nt.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF) * speed);
+                    
+                    nf.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF) * GraphRenderer.Current.speed);
+                    nt.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF) * GraphRenderer.Current.speed);
                 }
             }
 

@@ -47,9 +47,11 @@ public class GraphRenderer : MonoBehaviour
 
     public List<GraphEdge> GraphEdges;
 
+    public float MaxIterations = 0;
     public float area = 0;
     public float maxDisplace = 0;
     public float k = 0;
+    public float speed = 10;
 
     private ForceDirectedLayout graphLayout;
 
@@ -63,7 +65,7 @@ public class GraphRenderer : MonoBehaviour
     {
         _graph1 = graph1;
         Display();
-        Debug.Log("Initialized");
+        
     }
 
 
@@ -90,6 +92,7 @@ public class GraphRenderer : MonoBehaviour
         // Display links
         DisplayLinks();
 
+        //Spread out nodes
         InitialLayout();
     }
 
@@ -97,22 +100,26 @@ public class GraphRenderer : MonoBehaviour
     {
         // Clear nodes
         GraphNodes = new Dictionary<long, GraphNode>();
-        foreach (Transform entity in NodesParent.transform)
-            GameObject.DestroyImmediate(entity.gameObject, true);
+        foreach (Transform node in NodesParent.transform)
+            GameObject.DestroyImmediate(node.gameObject, true);
 
-        // Clear paths
+        // Clear edges
         GraphEdges = new List<GraphEdge>();
-        foreach (Transform path in EdgePrefab.transform)
-            GameObject.DestroyImmediate(path.gameObject, true);
+        foreach (Transform edge in EdgePrefab.transform)
+            GameObject.DestroyImmediate(edge.gameObject, true);
     }
 
     private void DisplayNodes()
-    {
+    {   
+        System.Random random = new System.Random(); 
+        
             // For each position, create an entity
         foreach (Nodes dnode in graph1?.nodes1)
         {
+            //Vector3 startingPosition = new Vector3(random.Next(-25, 25), random.Next(-25, 25), random.Next(-25, 25));
             // Create a new entity instance
             GameObject graphNode = Instantiate(NodePrefab, NodesParent.transform);
+            //graphNode.transform.position = startingPosition;
             graphNode.transform.position = Vector3.zero;
             graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
             graphNode.transform.name = dnode.Title;
@@ -132,10 +139,66 @@ public class GraphRenderer : MonoBehaviour
    
 
         }
-        area = GraphNodes.Count * 20F;
+
+        foreach(GraphNode node in GraphNodes.Values){
+            Debug.Log(node.name);
+        }
+         
+        getInfo();
         maxDisplace = (float)(Mathf.Sqrt(area) / 3F);
         k = (float)Mathf.Sqrt(area / (1 + GraphNodes.Count));
     }
+
+    private void getInfo()
+    {
+        if(GraphNodes.Count < 10){
+            area = 100;
+            MaxIterations = 50;
+            speed = 14;
+
+        }else if(GraphNodes.Count < 30){
+            area = 200;
+            MaxIterations = 300;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 60){
+            area = 500;
+            MaxIterations = 500;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 100){
+            area = 1000;
+            MaxIterations = 600;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 200){
+            area = 4000;
+            MaxIterations = 800;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 250){
+            area = 6000;
+            MaxIterations = 1200;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 300){
+            area = 9000;
+            MaxIterations = 1600;
+            speed = 10;
+
+        }else if(GraphNodes.Count < 400){
+            area = 12000;
+            speed = 7;
+            MaxIterations = 2000;
+
+        }else if(GraphNodes.Count < 500){
+            area = 14000;
+            speed = 5;
+            MaxIterations = 2000;
+
+        }        
+    }
+
 
     private void DisplayLinks()
     {
@@ -173,12 +236,12 @@ public class GraphRenderer : MonoBehaviour
     {
         System.Random random = new System.Random();
         foreach (var node in GraphNodes.Values)
-            node.ApplyInitialForces(new List<Vector3>() { new Vector3(random.Next(-50, 50), random.Next(-50, 50), random.Next(-50, 50)) }, true);
+            node.ApplyInitialForces(new List<Vector3>() { new Vector3(random.Next(-100, 100), random.Next(-100, 100), random.Next(-100, 100)) }, true);
     }
 
-    void Update()
-    {
-        //graphLayout.DoIterations(3);
-    }
+    // void Update()
+    // {
+    //     graphLayout.DoIterations(1);
+    // }
 }
 }

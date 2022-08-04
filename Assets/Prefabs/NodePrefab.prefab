@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 214304860268058193}
   - component: {fileID: 135478871737246988}
   - component: {fileID: -7753677216298882080}
+  - component: {fileID: 933148601013034938}
   - component: {fileID: -7413067344493341617}
   - component: {fileID: 86676614263676247}
   m_Layer: 8
@@ -85,13 +86,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SO: {fileID: 11400000, guid: deafd82957807634b8f365e6ca831c81, type: 2}
+  uIcheckerSO: {fileID: 11400000, guid: e078a30526842dc4da4929b64cfa0430, type: 2}
   LoadCat: {fileID: 6727554651542699194, guid: 7322113f841a6d546a954c1de42a3c35, type: 3}
-  LoadPage: {fileID: 4638773678242325167, guid: c2d11e5fa287be941bfca8a463d54e9f, type: 3}
+  HexaPage: {fileID: 7979144084180460865, guid: 6b2d95fd29ede1849a33c33c3d418b59, type: 3}
   _Node:
     _ID: 0
     _Label: 
     _Title: 
   Rigidbody1: {fileID: 214304860268058193}
+--- !u!114 &933148601013034938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576558684187692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c00dbe87f3bd14abbd92179e17a87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PageMaterial: {fileID: 2100000, guid: e1a39d609e5bf094f8d8fecafe900fc1, type: 2}
+  CatMaterial: {fileID: 2100000, guid: 80cdbe75ea9c58b4fb7ae0324881f0f9, type: 2}
+  PageSelectedMaterial: {fileID: 2100000, guid: b4b91fb01e2aca94da659b30565097f3, type: 2}
+  CatSelectedMaterial: {fileID: 2100000, guid: f6acb600b44789447b93b2afa46bbe3e, type: 2}
+  graphNode: {fileID: -7753677216298882080}
 --- !u!114 &-7413067344493341617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +154,7 @@ MonoBehaviour:
   m_FirstHoverEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 595243748153266790}
+      - m_Target: {fileID: 933148601013034938}
         m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
         m_MethodName: enlargeNode
         m_Mode: 1
@@ -150,7 +169,7 @@ MonoBehaviour:
   m_LastHoverExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 595243748153266790}
+      - m_Target: {fileID: 933148601013034938}
         m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
         m_MethodName: normalsizeNode
         m_Mode: 1
@@ -170,34 +189,10 @@ MonoBehaviour:
       m_Calls: []
   m_FirstSelectEntered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 23744614802655060}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: b4b91fb01e2aca94da659b30565097f3, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_LastSelectExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 23744614802655060}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: e1a39d609e5bf094f8d8fecafe900fc1, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -260,7 +255,6 @@ GameObject:
   - component: {fileID: 4801524874503626}
   - component: {fileID: 33369642677025854}
   - component: {fileID: 23744614802655060}
-  - component: {fileID: 595243748153266790}
   m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
@@ -277,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 1734147258468232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 224224983813791988}
@@ -333,18 +327,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &595243748153266790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1734147258468232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c00dbe87f3bd14abbd92179e17a87c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2935561496788586891
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +356,7 @@ RectTransform:
   m_GameObject: {fileID: 2935561496788586891}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7324386067718568676}
@@ -383,7 +365,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.5}
+  m_AnchoredPosition: {x: 0, y: 2.64}
   m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5031443938202627874
@@ -459,6 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb82da7d192c8f94baa01ed94d98e3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodeText: {fileID: 807212996126603305}
+  Range: 200
 --- !u!1 &4176500651792382901
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +572,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -4.953644, y: -0.44276428, z: -4.9974976, w: 1.8316498}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

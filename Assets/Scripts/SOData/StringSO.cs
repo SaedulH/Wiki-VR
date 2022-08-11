@@ -12,7 +12,7 @@ public class StringSO : ScriptableObject
         set { _cat = value; }
     }
     
-        [SerializeField]
+    [SerializeField]
     private string _lastcat;
 
     public string LastCat
@@ -21,7 +21,7 @@ public class StringSO : ScriptableObject
         set { _lastcat = value; }
     }
 
-        [SerializeField]
+    [SerializeField]
     private string _2ndlastCat;
 
     public string SecondLastCat
@@ -30,7 +30,7 @@ public class StringSO : ScriptableObject
         set { _2ndlastCat = value; }
     }
 
-        [SerializeField]
+    [SerializeField]
     private string _Pagename;
 
     public string PageName
@@ -39,4 +39,20 @@ public class StringSO : ScriptableObject
         set { _Pagename = value; }
     }
 
+
+    [SerializeField]
+    private int _Num;
+    public int Num
+    {
+        get { return _Num; }
+        set { _Num = value; }
+    }
+
+    [SerializeField]
+    private float _Limiter;
+    public float Limiter
+    {
+        get { return _Limiter; }
+        set { _Limiter = value; }
+    }
 }

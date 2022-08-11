@@ -4,7 +4,7 @@ using UnityEngine;
 using Neo4j.Driver;
 using Graph.DataStructure;
 using Graph; 
-using Search;
+using System.Linq;
 
 public class NeoQuery : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class NeoQuery : MonoBehaviour
     private ForceDirectedLayout graphLayout;
 
     [SerializeField]
-    private StringSO catSelector;
+    private StringSO SO;
 
     public bool rootFetched = false;
     public bool isRendered = false;
@@ -53,13 +53,13 @@ public class NeoQuery : MonoBehaviour
 
         Graph.DataStructure.GraphNetwork network = new Graph.DataStructure.GraphNetwork();
 
-        Query(catSelector.Cat, network);
+        Query(SO.Cat, network, SO.Limiter);
         //Query("Databases", network);
         //SampleData.MakeSampleGraphData(network);
         
         //waits for 1 second.
         yield return new WaitForSeconds(1);
-        graphRenderer.Initialize(network);
+        graphRenderer.Initialize(network, SO.Num);
 
         graphLayout.InitializeForces();
         isRendered = true;
@@ -74,13 +74,13 @@ public class NeoQuery : MonoBehaviour
     }
     
 
-    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph) 
+    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter) 
     {
         IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "test"));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var cypherQuery =
-        @"MATCH x= (p:Category {catName: '" + Cat + "'})<-[*..2]-(s) WITH *, relationships(x) as r RETURN p, r, s LIMIT 400";
+        @"MATCH x= (p:Category {catName: '" + Cat + "'})<-[*..2]-(s) WITH *, relationships(x) as r RETURN p, r, s LIMIT " + Limiter;
 
         try 
         {
@@ -132,17 +132,38 @@ public class NeoQuery : MonoBehaviour
 
                 var anode = record["s"].As<INode>();
 
+                
+
                 if (anode.Labels[0] == "Category")
                 {
 
                     Graph.DataStructure.Nodes nodey = new Nodes(anode.Id, anode.Labels[0], anode.Properties["catName"].ToString());
-                    graph.nodes1.Add(nodey);
+                    if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
+                    {
+                        //do nothing
+                        Debug.Log("Did not add: "+ nodey.Title);
+                    }
+                    else
+                    {   
+                        Debug.Log("Added: " + nodey.Title);
+                        graph.nodes1.Add(nodey);
+                    }
+                        
                 } 
                 else if (anode.Labels[0] == "Page")
                 {
 
                     Graph.DataStructure.Nodes nodey = new Nodes(anode.Id, anode.Labels[0], anode.Properties["pageTitle"].ToString());           
-                    graph.nodes1.Add(nodey);
+                    if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
+                    {
+                        //do nothing
+                        Debug.Log("Did not add: "+ nodey.Title);
+                    }
+                    else
+                    {
+                        Debug.Log("Added: " + nodey.Title); 
+                        graph.nodes1.Add(nodey);
+                    }
                 }
 
             }
@@ -151,7 +172,7 @@ public class NeoQuery : MonoBehaviour
             // {
             //     Debug.Log(edge.StartNodeID + " -> " + edge.EndNodeID);
             // }
-            Debug.Log("Neonodes = " + graph.nodes1.Count);
+            //Debug.Log("Neonodes = " + graph.nodes1.Count);
 
         }
    

@@ -14,6 +14,8 @@ namespace Graph
 
         private const float MAX_VELOCITY_MAGNITUDE = 1000f;
 
+        //public Vector3 increaseSize;
+
         public static GraphNode thisNode;
 
         [SerializeField]
@@ -30,6 +32,13 @@ namespace Graph
         [Tooltip("prefab used for the loadpage canvas.")] 
         private GameObject LoadPage; 
 
+        
+        [SerializeField]
+        [Tooltip("The graph data being displayed.")]
+        private Graph.DataStructure.GraphNetwork _graph1;
+
+        public Graph.DataStructure.GraphNetwork graph1 { get { return _graph1; } }
+
         #endregion
 
         #region Initialization
@@ -38,11 +47,9 @@ namespace Graph
         /// Executes once on start.
         /// </summary>
         private void Awake()
-        {
+        {   
+            
             Rigidbody1 = GetComponent<Rigidbody>();
-            //Draggable = GetComponent<Draggable>();
-            //Rigidbody.freezeRotation = true;          
-            //wait5();
             thisNode = this;
         }
 
@@ -58,26 +65,29 @@ namespace Graph
         /// Initializes the graph node.
         /// </summary>
         /// <param name="node">The node being presented.</param>
-        public void InitializeNode(Nodes node)
+        public void InitializeNode(Nodes node, Graph.DataStructure.GraphNetwork graph1)
         {
+            _graph1 = graph1;
             _Node = node;
-
-            // Set the color
-            //GetComponentInChildren<TextMeshPro>().text = node.Label;
-            if(node.Label == "Category")
-            {
-            GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor",Color.red);
-            
-            GetComponentInChildren<Transform>().localScale = new Vector3(2f, 2f, 2f);
-            }
-            else
-            {
-            GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor",Color.yellow);                
-            }
 
             // Set title
             GetComponentInChildren<TextMeshProUGUI>().text = node.ToString();
             
+            // Set size
+            if(node.Label == "Category")
+            {
+                Vector3 increaseSize = new Vector3(0.02F, 0.02F, 0.02f);
+                foreach(var edge in graph1.edges1)
+                {
+                    if(node.Id == edge.StartNodeID || node.Id == edge.EndNodeID)
+                    {
+                        //Debug.Log(node.Id + " to " + edge.Type);
+                        transform.GetComponentInChildren<Transform>().localScale += increaseSize;
+                        
+                    }
+                }
+            }
+
         }
 
         #endregion

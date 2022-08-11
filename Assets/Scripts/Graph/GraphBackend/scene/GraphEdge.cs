@@ -36,11 +36,26 @@ namespace Graph
             
             // Set width
             //float width = 0.08f + 0.02f; // [0.02 -> 0.1]
-            LineRenderer.startWidth = 0.5f;
-            LineRenderer.endWidth = 0.25f;
+
 
             sourceRb = firstNode.GetComponent<Rigidbody>();
             targetRb = secondNode.GetComponent<Rigidbody>();
+
+            if(edge.Type == "SUBCAT_OF")
+            {
+                LineRenderer.startWidth = 1f;
+                LineRenderer.endWidth = 0.5f;
+                //GetComponent<Renderer>().material.color = Color.green
+                GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
+
+            }
+            else if(edge.Type == "IN_CATEGORY")
+            {
+                LineRenderer.startWidth = 0.5f;
+                LineRenderer.endWidth = 0.25f;
+                //GetComponent<Renderer>().material.color = Color.blue;
+                GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
+            }
         }
 
         #endregion

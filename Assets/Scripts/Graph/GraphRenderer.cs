@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Graph.DataStructure;
-using TMPro;
  
 namespace Graph{
 
@@ -28,19 +26,23 @@ public class GraphRenderer : MonoBehaviour
     private GameObject NodesParent;
 
     [SerializeField]
-    [Tooltip("Template used for initiating nodes.")]
-    private GameObject NodePrefab;
+    [Tooltip("Prefabs used for initiating Page nodes.")]
+    private GameObject PageNodePrefab;
+
+    [SerializeField]
+    [Tooltip("Prefabs used for initiating  Category nodes.")]
+    private GameObject CatNodePrefab;
 
         [Header("Edges")]
 
 
     [SerializeField]
-    [Tooltip("References the parent holding all links.")]
+    [Tooltip("References the parent holding all edges.")]
     private GameObject EdgesParent;
 
 
     [SerializeField]
-    [Tooltip("Template used for initiating links.")]
+    [Tooltip("Prefabs used for initiating edges.")]
     private GameObject EdgePrefab;
 
     public Dictionary<long, GraphNode> GraphNodes;
@@ -61,10 +63,10 @@ public class GraphRenderer : MonoBehaviour
     }
 
 
-    public void Initialize(Graph.DataStructure.GraphNetwork graph1)
+    public void Initialize(Graph.DataStructure.GraphNetwork graph1, int num)
     {
         _graph1 = graph1;
-        Display();
+        Display(num);
         
     }
 
@@ -81,7 +83,7 @@ public class GraphRenderer : MonoBehaviour
 
     }
 
-    private void Display()
+    private void Display(int num)
     {
         // Clear everything
         Clear();
@@ -89,11 +91,11 @@ public class GraphRenderer : MonoBehaviour
         // Display nodes
         DisplayNodes();
 
-        // Display links
-        DisplayLinks();
+        // Display edges
+        DisplayEdges();
 
         //Spread out nodes
-        InitialLayout();
+        InitialLayout(num);
     }
 
     private void Clear()
@@ -110,99 +112,71 @@ public class GraphRenderer : MonoBehaviour
     }
 
     private void DisplayNodes()
-    {   
-        System.Random random = new System.Random(); 
-        
-            // For each position, create an entity
+    {               
+            // For each position, create an object
         foreach (Nodes dnode in graph1?.nodes1)
         {
             //Vector3 startingPosition = new Vector3(random.Next(-25, 25), random.Next(-25, 25), random.Next(-25, 25));
+
             // Create a new entity instance
-            GameObject graphNode = Instantiate(NodePrefab, NodesParent.transform);
-            //graphNode.transform.position = startingPosition;
-            graphNode.transform.position = Vector3.zero;
-            graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
-            graphNode.transform.name = dnode.Title;
-            
 
-            // Extract the script
-            GraphNode nscript = graphNode.GetComponent<GraphNode>();
-
-            // Initialize data
-            nscript.InitializeNode(dnode);
-
-            // Add to list
-            if (!GraphNodes.ContainsKey(dnode.Id))
+            if(dnode.Label == "Page")
             {
-            GraphNodes?.Add(dnode.Id, nscript); 
+                GameObject graphNode = Instantiate(PageNodePrefab, NodesParent.transform);
+                //graphNode.transform.position = startingPosition;
+                graphNode.transform.position = Vector3.zero;
+                graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
+                graphNode.transform.name = dnode.Title;
+
+                // Extract the script                
+                GraphNode nscript = graphNode.GetComponent<GraphNode>();
+
+                // Initialize data
+                nscript.InitializeNode(dnode, graph1);
+
+                // Add to list
+                if (!GraphNodes.ContainsKey(dnode.Id))
+                {
+                GraphNodes?.Add(dnode.Id, nscript); 
+                }            
             }
-   
+            else
+            {
+                GameObject graphNode = Instantiate(CatNodePrefab, NodesParent.transform);
+                //graphNode.transform.position = startingPosition;
+                graphNode.transform.position = Vector3.zero;
+                graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
+                graphNode.transform.name = dnode.Title;      
+
+                // Extract the script
+                GraphNode nscript = graphNode.GetComponent<GraphNode>();
+
+                // Initialize data
+                nscript.InitializeNode(dnode, graph1);
+
+                // Add to list
+                if (!GraphNodes.ContainsKey(dnode.Id))
+                {
+                GraphNodes?.Add(dnode.Id, nscript); 
+                }
+            }
 
         }
 
-        foreach(GraphNode node in GraphNodes.Values){
-            Debug.Log(node.name);
-        }
+        // foreach(GraphNode node in GraphNodes.Values)
+        // {
+        //     Debug.Log(node.name);
+        // }
          
         getInfo();
         maxDisplace = (float)(Mathf.Sqrt(area) / 3F);
         k = (float)Mathf.Sqrt(area / (1 + GraphNodes.Count));
     }
 
-    private void getInfo()
+
+    private void DisplayEdges()
     {
-        if(GraphNodes.Count < 10){
-            area = 100;
-            MaxIterations = 50;
-            speed = 14;
-
-        }else if(GraphNodes.Count < 30){
-            area = 200;
-            MaxIterations = 300;
-            speed = 12;
-
-        }else if(GraphNodes.Count < 60){
-            area = 500;
-            MaxIterations = 500;
-            speed = 12;
-
-        }else if(GraphNodes.Count < 100){
-            area = 1000;
-            MaxIterations = 600;
-            speed = 12;
-
-        }else if(GraphNodes.Count < 200){
-            area = 4000;
-            MaxIterations = 800;
-            speed = 12;
-
-        }else if(GraphNodes.Count < 250){
-            area = 6000;
-            MaxIterations = 1200;
-            speed = 12;
-
-        }else if(GraphNodes.Count < 300){
-            area = 9000;
-            MaxIterations = 1600;
-            speed = 10;
-
-        }else if(GraphNodes.Count < 400){
-            area = 12000;
-            speed = 7;
-            MaxIterations = 2000;
-
-        }else if(GraphNodes.Count < 500){
-            area = 14000;
-            speed = 5;
-            MaxIterations = 2000;
-
-        }        
-    }
-
-
-    private void DisplayLinks()
-    {
-            // For each position, create an entity
+            // For each position, create an object
         foreach (Edges dedge in graph1?.edges1)
         {
             // Find graph nodes
@@ -231,12 +205,68 @@ public class GraphRenderer : MonoBehaviour
             
         }
     }
+    private void getInfo()
+    {
+        if(GraphNodes.Count < 12){
+            area = 100;
+            MaxIterations = 50;
+            speed = 15;
 
-    private void InitialLayout()
+        }else if(GraphNodes.Count < 32){
+            area = 200;
+            MaxIterations = 300;
+            speed = 13;
+
+        }else if(GraphNodes.Count < 62){
+            area = 500;
+            MaxIterations = 500;
+            speed = 12;
+
+        }else if(GraphNodes.Count < 102){
+            area = 1000;
+            MaxIterations = 600;
+            speed = 11;
+
+        }else if(GraphNodes.Count < 202){
+            area = 4000;
+            MaxIterations = 800;
+            speed = 10;
+
+        }else if(GraphNodes.Count < 252){
+            area = 6000;
+            MaxIterations = 1200;
+            speed = 9;
+
+        }else if(GraphNodes.Count < 302){
+            area = 9000;
+            MaxIterations = 1600;
+            speed = 8;
+
+        }else if(GraphNodes.Count < 402){
+            area = 12000;
+            speed = 7;
+            MaxIterations = 2000;
+
+        }else if(GraphNodes.Count < 502){
+            area = 15000;
+            speed = 5;
+            MaxIterations = 2200;
+
+        }else{
+            area = 18000;
+            speed = 5;
+            MaxIterations = 2400;
+        }         
+    }
+
+
+
+
+    private void InitialLayout(int num)
     {
         System.Random random = new System.Random();
         foreach (var node in GraphNodes.Values)
-            node.ApplyInitialForces(new List<Vector3>() { new Vector3(random.Next(-100, 100), random.Next(-100, 100), random.Next(-100, 100)) }, true);
+            node.ApplyInitialForces(new List<Vector3>() { new Vector3(random.Next(-num, num), random.Next(-num, num), random.Next(-num, num)) }, true);
     }
 
     // void Update()

@@ -69,13 +69,13 @@ namespace Graph
                         {
                             if(n1.Node.Label == n2.Node.Label && n1.Node.Label == "Category")
                             {
-                                float repulsiveF = 5F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
+                                float repulsiveF = 7.5F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
                                 n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
 
                             }
                             else
                             {
-                                float repulsiveF = GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
+                                float repulsiveF = 2F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
                                 n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
                             }
 
@@ -90,6 +90,8 @@ namespace Graph
                 Rigidbody nf = edge.sourceRb;
                 Rigidbody nt = edge.targetRb;
 
+                
+
                 float xDist = nf.transform.position.x - nt.transform.position.x;
                 float yDist = nf.transform.position.y - nt.transform.position.y;
                 float zDist = nf.transform.position.z - nt.transform.position.z;
@@ -99,9 +101,17 @@ namespace Graph
 
                 if (dist > 0)
                 {
-                    
-                    nf.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF) * GraphRenderer.Current.speed);
-                    nt.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF) * GraphRenderer.Current.speed);
+                    if(iterator >= (GraphRenderer.Current.MaxIterations/2) && edge.FirstNode.Node.Label != edge.SecondNode.Node.Label)
+                    {
+                        nf.AddForce(new Vector3(-xDist / dist * attractiveF * 2, -yDist / dist * attractiveF * 2, -zDist / dist * attractiveF * 2) * GraphRenderer.Current.speed);
+                        nt.AddForce(new Vector3(xDist / dist * attractiveF * 2, yDist / dist * attractiveF * 2, zDist / dist * attractiveF * 2) * GraphRenderer.Current.speed);                             
+                    }
+                    else
+                    {
+                        nf.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF) * GraphRenderer.Current.speed);
+                        nt.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF) * GraphRenderer.Current.speed);                        
+                    }
+
                 }
             }
 

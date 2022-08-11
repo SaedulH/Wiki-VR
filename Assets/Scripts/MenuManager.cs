@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI confirmCat;
 
+    public Animator transition;
+
     public void StartGame()
     {
         Menu.SetActive(false);
@@ -49,10 +51,20 @@ public class MenuManager : MonoBehaviour
         Settings.SetActive(true);
     }
 
-    public void loadScene()
+    public void StartTransition()
     {
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene()
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+
         SceneManager.LoadScene("FDG");
     }
+
 
     public void ExitGame(){
         

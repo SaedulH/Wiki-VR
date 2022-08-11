@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace WebData
 {   
 
+    //For deserializing List of Content from wikitext to C# objects
     public class Base
     {
         public _Parse parse {get; set;}

@@ -41,12 +41,13 @@ namespace Search
             }
         }
 
-        void clearButtons()
+        private void clearButtons()
         {
+
             foreach (Transform button in ButtonsParent.transform)
                 if(button.GetComponentInChildren<TextMeshProUGUI>().text != "placeholder")
                 {
-                    GameObject.Destroy(button);
+                    GameObject.Destroy(button.gameObject);
                 }
                             
         }

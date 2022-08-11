@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FDG.unity
     guid: 0d66cfe749bc15047ae15e0014e54e39
+  - enabled: 1
+    path: Assets/Scenes/WikiPage.unity
+    guid: 340f827fc3683f443ac4093f7c943926
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e1e1f90bf58787642a0da87ca26aa9e7, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: f00230e076c6cd646b8e6698bef3caa3, type: 2}

@@ -58,7 +58,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator LoadScene()
     {
-        transition.SetTrigger("Start");
+        transition.SetTrigger("Fadeout");
 
         yield return new WaitForSeconds(1);
 

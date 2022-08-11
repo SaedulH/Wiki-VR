@@ -13,6 +13,12 @@ namespace Graph
 
         public bool graphReady = false;
 
+        public static ForceDirectedLayout currentLayout; 
+
+        void Awake()
+        {
+            currentLayout = this;
+        } 
         public void DoIterations()
 		{
 

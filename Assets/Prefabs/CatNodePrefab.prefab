@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 7586097164423234913}
   - component: {fileID: 8983397156952886932}
   - component: {fileID: 7244006410097674124}
+  - component: {fileID: 2626645488318134749}
   m_Layer: 8
   m_Name: CatNodePrefab
   m_TagString: Node
@@ -362,6 +363,7 @@ MonoBehaviour:
   PageSelectedMaterial: {fileID: 2100000, guid: b4b91fb01e2aca94da659b30565097f3, type: 2}
   CatSelectedMaterial: {fileID: 2100000, guid: f6acb600b44789447b93b2afa46bbe3e, type: 2}
   graphNode: {fileID: 8201452119756403003}
+  Hover: {fileID: 2626645488318134749}
 --- !u!114 &8983397156952886932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,13 +409,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7586097164423234913}
         m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
-        m_MethodName: enlargeNode
+        m_MethodName: OnHover
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 100
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -422,7 +424,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7586097164423234913}
         m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
-        m_MethodName: normalsizeNode
+        m_MethodName: OffHover
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -495,6 +497,26 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &2626645488318134749
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327804403519715063}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ffcbb14a00d1edc40a60cd502f5d5417, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7327963156466572627
 GameObject:
   m_ObjectHideFlags: 0

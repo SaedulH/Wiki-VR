@@ -23,6 +23,8 @@ public class NodeInteraction : MonoBehaviour
 
     [SerializeField]
     private GraphNode graphNode;
+
+    public Animator Hover;
     
     void start()
     {
@@ -61,7 +63,7 @@ public class NodeInteraction : MonoBehaviour
         }        
     }
 
-        public void dimNode()
+    public void dimNode()
     {
         if(GraphNode.thisNode.Node.Label == ("Category"))
         {
@@ -72,5 +74,15 @@ public class NodeInteraction : MonoBehaviour
             GetComponentInChildren<MeshRenderer>().material = CatMaterial;
         }
         
+    }
+
+    public void OnHover()
+    {
+        Hover.SetBool("IsHovering", true);
+    }
+
+    public void OffHover()
+    {
+        Hover.SetBool("IsHovering", false);
     }
 }

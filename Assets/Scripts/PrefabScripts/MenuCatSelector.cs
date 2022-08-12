@@ -7,12 +7,12 @@ public class MenuCatSelector : MonoBehaviour
 {
 
     [SerializeField]
-    private StringSO catNameSO;
+    private StringSO SO;
 
     public void getCategory()
     {
-        catNameSO.Cat = GetComponentInChildren<TextMeshProUGUI>().text; 
-        Debug.Log(catNameSO.Cat);
+        SO.Cat = GetComponentInChildren<TextMeshProUGUI>().text; 
+        Debug.Log(SO.Cat);
     }
 
 }

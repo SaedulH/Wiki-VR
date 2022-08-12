@@ -37,10 +37,12 @@ namespace Search
         private TextMeshProUGUI resultText;
 
         [SerializeField]
-        private UIcheckerSO uIcheckerSO;
+        private UIcheckerSO UIcheckerSO;
 
         [SerializeField]
         private StringSO SO;
+
+        public Animator Toggle;
         void Awake()
         {
             showingPage = false;
@@ -156,10 +158,17 @@ namespace Search
 
         public void exitCanvas()
         {
-            uIcheckerSO.showingUI = false;
-            Destroy(SearchCanvas);
+            UIcheckerSO.showingUI = false;
+            StartCoroutine(CanvasOff());
         }
 
+        IEnumerator CanvasOff()
+        {   
+            Toggle.SetTrigger("SearchCanvasOff");
+            yield return new WaitForSeconds(1);
+
+            Destroy(SearchCanvas);
+        }
     }
 
 

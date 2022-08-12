@@ -8,6 +8,7 @@ public class WristUI : MonoBehaviour
     
     public InputActionReference MenuReference;
 
+    public Animator Toggle;
     private Canvas _wristCanvas;
     
     void Awake()
@@ -25,8 +26,26 @@ public class WristUI : MonoBehaviour
 
     public void ToggleMenu(InputAction.CallbackContext context)
     {   
-        bool isActive = !gameObject.activeSelf;
-        gameObject.SetActive(isActive);
+
+        if(gameObject.activeSelf == true)
+        {
+            StartCoroutine(WristOff());
+            
+        }
+        else if(gameObject.activeSelf == false)
+        {
+            gameObject.SetActive(true);
+            //Toggle.SetTrigger("TurnWristOn");
+
+        }
         //_wristCanvas.enabled = !_wristCanvas.enabled;
+    }
+
+    IEnumerator WristOff()
+    {
+        Toggle.SetTrigger("TurnWristOff");
+        yield return new WaitForSeconds(1);
+        
+        gameObject.SetActive(false);
     }
 }

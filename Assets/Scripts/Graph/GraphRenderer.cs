@@ -43,7 +43,7 @@ public class GraphRenderer : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Prefabs used for initiating edges.")]
-    private GameObject EdgePrefab;
+    private GameObject CylinderEdgePrefab;
 
     public Dictionary<long, GraphNode> GraphNodes;
 
@@ -107,7 +107,7 @@ public class GraphRenderer : MonoBehaviour
 
         // Clear edges
         GraphEdges = new List<GraphEdge>();
-        foreach (Transform edge in EdgePrefab.transform)
+        foreach (Transform edge in CylinderEdgePrefab.transform)
             GameObject.DestroyImmediate(edge.gameObject, true);
     }
 
@@ -187,7 +187,7 @@ public class GraphRenderer : MonoBehaviour
             GraphNode secondNode = GraphNodes?[dedge.EndNodeID];
 
                 // Create a new entity instance
-            GameObject graphEdge = Instantiate(EdgePrefab, EdgesParent.transform);
+            GameObject graphEdge = Instantiate(CylinderEdgePrefab, EdgesParent.transform);
             graphEdge.transform.position = Vector3.zero;
             graphEdge.transform.localRotation = Quaternion.Euler(Vector3.zero);
             graphEdge.transform.name = dedge.StartNodeID + " -> " + dedge.EndNodeID;

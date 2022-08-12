@@ -39,6 +39,10 @@ public class WristMenuFunctions : MonoBehaviour
     [Tooltip("prefab used for the search canvas.")]
     private GameObject SearchCanvas;
 
+    public Animator Fade;
+
+    public Animator Toggle;
+
     void Start()
     {
         rootcatname.text = SO.Cat;
@@ -88,23 +92,29 @@ public class WristMenuFunctions : MonoBehaviour
 
     public void Searchpressed()
     {
-        gameObject.SetActive(false);
+
+        StartCoroutine(WristOff());
         showSearch();
+    }
+
+    IEnumerator WristOff()
+    {
+        Toggle.SetTrigger("TurnWristOff");
+        yield return new WaitForSeconds(1);
+        
+        gameObject.SetActive(false);
     }
 
     public void Confirmpressed()
     {
         if(_Exitpressed)
         {
-             #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-            #else
-                Application.Quit();
-            #endif
+            StartCoroutine(Exiting());
+
         }
         else if(_Menupressed)
         {
-            SceneManager.LoadScene("MainMenu");
+            StartCoroutine(Confirmed("MainMenu"));
         }
         else if(_Catpressed)
         {
@@ -112,9 +122,30 @@ public class WristMenuFunctions : MonoBehaviour
             SO.Cat = SO.LastCat;
             SO.LastCat = SO.SecondLastCat;
             SO.SecondLastCat = "";
-            SceneManager.LoadScene("FDG");
+            StartCoroutine(Confirmed("FDG"));
             
         }
+    }
+
+    IEnumerator Exiting()
+    {
+        Fade.SetTrigger("FadeOut");
+
+        yield return new WaitForSeconds(1);
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    IEnumerator Confirmed(string Scenename)
+    {
+        Fade.SetTrigger("FadeOut");
+
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(Scenename);
     }
 
     public void goBack()

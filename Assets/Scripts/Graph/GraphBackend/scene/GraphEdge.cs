@@ -18,7 +18,7 @@ namespace Graph
         /// </summary>
         private void Awake()
         {
-            LineRenderer = GetComponent<LineRenderer>();
+            // LineRenderer = GetComponent<LineRenderer>();
         }
 
         /// <summary>
@@ -43,17 +43,19 @@ namespace Graph
 
             if(edge.Type == "SUBCAT_OF")
             {
-                LineRenderer.startWidth = 1f;
-                LineRenderer.endWidth = 0.5f;
+                // LineRenderer.startWidth = 1f;
+                // LineRenderer.endWidth = 0.5f;
                 //GetComponent<Renderer>().material.color = Color.green
+                //GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
                 GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
 
             }
             else if(edge.Type == "IN_CATEGORY")
             {
-                LineRenderer.startWidth = 0.5f;
-                LineRenderer.endWidth = 0.25f;
+                // LineRenderer.startWidth = 0.5f;
+                // LineRenderer.endWidth = 0.25f;
                 //GetComponent<Renderer>().material.color = Color.blue;
+                //GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
                 GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
             }
         }
@@ -116,14 +118,22 @@ namespace Graph
         /// </summary>
         private void Update()
         {
-            LineRenderer.useWorldSpace = true;
+            //LineRenderer.useWorldSpace = true;
 
             Vector3 firstPosition = _FirstNode.transform.position + (_SecondNode.transform.position - _FirstNode.transform.position).normalized * 0.1f;
             Vector3 secondPosition = _SecondNode.transform.position + (_FirstNode.transform.position - _SecondNode.transform.position).normalized * 0.1f;
 
-            LineRenderer.SetPosition(0, firstPosition);
-            LineRenderer.SetPosition(1, secondPosition);
+            // LineRenderer.SetPosition(0, firstPosition);
+            // LineRenderer.SetPosition(1, secondPosition);
 
+            Vector3 offset = secondPosition - firstPosition;
+            Vector3 position = firstPosition + (offset / 2.0f);
+
+            gameObject.transform.position = position;
+            gameObject.transform.LookAt(firstPosition);
+            Vector3 localScale = gameObject.transform.localScale;
+            localScale.z = (secondPosition - firstPosition).magnitude;
+            gameObject.transform.localScale = localScale;
         }
 
         #endregion

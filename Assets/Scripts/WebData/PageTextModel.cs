@@ -37,4 +37,5 @@ namespace WebData
         public string title { get; set; }
         public string extract { get; set; }
     }
+
 }  

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using MwParserFromScratch;
-using MwParserFromScratch.Nodes;
 using System.Text.RegularExpressions;
 
 namespace WebData
@@ -16,11 +16,24 @@ namespace WebData
     {
 
         [SerializeField]
-        [Tooltip("References the parent holding all buttons.")]
+        [Tooltip("References the parent holding all content list buttons.")]
         private GameObject ButtonsParent;
 
         [SerializeField]
+        [Tooltip("References the parent holding all content list buttons.")]
         private GameObject buttonTemplate; 
+
+        [SerializeField]
+        [Tooltip("References the parent holding all saved page buttons.")]
+        private GameObject SavedButtonsParent;
+
+        [SerializeField]
+        [Tooltip("References the parent holding all saved page buttons.")]
+        private GameObject SavedbuttonTemplate; 
+
+        [SerializeField]
+        private TextMeshProUGUI AddorRemove;
+
         [SerializeField]
         private TextMeshProUGUI pageText;
 
@@ -31,18 +44,24 @@ namespace WebData
         private TextMeshProUGUI parsetester;
 
         [SerializeField]
-        private TextMeshProUGUI normaltester;
-
-        [SerializeField]
         private RawImage InfoboxImage;
 
         [SerializeField]
+        private TextMeshProUGUI featuredText;
+        
+        [SerializeField]
         private StringSO SO;
+
+        public Animator Fade;
         public string encodedName;
+
+        public string randomPageTitle;
 
         public string sectionNumber;
 
         public Dictionary<int, string> ListofContents;
+
+        public List<string> ListofSaved;
 
         private string APIintro = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=";
 
@@ -50,6 +69,10 @@ namespace WebData
         private string GetList = "https://en.wikipedia.org/w/api.php?format=json&action=parse&prop=sections&disabletoc=1&page=";
 
         private string GetRawImage = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages&titles=";
+
+        private string GetFeatured = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/2022/08/14";
+
+        private string GetRandom = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1";
 
         //string experi = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&disabletoc=1&titles=Racism%20in%20Israel&section=2";
 
@@ -61,19 +84,21 @@ namespace WebData
             
             pageName.text = SO.PageName;
             encodedName = pageName.text.Replace(" ", "%20"); 
-            //StartCoroutine(GetRequest());
 
             StartCoroutine(GetContentList());
             StartCoroutine(GetIntroRequest());
             StartCoroutine(GetImageURL());
-            //StartCoroutine(GetSectionRequest("1"));
+            StartCoroutine(GetSavedList());
+            StartCoroutine(GetFeaturedArticle());
+            StartCoroutine(GetRandomURL());
+        
         }
 
 
         public IEnumerator GetIntroRequest()
         {   
             pageText.text = "Loading...";
-            Debug.Log(APIintro+encodedName); 
+            //Debug.Log(APIintro+encodedName); 
             using(UnityWebRequest request = UnityWebRequest.Get(APIintro+encodedName))
             {
                 yield return request.SendWebRequest();  
@@ -96,7 +121,7 @@ namespace WebData
         {
             pageText.text = "Loading...";
             string sectionRequest = APIsection+encodedName+"&section="+sectionNum;
-            Debug.Log(sectionRequest);
+            //Debug.Log(sectionRequest);
 
             using(UnityWebRequest request = UnityWebRequest.Get(sectionRequest))
             {
@@ -137,8 +162,7 @@ namespace WebData
 
                 string Content  = request.downloadHandler.text;
                 var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<Base>(Content);                
-                //pageText.text = contentData.parse.sections[0].line;
-
+                
                     foreach(var item in contentData.parse.sections)
                     {
                         ListofContents.Add(item.index, item.line);
@@ -153,7 +177,7 @@ namespace WebData
 
         IEnumerator GetImageURL()
         {   
-            Debug.Log(GetRawImage+encodedName);
+            //Debug.Log(GetRawImage+encodedName);
             using(UnityWebRequest request = UnityWebRequest.Get(GetRawImage+encodedName))
             {
                 yield return request.SendWebRequest();
@@ -167,9 +191,9 @@ namespace WebData
 
                 //string pixel = ImageURL.Split("")[1].Split("")[0]; 
 
-                var HDImageURL = Regex.Replace(ImageURL, @"jpg/([\w-]+)px", "jpg/400px");
+                var HDImageURL = Regex.Replace(ImageURL, @"/([\w-]+)px", "/400px");
 
-                Debug.Log(HDImageURL);
+                //Debug.Log(HDImageURL);
                 StartCoroutine(GetImage(HDImageURL));
 
                 //https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.jpg/37px-Hitler_portrait_crop.jpg
@@ -195,6 +219,27 @@ namespace WebData
             }
         }
 
+        IEnumerator GetSavedList()
+        {   
+            
+            foreach(string page in SO.Saved)
+            {
+                ListofSaved.Add(page);
+            }
+            yield return new WaitForSeconds(1);
+
+            if(ListofSaved.Contains(pageName.text))
+            {
+                AddorRemove.text = "Remove";
+            }
+            else
+            {
+                AddorRemove.text = "Add";
+            }    
+
+            generateSavedButtons();
+        }
+
         public void generateContentButtons()
         {   
             foreach (var contentData in ListofContents)
@@ -207,6 +252,109 @@ namespace WebData
             }
         }
 
+        public void generateSavedButtons()
+        {   
+            
+            foreach (var page in ListofSaved)
+            {
+                GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
+                button.SetActive(true);
+
+                button.GetComponent<SavedListButton>().setText(page);
+                
+            }
+        }
+
+        public void AddorRemoveSave()
+        {
+            if(AddorRemove.text == "Add")
+            {
+                SO.Saved.Add(pageName.text);
+
+                GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
+                button.SetActive(true);
+
+                button.GetComponent<SavedListButton>().setText(pageName.text);
+
+                AddorRemove.text = "Remove";
+                
+
+            }
+            else
+            {
+                SO.Saved.Remove(pageName.text);
+
+                foreach (Transform savebutton in SavedButtonsParent.transform)
+                {
+                    if(savebutton.GetComponentInChildren<TextMeshProUGUI>().text == pageName.text)
+                    {
+                        GameObject.Destroy(savebutton.gameObject);
+                    }
+                }
+                AddorRemove.text = "Add";
+            }
+        
+            //StartCoroutine(GetSavedList());
+            
+        }
+
+        IEnumerator GetFeaturedArticle()
+        {
+            using(UnityWebRequest request = UnityWebRequest.Get(GetFeatured))
+            {
+                yield return request.SendWebRequest();
+                string Content = request.downloadHandler.text;
+
+                var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<FeaturedBase>(Content);
+                featuredText.text = contentData.tfa.displaytitle; 
+            }
+        }
+
+        public void Visit()
+        {
+            StartCoroutine(LoadFeatured());
+        }
+
+        IEnumerator LoadFeatured()
+        {
+            SO.PageName = featuredText.text;
+            Fade.SetTrigger("Start");
+
+            yield return new WaitForSeconds(0.5F);
+
+            SceneManager.LoadScene("WikiPage");
+
+        }
+
+        public void GetRandomPage()
+        {
+            StartCoroutine(LoadRandomPage());
+        }
+
+        IEnumerator GetRandomURL()
+        {
+            using(UnityWebRequest request = UnityWebRequest.Get(GetRandom))
+            {
+                yield return request.SendWebRequest();
+                string Content = request.downloadHandler.text; 
+
+                Debug.Log("about to parse");
+                
+                var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<RandomBase>(Content);
+                randomPageTitle = contentData.query.random[0].title; 
+                Debug.Log("random page = " + randomPageTitle);
+            }
+        }
+
+        IEnumerator LoadRandomPage()
+        {
+            SO.PageName = randomPageTitle;
+            Fade.SetTrigger("Start");
+
+            yield return new WaitForSeconds(0.5F);
+            SceneManager.LoadScene("WikiPage");
+        }
+
         public void parseText(string content)
         {
             string spaces = content.Replace("\n\n", "\n\n ");
@@ -217,14 +365,6 @@ namespace WebData
             pageText.text = noUrlText;
 
         }
-        public void printList()
-        {
-            foreach(var item in ListofContents)
-            {
-                Debug.Log(item.Key+" : "+item.Value);
-            }
-        }
-
 
     }
 }

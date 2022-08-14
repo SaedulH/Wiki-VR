@@ -22,6 +22,8 @@ public class PageOptions : MonoBehaviour
     [SerializeField]
     private StringSO SO;
 
+    public Animator Fade;
+
     public bool backtocatPressed = false;
     public bool menuPressed = false;
     public bool exitPressed = false;
@@ -68,19 +70,40 @@ public class PageOptions : MonoBehaviour
     {
         if(menuPressed)
         {
-            SceneManager.LoadScene("MainMenu");
+            StartCoroutine(Confirmation("menu"));
         }
         else if(exitPressed)
+        {
+            StartCoroutine(Confirmation("exit"));
+        }
+        else if(backtocatPressed)
+        {
+            StartCoroutine(Confirmation("page"));           
+        }
+    }
+
+    IEnumerator Confirmation(string choice)
+    {
+        Fade.SetTrigger("Start");
+
+        yield return new WaitForSeconds(0.5F);
+
+        if(choice == "exit")
         {
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #else
                 Application.Quit();
-            #endif
+            #endif            
         }
-        else if(backtocatPressed)
+        else if(choice == "menu")
         {
-            SceneManager.LoadScene("FDG");
+            SceneManager.LoadScene("MainMenu");
+        }
+        else if(choice == "page")
+        {
+            //SO.PageName = SO.lastPage;
+            SceneManager.LoadScene("WikiPage");
         }
     }
  

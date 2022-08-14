@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -54,5 +55,13 @@ public class StringSO : ScriptableObject
     {
         get { return _Limiter; }
         set { _Limiter = value; }
+    }
+
+    [SerializeField]
+    private List<string> _Saved;
+    public List<string> Saved
+    {
+        get { return _Saved; }
+        set { _Saved = value; }
     }
 }

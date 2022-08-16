@@ -25285,6 +25285,7 @@ MonoBehaviour:
   catNameText: {fileID: 5364135786683689458}
   SO: {fileID: 11400000, guid: deafd82957807634b8f365e6ca831c81, type: 2}
   Fade: {fileID: 0}
+  ConfirmUI: {fileID: 0}
   backtocatPressed: 0
   menuPressed: 0
   exitPressed: 0
@@ -25717,19 +25718,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3566522069671968952, guid: bc89e28de75e43446ae23ef46278c999, type: 3}
       propertyPath: m_Color.a
-      value: 0.6862745
+      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 3566522069671968952, guid: bc89e28de75e43446ae23ef46278c999, type: 3}
       propertyPath: m_Color.b
-      value: 0.103773594
+      value: 0.084905684
       objectReference: {fileID: 0}
     - target: {fileID: 3566522069671968952, guid: bc89e28de75e43446ae23ef46278c999, type: 3}
       propertyPath: m_Color.g
-      value: 0.103773594
+      value: 0.084905684
       objectReference: {fileID: 0}
     - target: {fileID: 3566522069671968952, guid: bc89e28de75e43446ae23ef46278c999, type: 3}
       propertyPath: m_Color.r
-      value: 0.103773594
+      value: 0.084905684
       objectReference: {fileID: 0}
     - target: {fileID: 3566522069834268126, guid: bc89e28de75e43446ae23ef46278c999, type: 3}
       propertyPath: m_Name

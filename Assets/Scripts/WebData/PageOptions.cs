@@ -23,6 +23,7 @@ public class PageOptions : MonoBehaviour
     private StringSO SO;
 
     public Animator Fade;
+    public Animator ConfirmUI;
 
     public bool backtocatPressed = false;
     public bool menuPressed = false;
@@ -57,12 +58,22 @@ public class PageOptions : MonoBehaviour
         catNameText.text = SO.Cat;
     }
 
-    // Update is called once per frame
+    
     public void goBack()
     {   
         menuPressed = false;
         exitPressed = false;
         backtocatPressed =false;
+        StartCoroutine(Back());
+
+    }
+
+    IEnumerator Back()
+    {
+        ConfirmUI.SetTrigger("OptionsOff");
+
+        yield return new WaitForSeconds(0.5F);
+
         optionCanvas.SetActive(false);
     }
     

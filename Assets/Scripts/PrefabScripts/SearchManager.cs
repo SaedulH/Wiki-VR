@@ -12,6 +12,8 @@ namespace Search
     {
         public bool showingPage = false;
 
+        public static SearchManager thissearchManager;
+
         [SerializeField]
         private Button categoriesButton;
         
@@ -31,9 +33,6 @@ namespace Search
         private GameObject SearchCanvas;
 
         [SerializeField]
-        private TextMeshProUGUI confirmationText;
-
-        [SerializeField]
         private TextMeshProUGUI resultText;
 
         [SerializeField]
@@ -42,12 +41,20 @@ namespace Search
         [SerializeField]
         private StringSO SO;
 
+        [SerializeField]
+        private GameObject KeyboardCanvas;
+
         public Animator Toggle;
+
+        public Animator SearchConfirm;
+
+        public Animator Fade;
         void Awake()
         {
+            thissearchManager = this;
             showingPage = false;
             checkSelect();
-            inputField.text = "Databases";
+            //inputField.text = "Databases";
             //searchInput();
             //Debug.Log(showingPage);
         }
@@ -106,35 +113,36 @@ namespace Search
 
         public void searchInput()
         {
-
-            if(!showingPage)
+            if(inputField.text != "")
             {
-            StartCoroutine(searchListControl.SearchCat(inputField.text));    
+
+                if(!showingPage)
+                {
+                StartCoroutine(searchListControl.SearchCat(inputField.text));    
+                }
+                else
+                {
+                StartCoroutine(searchListControl.SearchPage(inputField.text));
+                }
+
+                Debug.Log("search complete"); 
             }
             else
             {
-            StartCoroutine(searchListControl.SearchPage(inputField.text));
-            }
-
-            Debug.Log("search complete");            
+                //do nothing
+            }           
         }   
-
-        public void selectMade()
-        {
-            ConfirmPanel.SetActive(true);
-            if(!showingPage)
-            {
-                confirmationText.text = "Load graph for";   
-            }
-            else
-            {
-                confirmationText.text = "Load page for";
-            }
-            resultText.text = GetComponentInChildren<TextMeshProUGUI>().text;            
-        }
 
         public void backtoSearch()
         {
+            StartCoroutine(backtoSearchCanvas());
+        }
+
+        IEnumerator backtoSearchCanvas()
+        {
+            SearchConfirm.SetTrigger("SearchOff");
+            yield return new WaitForSeconds(0.75F);
+
             ConfirmPanel.SetActive(false);
         }
 
@@ -146,14 +154,22 @@ namespace Search
                 SO.LastCat = SO.Cat;
                 SO.Cat = resultText.text;
                 //load graph for category
-                SceneManager.LoadScene("FDG");
+                StartCoroutine(DoConfirmMade("FDG"));
             }
             else
             {
                 SO.PageName = resultText.text;
                 //load the page
-                SceneManager.LoadScene("WikiPage");
+                StartCoroutine(DoConfirmMade("WikiPage"));
             }
+        }
+
+        IEnumerator DoConfirmMade(string scene)
+        {   
+            Fade.SetTrigger("Start");
+            yield return new WaitForSeconds(1);
+
+            SceneManager.LoadScene(scene);
         }
 
         public void exitCanvas()
@@ -167,9 +183,14 @@ namespace Search
             Toggle.SetTrigger("SearchCanvasOff");
             yield return new WaitForSeconds(1);
 
-            Destroy(SearchCanvas);
+            //Destroy(SearchCanvas);
+            SearchCanvas.SetActive(false);
+        }
+    
+
+        public void KeyboardOn()
+        {
+            KeyboardCanvas.SetActive(true);
         }
     }
-
-
 }

@@ -27,28 +27,122 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI confirmCat;
 
-    public Animator transition;
+    [SerializeField]
+    public GameObject SearchCanvas;
 
-    public void StartGame()
+    public Animator Fade;
+    public Animator StartUI;
+    public Animator SettingsUI;
+    public Animator ConfirmUI;    
+    public Animator ChoicesUI;
+
+    public Animator Toggle;
+
+
+    public Animator CatAnim;
+
+
+    public void StarttoChoices()
     {
+        StartCoroutine(StarttoChoicesMenu());
+    }
+
+    IEnumerator StarttoChoicesMenu()
+    {
+        StartUI.SetTrigger("MenuOff");
+        Categories.SetActive(true);
+
+        yield return new WaitForSeconds(0.33F);
+
+
         Menu.SetActive(false);
         Choices.SetActive(true);
-        Categories.SetActive(true);
+    }
+      
+    
+
+    public void StarttoSettings()
+    {
+        StartCoroutine(StarttoSetingsMenu());
     }
 
-    public void BacktoMenu()
-    {
 
-        Choices.SetActive(false);
-        Categories.SetActive(false);
-        Settings.SetActive(false);             
-        Menu.SetActive(true);   
-    }
-
-    public void toSettings()
+    IEnumerator StarttoSetingsMenu()
     {
+        StartUI.SetTrigger("MenuOff");
+
+        yield return new WaitForSeconds(0.5F);
+        
         Menu.SetActive(false);
         Settings.SetActive(true);
+    }
+    
+
+    public void ChoicestoStart()
+    {
+        StartCoroutine(ChoicestoStartMenu());
+    }
+
+    IEnumerator ChoicestoStartMenu()
+    {
+        ChoicesUI.SetTrigger("ChoicesOff");
+        CatAnim.SetTrigger("CatsOff");
+
+        yield return new WaitForSeconds(0.5F);
+        
+        Categories.SetActive(false);
+        Choices.SetActive(false);
+        Menu.SetActive(true);
+    }
+
+    public void SettingstoStart()
+    {
+        StartCoroutine(SettingstoStartMenu());
+    }
+
+    IEnumerator SettingstoStartMenu()
+    {
+        SettingsUI.SetTrigger("SettingsOff");
+
+        yield return new WaitForSeconds(0.5F);
+
+        Settings.SetActive(false);
+        Menu.SetActive(true);
+    }
+
+    public void ConfirmtoChoices()
+    {
+        StartCoroutine(ConfirmtoChoicesMenu());
+        
+    }
+
+    IEnumerator ConfirmtoChoicesMenu()
+    {
+        ConfirmUI.SetTrigger("ConfirmOff");
+
+        yield return new WaitForSeconds(0.66F);
+
+        Confirm.SetActive(false);
+        Choices.SetActive(true);
+    }
+
+    public void toComfirm()
+    {
+        StartCoroutine(toComfirmMenu());
+    }
+
+    IEnumerator toComfirmMenu()
+    {
+        ChoicesUI.SetTrigger("ChoicesOff");
+
+        yield return new WaitForSeconds(0.33F);
+        Choices.SetActive(false);
+
+        confirmCat.text = catNameSO.Cat;
+        Confirm.SetActive(true);
+
+
+
     }
 
     public void StartTransition()
@@ -58,36 +152,66 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator LoadScene()
     {
-        transition.SetTrigger("Start");
+        Fade.SetTrigger("Start");
 
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene("FDG");
     }
 
-
-    public void ExitGame(){
-        
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+    public void toSearchCanvas()
+    {
+        StartCoroutine(toSearchCanvasMenu());
     }
 
-
-    public void toChoices()
+    IEnumerator toSearchCanvasMenu()
     {
-        Choices.SetActive(true);
-        Confirm.SetActive(false);
-        
-    }
+        ChoicesUI.SetTrigger("ChoicesOff");
 
-        public void OpenfrontPanel()
-    {
+        yield return new WaitForSeconds(1);
+
         Choices.SetActive(false);
-        Confirm.SetActive(true);
-
-        confirmCat.text = catNameSO.Cat+"?";
+        SearchCanvas.SetActive(true);
     }
+
+    public void fromSearchCanvas()
+    {
+        StartCoroutine(fromSearchCanvasMenu());
+    }
+
+    IEnumerator fromSearchCanvasMenu()
+    {
+        Toggle.SetTrigger("SearchCanvasOff");
+
+        yield return new WaitForSeconds(0.5F);
+
+        Choices.SetActive(true);
+        SearchCanvas.SetActive(false);
+    }
+
+    
+
+    public void ExitGame()
+    {
+        StartCoroutine(Exited());
+
+    }
+
+    IEnumerator Exited()
+    {
+        Fade.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+
+    }
+
+
+
+
 }

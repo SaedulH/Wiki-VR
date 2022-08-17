@@ -48,9 +48,11 @@ namespace Search
 
         public Animator SearchConfirm;
 
-        public Animator Fade;
+        private Animator Fade;
+
         void Awake()
         {
+            Fade = GameObject.FindGameObjectWithTag("Fade").GetComponentInChildren<Animator>();
             thissearchManager = this;
             showingPage = false;
             checkSelect();

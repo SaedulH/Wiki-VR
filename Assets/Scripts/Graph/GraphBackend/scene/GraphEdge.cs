@@ -46,7 +46,7 @@ namespace Graph
                 // LineRenderer.startWidth = 1f;
                 // LineRenderer.endWidth = 0.5f;
                 //GetComponent<Renderer>().material.color = Color.green
-                //GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
+                //GetComponent<Renderer>().material.SetColor ("_Color", Color.green);
                 GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
 
             }
@@ -55,7 +55,7 @@ namespace Graph
                 // LineRenderer.startWidth = 0.5f;
                 // LineRenderer.endWidth = 0.25f;
                 //GetComponent<Renderer>().material.color = Color.blue;
-                //GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
+                //GetComponent<Renderer>().material.SetColor ("_Color", Color.magenta);
                 GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
             }
         }

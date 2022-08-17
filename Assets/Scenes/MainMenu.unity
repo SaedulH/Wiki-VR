@@ -661,7 +661,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034082
+  m_Name: pb_Mesh-241366
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1647,7 +1647,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034030
+  m_Name: pb_Mesh-241324
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1946,7 +1946,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034252
+  m_Name: pb_Mesh-241536
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2645,7 +2645,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034130
+  m_Name: pb_Mesh-241414
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3090,13 +3090,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3269,13 +3269,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4918,7 +4918,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034308
+  m_Name: pb_Mesh-241592
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5082,7 +5082,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh207156
+  m_Name: pb_Mesh49892
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5246,7 +5246,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh206572
+  m_Name: pb_Mesh49328
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5725,7 +5725,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034094
+  m_Name: pb_Mesh-241378
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6226,7 +6226,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034294
+  m_Name: pb_Mesh-241578
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6517,7 +6517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &683114944
 Transform:
   m_ObjectHideFlags: 0
@@ -7438,7 +7438,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034266
+  m_Name: pb_Mesh-241550
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7904,7 +7904,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034062
+  m_Name: pb_Mesh-241346
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9026,7 +9026,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034118
+  m_Name: pb_Mesh-241402
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9533,13 +9533,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9970,6 +9970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 646600961224109980, guid: 6cfafa38f5abf5b418bdee30ab75aff5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cfafa38f5abf5b418bdee30ab75aff5, type: 3}
 --- !u!4 &1154638462 stripped
@@ -10050,7 +10054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1195189706
 Transform:
   m_ObjectHideFlags: 0
@@ -10953,13 +10957,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11132,13 +11136,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11371,7 +11375,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034322
+  m_Name: pb_Mesh-241606
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11669,13 +11673,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12437,13 +12441,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12788,7 +12792,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034072
+  m_Name: pb_Mesh-241356
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13474,7 +13478,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034016
+  m_Name: pb_Mesh-241310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13959,13 +13963,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14085,7 +14089,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034054
+  m_Name: pb_Mesh-241338
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14564,6 +14568,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 646600961224109980, guid: 36f2684c5ea51a74d910fa5bcd151e58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36f2684c5ea51a74d910fa5bcd151e58, type: 3}
 --- !u!4 &1821821026 stripped
@@ -14823,7 +14831,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034280
+  m_Name: pb_Mesh-241564
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15352,13 +15360,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 565213526}
-        m_TargetAssemblyTypeName: MenuCatSelector, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 565213527}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: toConfirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15397,7 +15405,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034140
+  m_Name: pb_Mesh-241424
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15684,6 +15692,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1067594622782738317, guid: 2e177e56aa9c40f45a0f0296e5eed1c2, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 963194227}
     - target: {fileID: 1319993356797663113, guid: 2e177e56aa9c40f45a0f0296e5eed1c2, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -15707,6 +15719,10 @@ PrefabInstance:
     - target: {fileID: 3753029408633534177, guid: 2e177e56aa9c40f45a0f0296e5eed1c2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5245852815096810093, guid: 2e177e56aa9c40f45a0f0296e5eed1c2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7379701725328353200, guid: 2e177e56aa9c40f45a0f0296e5eed1c2, type: 3}
       propertyPath: Fade
@@ -16628,7 +16644,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1034106
+  m_Name: pb_Mesh-241390
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17038,7 +17054,11 @@ PrefabInstance:
     - target: {fileID: 4580864076079630863, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
       propertyPath: m_Deactivated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 565213526}
+      objectReference: {fileID: 565213527}
+    - target: {fileID: 4580864076079630863, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
+      propertyPath: m_Deactivated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: toConfirm
+      objectReference: {fileID: 0}
     - target: {fileID: 4580864076079630863, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
       propertyPath: m_LastHoverExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -17047,6 +17067,14 @@ PrefabInstance:
       propertyPath: m_FirstHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 967197702}
+    - target: {fileID: 4580864076079630863, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
+      propertyPath: m_Deactivated.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580864076079630863, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
+      propertyPath: m_Deactivated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0901281765cfb3a47b2f2e997e02dcc3, type: 3}
 --- !u!1001 &5602060127072328787

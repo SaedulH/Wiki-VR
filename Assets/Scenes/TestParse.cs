@@ -67,26 +67,26 @@ namespace ConsoleTestApplication1
             Debug.Log(ast.ToPlainText());
             
             
-            // // Convert the code snippets to nodes
-            // var dateName = parser.Parse("date");
-            // var dateValue = parser.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
-            // Console.WriteLine("Issues:");
-            // // Search and set
-            // foreach (var t in ast.EnumDescendants().OfType<Template>()
-            //     .Where(t => templateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name))))
-            // {
-            //     // Get the argument by name.
-            //     var date = t.Arguments["date"];
-            //     if (date != null)
-            //     {
-            //         // To print the wikitext instead of user-friendly text, use ToString()
-            //         Console.WriteLine("{0} ({1})", t.Name.ToPlainText(), date.Value.ToPlainText());
-            //     }
-            //     // Update/Add the argument
-            //     t.Arguments.SetValue(dateName, dateValue);
-            // }
-            // Console.WriteLine();
-            // Console.WriteLine("Wikitext:");
+            // Convert the code snippets to nodes
+            var dateName = parser.Parse("date");
+            var dateValue = parser.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
+            Console.WriteLine("Issues:");
+            // Search and set
+            foreach (var t in ast.EnumDescendants().OfType<Template>()
+                .Where(t => templateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name))))
+            {
+                // Get the argument by name.
+                var date = t.Arguments["date"];
+                if (date != null)
+                {
+                    // To print the wikitext instead of user-friendly text, use ToString()
+                    Console.WriteLine("{0} ({1})", t.Name.ToPlainText(), date.Value.ToPlainText());
+                }
+                // Update/Add the argument
+                t.Arguments.SetValue(dateName, dateValue);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Wikitext:");
             
         }
 

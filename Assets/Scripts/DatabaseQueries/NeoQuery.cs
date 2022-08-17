@@ -191,7 +191,7 @@ public class NeoQuery : MonoBehaviour
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 
-        @"MATCH (c:Category) WHERE c.catName STARTS WITH '"+SearchValue+"' Return c.catName AS s LIMIT 5";
+        @"MATCH (c:Category) WHERE c.catName STARTS WITH '"+SearchValue+"' Return c.catName AS s LIMIT 20";
         
         try 
         {
@@ -226,7 +226,7 @@ public class NeoQuery : MonoBehaviour
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 
-        @"MATCH (p:Page) WHERE p.pageTitle STARTS WITH '"+SearchValue+"' Return p.pageTitle AS s LIMIT 5";
+        @"MATCH (p:Page) WHERE p.pageTitle STARTS WITH '"+SearchValue+"' Return p.pageTitle AS s LIMIT 20";
         
         try 
         {

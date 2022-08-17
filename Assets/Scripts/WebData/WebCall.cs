@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
-using MwParserFromScratch;
 using System.Text.RegularExpressions;
 
 namespace WebData
@@ -47,7 +46,14 @@ namespace WebData
         private RawImage InfoboxImage;
 
         [SerializeField]
+        private GameObject ImageCanvas;
+
+        [SerializeField]
+        private TextMeshProUGUI ImageCaption;
+        [SerializeField]
         private TextMeshProUGUI featuredText;
+
+
         
         [SerializeField]
         private StringSO SO;
@@ -70,7 +76,7 @@ namespace WebData
 
         private string GetRawImage = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages&titles=";
 
-        private string GetFeatured = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/2022/08/14";
+        private string GetFeatured = "https://api.wikimedia.org/feed/v1/wikipedia/en/featured/";
 
         private string GetRandom = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1";
 
@@ -110,7 +116,7 @@ namespace WebData
                 // var parser = new WikitextParser();
                 // var ast = parser.Parse(pageData.query.pages[firstKey].extract);
                 // pageText.text =  ast.Lines.ToString();
-                pageText.text = pageData.query.pages[firstKey].extract;
+                pageText.text = pageData.query.pages[firstKey].extract.Replace("\n", "\n\n");
                 
                 
             }
@@ -130,25 +136,10 @@ namespace WebData
                 string Content = request.downloadHandler.text;
                 var pageData = Newtonsoft.Json.JsonConvert.DeserializeObject<SectionBase>(Content);
 
-                var parser = new WikitextParser();
+                WebData.PageParser pageParser = new PageParser();
 
-                var ast = parser.Parse(pageData.parse.wikitext.ToString());
-                
-
-                //parseText(ast.ToPlainText());
-                //pageText.text =  ast.ToPlainText();                
-                //parsetester.text = ast.ToPlainText();
-                //normaltester.text = ast.ToString();
+                pageText.text = pageParser.parseText(pageData.parse.wikitext.ToString());
                 //pageText.text = pageData.parse.wikitext.ToString();
-                //pageText.text  = request.downloadHandler.text;
-                    string content = ast.ToPlainText();
-                    //string ready = Regex.Replace(content, @'/"*":, "=="/', "");
-                    string spaces = Regex.Replace(content, @"\n\n", "\n\n ");
-                    string nosquarecontent = spaces.Replace("[[", "").Replace("]]", "").Replace("[", "").Replace("]", "");
-                    string nocurlycontent = Regex.Replace(nosquarecontent, @"/{([^}]*)}/g", "");
-                    string noUrlText = Regex.Replace(nocurlycontent, @"http[^\s]+", "");
-                        pageText.text = noUrlText;
-
 
             }
             Debug.Log("got section");
@@ -177,7 +168,7 @@ namespace WebData
 
         IEnumerator GetImageURL()
         {   
-            //Debug.Log(GetRawImage+encodedName);
+            Debug.Log(GetRawImage+encodedName);
             using(UnityWebRequest request = UnityWebRequest.Get(GetRawImage+encodedName))
             {
                 yield return request.SendWebRequest();
@@ -187,14 +178,20 @@ namespace WebData
 
                 var firstKey = imageData.query.pages.First().Key;
 
-                var ImageURL = imageData.query.pages[firstKey].thumbnail.source;
+                if(imageData.query.pages[firstKey].thumbnail.source == null)
+                {
+                    ImageCaption.text = "No Image Available";
+                    ImageCanvas.SetActive(false);
+                }
+                else
+                {
+                    var ImageURL = imageData.query.pages[firstKey].thumbnail.source;
 
-                //string pixel = ImageURL.Split("")[1].Split("")[0]; 
+                    var HDImageURL = Regex.Replace(ImageURL, @"/([\w-]+)px", "/400px");
 
-                var HDImageURL = Regex.Replace(ImageURL, @"/([\w-]+)px", "/400px");
-
-                //Debug.Log(HDImageURL);
-                StartCoroutine(GetImage(HDImageURL));
+                    //Debug.Log(HDImageURL);
+                    StartCoroutine(GetImage(HDImageURL));
+                }
 
                 //https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.jpg/37px-Hitler_portrait_crop.jpg
                 //https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.400-Hitler_portrait_crop.jpg
@@ -269,7 +266,7 @@ namespace WebData
         {
             if(AddorRemove.text == "Add")
             {
-                SO.Saved.Add(pageName.text);
+                SO.AddtoSaved(pageName.text);
 
                 GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
                 button.SetActive(true);
@@ -282,7 +279,7 @@ namespace WebData
             }
             else
             {
-                SO.Saved.Remove(pageName.text);
+                SO.RemovefromSaved(pageName.text);
 
                 foreach (Transform savebutton in SavedButtonsParent.transform)
                 {
@@ -300,7 +297,7 @@ namespace WebData
 
         IEnumerator GetFeaturedArticle()
         {
-            using(UnityWebRequest request = UnityWebRequest.Get(GetFeatured))
+            using(UnityWebRequest request = UnityWebRequest.Get(GetFeatured + System.DateTime.Now.ToString("yyyy/MM/dd")))
             {
                 yield return request.SendWebRequest();
                 string Content = request.downloadHandler.text;

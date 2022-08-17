@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ExitDoor : MonoBehaviour
 {
@@ -12,7 +13,16 @@ public class ExitDoor : MonoBehaviour
     [SerializeField]
     private Material blueGlassHovered;
 
+    [SerializeField]
+    private TextMeshProUGUI catName;
+
+    public StringSO SO;
     public Animator Fade;
+
+    void Start()
+    {
+        catName.text = SO.Cat;
+    }
 
     public void OnHover()
     {
@@ -26,6 +36,7 @@ public class ExitDoor : MonoBehaviour
 
     public void Exited()
     {
+        Debug.Log("exiting");
         StartCoroutine(exitPressed());
     }
 
@@ -33,7 +44,7 @@ public class ExitDoor : MonoBehaviour
     IEnumerator exitPressed()
     {
         Fade.SetTrigger("Start");
-        
+            
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene("FDG");

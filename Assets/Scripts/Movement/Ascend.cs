@@ -9,8 +9,7 @@ public class Ascend : MonoBehaviour
     [SerializeField]
     private InputActionReference AscendReference;
 
-    [SerializeField]
-    private float AscendForce = 75F;
+    public float AscendForce = 75F;
     
     [SerializeField]
     private Rigidbody _Abody;

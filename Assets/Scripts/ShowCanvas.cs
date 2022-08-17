@@ -29,7 +29,7 @@ public class ShowCanvas : MonoBehaviour
 
     void Awake()
     {
-        Fade = GameObject.FindGameObjectWithTag("PageCrossfade").GetComponent<Animator>();
+        Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
     }
 
     public void loadnewCat()

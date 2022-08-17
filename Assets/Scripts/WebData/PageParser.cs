@@ -2,18 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MwParserFromScratch;
 using System.Text.RegularExpressions;
+using TMPro;
 
-public class PageParser : MonoBehaviour
+namespace WebData
 {
-    // Start is called before the first frame update
 
-    public void parseText(string content)
-    {
-        string spaces = content.Replace("\n\n", "\n\nflubby");
-        string nosquarecontent = spaces.Replace("[[", "").Replace("]]", "").Replace("[", "").Replace("]", "");
-        string nocurlycontent = Regex.Replace(nosquarecontent, @"/{([^}]*)}/g", "");
-        string noUrlText = Regex.Replace(nocurlycontent, @"http[^\s]+", "");
+    public class PageParser : MonoBehaviour
+    {   
+
+        [SerializeField]
+        private TextMeshProUGUI Old;
+        [SerializeField]
+        private TextMeshProUGUI New;
+
+        public string parseText(string content)
+        {   
+            Regex regexcurly = new Regex("{{[^}]+}}");
+
+            Regex regexfile = new Regex("File[^\\n]+\\n");
+
+            var parser = new WikitextParser();
+
+            var ast = parser.Parse(content);
+
+            content = ast.ToPlainText();
+
+            content = content.Substring(content.IndexOf("==\\n")).Replace("==\\n", "");
+
+            content = content.Replace("\\n","\n");
+
+            content = regexcurly.Replace(content, "");
+
+            content = content.Replace("{", "").Replace("}", "").Replace("\"", "").Replace("\\","\"");
+
+            content = content.Replace("[[", "").Replace("]]", "").Replace("[", "").Replace("]", "");
+
+            content = Regex.Replace(content, @"http[^\s]+", "");
+
+            content = regexfile.Replace(content, "");
+
+            return content;
+
+        }
+
     }
-
 }

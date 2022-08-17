@@ -126,7 +126,7 @@ public class MenuManager : MonoBehaviour
         Choices.SetActive(true);
     }
 
-    public void toComfirm()
+    public void toConfirm()
     {
         StartCoroutine(toComfirmMenu());
     }

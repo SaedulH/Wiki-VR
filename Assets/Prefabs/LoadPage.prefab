@@ -898,7 +898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 0.88235295}
+  m_Color: {r: 0.12156863, g: 0.12156863, b: 0.12156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1114,6 +1114,7 @@ MonoBehaviour:
   SO: {fileID: 11400000, guid: deafd82957807634b8f365e6ca831c81, type: 2}
   uIcheckerSO: {fileID: 11400000, guid: e078a30526842dc4da4929b64cfa0430, type: 2}
   Toggle: {fileID: 7050112522561422269}
+  Fade: {fileID: 0}
 --- !u!95 &7050112522561422269
 Animator:
   serializedVersion: 4

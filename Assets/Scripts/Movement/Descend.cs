@@ -9,8 +9,7 @@ public class Descend : MonoBehaviour
     [SerializeField]
     private InputActionReference DescendReference;
 
-    [SerializeField]
-    private float DescendForce = 75F;
+    public float DescendForce = 75F;
     
     [SerializeField]
     private Rigidbody _Dbody;

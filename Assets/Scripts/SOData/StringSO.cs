@@ -64,4 +64,16 @@ public class StringSO : ScriptableObject
         get { return _Saved; }
         set { _Saved = value; }
     }
+
+    [SerializeField]
+    public void AddtoSaved(string page)
+    {
+        Saved.Add(page);
+    }
+
+    [SerializeField]
+    public void RemovefromSaved(string page)
+    {
+        Saved.Remove(page);
+    }
 }

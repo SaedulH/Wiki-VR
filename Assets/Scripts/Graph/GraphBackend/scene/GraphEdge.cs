@@ -32,7 +32,7 @@ namespace Graph
             _Edge = edge;
             _FirstNode = firstNode;
             _SecondNode = secondNode;
-
+            
             
             // Set width
             //float width = 0.08f + 0.02f; // [0.02 -> 0.1]
@@ -41,22 +41,23 @@ namespace Graph
             sourceRb = firstNode.GetComponent<Rigidbody>();
             targetRb = secondNode.GetComponent<Rigidbody>();
 
+            //GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color32(128,128,128,255));
+
             if(edge.Type == "SUBCAT_OF")
             {
-                // LineRenderer.startWidth = 1f;
-                // LineRenderer.endWidth = 0.5f;
-                //GetComponent<Renderer>().material.color = Color.green
+                GetComponent<Renderer>().material.color = new Color(0.47F,0,0,1);
                 //GetComponent<Renderer>().material.SetColor ("_Color", Color.green);
-                GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.green);
 
+                GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0,0,0,1));
+                //GetComponent<Renderer>().material.SetColor ("_Color", new Color32(110,0,0,255));
             }
             else if(edge.Type == "IN_CATEGORY")
             {
-                // LineRenderer.startWidth = 0.5f;
-                // LineRenderer.endWidth = 0.25f;
-                //GetComponent<Renderer>().material.color = Color.blue;
+                GetComponent<Renderer>().material.color = new Color(0.47F,0.47F,0,1);
                 //GetComponent<Renderer>().material.SetColor ("_Color", Color.magenta);
-                GetComponent<Renderer>().material.SetColor ("_EmissionColor", Color.magenta);
+
+                GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0,0,0,1));
+                //GetComponent<Renderer>().material.SetColor ("_Color", new Color32(110,110,0,255));                
             }
         }
 

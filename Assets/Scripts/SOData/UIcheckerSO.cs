@@ -5,4 +5,5 @@ using UnityEngine;
 public class UIcheckerSO : ScriptableObject
 {
     public bool showingUI = false;
+
 }

@@ -5,13 +5,11 @@ using TMPro;
 
 public class FollowPlayer : MonoBehaviour
 {
-    Camera mCamera;
-
     private GameObject player;
 
     [SerializeField]
     private TextMeshProUGUI nodeText;
-    public float Range = 200f;
+    public float Range = 300f;
 
     // Start is called before the first frame update
     void Start()

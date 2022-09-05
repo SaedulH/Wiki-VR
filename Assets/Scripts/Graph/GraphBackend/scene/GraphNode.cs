@@ -167,6 +167,7 @@ namespace Graph
             GameObject ConfirmCanvas = Instantiate(LoadCat, new Vector3(0, 0, 0), Quaternion.identity);
             var categoryname = ConfirmCanvas.transform.Find("BorderGroup").Find("CanvasGroup").Find("catName");
             categoryname.GetComponent<TextMeshProUGUI>().text = Node.Title;
+            ConfirmCanvas.GetComponent<ShowCanvas>().EnterNode = gameObject.GetComponent<Animator>();
 
             ConfirmCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.25f;
             ConfirmCanvas.transform.rotation = Camera.main.transform.rotation;
@@ -179,6 +180,7 @@ namespace Graph
             GameObject ConfirmCanvas = Instantiate(LoadPage, new Vector3(0, 0, 0), Quaternion.identity);
             var pagename = ConfirmCanvas.transform.Find("BorderGroup").Find("CanvasGroup").Find("PageName");
             pagename.GetComponent<TextMeshProUGUI>().text = SO.PageName;
+            ConfirmCanvas.GetComponent<ShowCanvas>().EnterNode = gameObject.GetComponent<Animator>();
 
             ConfirmCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.25f;
             ConfirmCanvas.transform.rotation = Camera.main.transform.rotation;

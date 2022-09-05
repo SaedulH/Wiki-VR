@@ -40,9 +40,6 @@ namespace WebData
         private TextMeshProUGUI pageName;
 
         [SerializeField]
-        private TextMeshProUGUI parsetester;
-
-        [SerializeField]
         private RawImage InfoboxImage;
 
         [SerializeField]
@@ -80,7 +77,7 @@ namespace WebData
 
         private string GetRandom = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1";
 
-        //string experi = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&disabletoc=1&titles=Racism%20in%20Israel&section=2";
+        private string GetInfoBox = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=jsonfm&rvsection=0&titles=";
 
         // Start is called before the first frame update
         private void Start()
@@ -123,10 +120,10 @@ namespace WebData
             Debug.Log("got intro");
         }
 
-        public IEnumerator GetSectionRequest(string sectionNum)
+        public IEnumerator GetSectionRequest(int sectionNum)
         {
             pageText.text = "Loading...";
-            string sectionRequest = APIsection+encodedName+"&section="+sectionNum;
+            string sectionRequest = APIsection+encodedName+"&section="+sectionNum.ToString();
             //Debug.Log(sectionRequest);
 
             using(UnityWebRequest request = UnityWebRequest.Get(sectionRequest))
@@ -152,11 +149,11 @@ namespace WebData
                 yield return request.SendWebRequest();  
 
                 string Content  = request.downloadHandler.text;
-                var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<Base>(Content);                
+                var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<ContentBase>(Content);                
                 
                     foreach(var item in contentData.parse.sections)
                     {
-                        ListofContents.Add(item.index, item.line);
+                        ListofContents.Add(item.index, item.number + ": " + item.line);
                     }
 
             }
@@ -244,9 +241,10 @@ namespace WebData
                 GameObject button = Instantiate(buttonTemplate, ButtonsParent.transform) as GameObject;
                 button.SetActive(true);
 
-                button.GetComponent<ContentListButton>().setText(contentData.Key + ":" + contentData.Value);
+                button.GetComponent<ContentListButton>().setText(contentData.Value);
                 
             }
+            Selectedfromlist("Brief Description");
         }
 
         public void generateSavedButtons()
@@ -352,16 +350,23 @@ namespace WebData
             SceneManager.LoadScene("WikiPage");
         }
 
-        public void parseText(string content)
+        public void Selectedfromlist(string Value)
         {
-            string spaces = content.Replace("\n\n", "\n\n ");
-            string nosquarecontent = spaces.Replace("[[", "").Replace("]]", "").Replace("[", "").Replace("]", "");
-            string nocurlycontent = Regex.Replace(nosquarecontent, @"/{([^}]*)}/g", "");
-            string noUrlText = Regex.Replace(nocurlycontent, @"http[^\s]+", "");
-
-            pageText.text = noUrlText;
-
+            foreach(Transform button in ButtonsParent.transform)
+            {
+                if(button.GetComponentInChildren<TextMeshProUGUI>().text == Value)
+                {
+                    button.GetComponent<Image>().color = new Color32(0,63,147,255);
+                    button.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(180,180,180,255);
+                }
+                else
+                {
+                    button.GetComponent<Image>().color = new Color32(185,185,185,255);
+                    button.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(50,50,50,255);
+                }
+            }
         }
+
 
     }
 }

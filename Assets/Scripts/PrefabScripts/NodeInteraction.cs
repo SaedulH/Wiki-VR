@@ -8,72 +8,13 @@ using Graph;
 
 public class NodeInteraction : MonoBehaviour
 {
-
-    [SerializeField]
-    private Material PageMaterial;
-
-    [SerializeField]
-    private Material CatMaterial; 
-
-    [SerializeField]
-    private Material PageSelectedMaterial;
-
-    [SerializeField]
-    private Material CatSelectedMaterial; 
-
-    [SerializeField]
-    private GraphNode graphNode;
-
     public Animator Hover;
+
+    private float ConnectionCounter = 0;
     
     void start()
     {
-        graphNode = gameObject.GetComponent<GraphNode>();
-    }
 
-    public void enlargeNode()
-    {
-        transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
-    }
-
-        public void enlargeMenuNode()
-    {
-        transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
-    }
-
-    public void normalsizeNode()
-    {
-        transform.localScale = new Vector3(2f, 2f, 2f);
-    }
-
-        public void normalMenuNode()
-    {
-        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-    }
-
-    public void brightNode()
-    {   
-        if(GraphNode.thisNode.Node.Label == ("Category"))
-        {
-            GetComponent<MeshRenderer>().material = PageSelectedMaterial;
-        }
-        else
-        {
-            GetComponent<MeshRenderer>().material = CatSelectedMaterial;
-        }        
-    }
-
-    public void dimNode()
-    {
-        if(GraphNode.thisNode.Node.Label == ("Category"))
-        {
-            GetComponentInChildren<MeshRenderer>().material = PageMaterial;
-        }   
-        else
-        {
-            GetComponentInChildren<MeshRenderer>().material = CatMaterial;
-        }
-        
     }
 
     public void OnHover()
@@ -85,4 +26,67 @@ public class NodeInteraction : MonoBehaviour
     {
         Hover.SetBool("IsHovering", false);
     }
+
+    public void NodeSelected()
+    {   
+        Debug.Log("Nodeselected");
+
+        GraphNode graphNode = gameObject.GetComponent<GraphNode>();
+        GraphRenderer graphComponents = GameObject.FindGameObjectWithTag("Graph").GetComponent<GraphRenderer>();
+        foreach(GraphEdge edges in graphComponents.GraphEdges)
+        {
+            if(graphNode.Node.Id == edges.FirstNode.Node.Id || graphNode.Node.Id == edges.SecondNode.Node.Id)
+            {
+                
+                if(edges.edge.Type == "SUBCAT_OF")
+                {
+                    edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(1,0,0,1));
+                    edges.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(1,0,0,1) * 2F);
+
+                }
+                else if(edges.edge.Type == "IN_CATEGORY")
+                {
+                    edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(0.78F,1,0,1));
+                    edges.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0.78F,1,0,1) * 2F);
+                
+                }
+                ConnectionCounter +=1;
+            }
+            
+        }
+        Debug.Log("This node has " + ConnectionCounter + " links");
+    }
+
+    public void NodeDeselected()
+    {
+        StartCoroutine(DoNodeDeselected());
+    }
+    
+    public IEnumerator DoNodeDeselected()
+    {   
+        yield return new WaitForSeconds(1);
+
+        ConnectionCounter = 0;
+        GraphNode graphNode = gameObject.GetComponent<GraphNode>();
+        GraphRenderer graphComponents = GameObject.FindGameObjectWithTag("Graph").GetComponent<GraphRenderer>();
+        foreach(GraphEdge edges in graphComponents.GraphEdges)
+        {
+            if(graphNode.Node.Id == edges.FirstNode.Node.Id || graphNode.Node.Id == edges.SecondNode.Node.Id)
+            {
+                if(edges.edge.Type == "SUBCAT_OF")
+                {
+                    edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(0.47F,0,0,1));
+                    edges.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0,0,0,1));
+
+                }
+                else if(edges.edge.Type == "IN_CATEGORY")
+                {
+                    edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(0.47F,0.47F,0,1));
+                    edges.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0,0,0,1));
+                }
+            }
+        }
+        
+    }
+
 }

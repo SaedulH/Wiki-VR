@@ -10,6 +10,13 @@ public class WristMenuFunctions : MonoBehaviour
     public bool _Exitpressed = false;
     public bool _Menupressed = false;
     public bool _Catpressed = false;
+    public bool MinGraph;
+
+    public Vector3 MyPosition;
+
+    [SerializeField]
+    [Tooltip("References the parent holding all nodes.")]
+    private GameObject NodesParent;
 
     [SerializeField]
     public GameObject firstScreen;
@@ -34,6 +41,17 @@ public class WristMenuFunctions : MonoBehaviour
     [SerializeField]
     private UIcheckerSO uIcheckerSO;
 
+    [SerializeField]
+    private GameObject Graph; 
+
+    [SerializeField]
+    private GameObject Max;
+
+    [SerializeField]
+    private GameObject Min;    
+
+    [SerializeField]
+    private GameObject PlayerIcon;
 
     [SerializeField]
     [Tooltip("prefab used for the search canvas.")]
@@ -43,6 +61,9 @@ public class WristMenuFunctions : MonoBehaviour
 
     public Animator Toggle;
 
+    public Animator GraphAnim;
+
+
     void Start()
     {
         rootcatname.text = SO.Cat;
@@ -51,17 +72,19 @@ public class WristMenuFunctions : MonoBehaviour
     public void Exitgamepressed()
     {
         _Exitpressed = true;
-        firstScreen.SetActive(false);
-        secondScreen.SetActive(true);
+        // firstScreen.SetActive(false);
+        // secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to exit game?";
+        Toggle.SetBool("FirstScreen", false);
     }
     
     public void Backtomenupressed()
     {
         _Menupressed = true;
-        firstScreen.SetActive(false);
-        secondScreen.SetActive(true);
+        // firstScreen.SetActive(false);
+        // secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to return to menu?";
+        Toggle.SetBool("FirstScreen", false);
     }
 
     public void Categorypressed()
@@ -73,10 +96,11 @@ public class WristMenuFunctions : MonoBehaviour
         else
         {
         _Catpressed = true;
-        firstScreen.SetActive(false);
-        secondScreen.SetActive(true);
+        // firstScreen.SetActive(false);
+        // secondScreen.SetActive(true);
         ExitorMenu.text = "Load graph for";
-        catname.text = SO.LastCat;            
+        catname.text = SO.LastCat;  
+        Toggle.SetBool("FirstScreen", false);        
         }
 
     }
@@ -154,8 +178,9 @@ public class WristMenuFunctions : MonoBehaviour
         _Catpressed = false;
         _Exitpressed = false;
         _Menupressed = false;
-        secondScreen.SetActive(false);
-        firstScreen.SetActive(true);
+        // secondScreen.SetActive(false);
+        // firstScreen.SetActive(true);
+        Toggle.SetBool("FirstScreen", true);
     }
 
     public void showSearch()
@@ -166,6 +191,77 @@ public class WristMenuFunctions : MonoBehaviour
         searchCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.5f;
         searchCanvas.transform.rotation = Camera.main.transform.rotation;
         Debug.Log("showing search canvas");
-    }    
+    } 
+
+    public void ExpandPressed()
+    {
+        if(!MinGraph)
+        {
+            MinimizeGraph();
+            MyPosition = GameObject.Find("XR Origin").transform.position;
+
+
+            GameObject playerIcon = Instantiate(PlayerIcon, NodesParent.transform);
+            playerIcon.transform.position = MyPosition;
+            playerIcon.transform.name = "PlayerIcon";
+            
+            Debug.Log("Old Position = "+ MyPosition);
+            GameObject.Find("XR Origin").transform.position = new Vector3(0,0,-80);
+
+            GraphAnim.SetBool("MinGraph", true);
+            MinGraph = true;
+        }
+        else
+        {
+            MaximizeGraph();
+            Destroy(NodesParent.transform.Find("PlayerIcon").gameObject);
+
+            GameObject.Find("XR Origin").transform.position = MyPosition;
+
+            GraphAnim.SetBool("MinGraph", false);
+            MinGraph = false;
+        }
+    }
+
+    public void MinimizeGraph()
+    {
+        uIcheckerSO.showingUI = true;
+        Min.SetActive(false);
+        Max.SetActive(true);
+        // Graph.transform.Find("NodesParent").localScale = new Vector3(0.07F,0.07F,0.07F);
+
+        foreach(Transform node in Graph.transform.Find("NodesParent").transform)
+        {
+            var MinScale = new Vector3(node.localScale.x * 1.5F, node.localScale.y * 1.5F, node.localScale.z * 1.5F);
+            node.localScale = MinScale;
+        }
+        
+        foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
+        {
+            var MinScale = new Vector3(0.35F, 0.35F, edge.localScale.z);
+            edge.localScale = MinScale;
+        }
+    }   
+
+    public void MaximizeGraph()
+    {
+        uIcheckerSO.showingUI = false;
+        Max.SetActive(false);
+        Min.SetActive(true);
+        // Graph.transform.Find("NodesParent").localScale = new Vector3(1F,1F,1F);
+    
+        foreach(Transform node in Graph.transform.Find("NodesParent").transform)
+        {
+            var MinScale = new Vector3(node.localScale.x * 0.75F, node.localScale.y * 0.75F, node.localScale.z * 0.75F);
+            node.localScale = MinScale;
+        }
+
+        foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
+        {
+            var MaxScale = new Vector3(0.65F, 0.65F, edge.localScale.z);
+            edge.localScale = MaxScale;
+        }
+
+    }
 
 }

@@ -43,7 +43,7 @@ public class StringSO : ScriptableObject
 
     [SerializeField]
     private int _Num;
-    public int Num
+    public int initialNum
     {
         get { return _Num; }
         set { _Num = value; }
@@ -76,4 +76,21 @@ public class StringSO : ScriptableObject
     {
         Saved.Remove(page);
     }
+
+    [SerializeField]
+    private bool _Snapturn;
+    public bool Snapturn
+    {
+        get { return _Snapturn; }
+        set { _Snapturn = value; }
+    }
+
+    [SerializeField]
+    private float _Volume;
+    public float Volume
+    {
+        get { return _Volume; }
+        set { _Volume = value; }
+    }  
+
 }

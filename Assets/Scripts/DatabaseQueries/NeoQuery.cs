@@ -37,15 +37,10 @@ public class NeoQuery : MonoBehaviour
     {
         if(isRendered)
         {
-            //Debug.Log("Doing iterations");
+            
             graphLayout.DoIterations();
-        //graphLayout.DoIterations(1);
-            //graphLayout.ApplyForce();
+
         }
-        // if(graphReady)
-        // {
-        //     showScreen();
-        // }
     }
 
     IEnumerator GraphDatafirst()
@@ -59,7 +54,7 @@ public class NeoQuery : MonoBehaviour
         
         //waits for 1 second.
         yield return new WaitForSeconds(1);
-        graphRenderer.Initialize(network, SO.Num);
+        graphRenderer.Initialize(network, SO.initialNum);
 
         graphLayout.InitializeForces();
         isRendered = true;
@@ -141,11 +136,11 @@ public class NeoQuery : MonoBehaviour
                     if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
                     {
                         //do nothing
-                        Debug.Log("Did not add: "+ nodey.Title);
+                        //Debug.Log("Did not add: "+ nodey.Title);
                     }
                     else
                     {   
-                        Debug.Log("Added: " + nodey.Title);
+                        //Debug.Log("Added: " + nodey.Title);
                         graph.nodes1.Add(nodey);
                     }
                         
@@ -157,11 +152,11 @@ public class NeoQuery : MonoBehaviour
                     if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
                     {
                         //do nothing
-                        Debug.Log("Did not add: "+ nodey.Title);
+                        //Debug.Log("Did not add: "+ nodey.Title);
                     }
                     else
                     {
-                        Debug.Log("Added: " + nodey.Title); 
+                        //Debug.Log("Added: " + nodey.Title); 
                         graph.nodes1.Add(nodey);
                     }
                 }
@@ -254,5 +249,7 @@ public class NeoQuery : MonoBehaviour
         } 
             await driver.CloseAsync(); 
     }
+
+
 }
  

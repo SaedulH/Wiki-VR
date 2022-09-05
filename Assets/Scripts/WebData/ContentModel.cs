@@ -8,7 +8,7 @@ namespace WebData
 {   
 
     //For deserializing List of Content from wikitext to C# objects
-    public class Base
+    public class ContentBase
     {
         public _Parse parse {get; set;}
     }
@@ -21,12 +21,8 @@ namespace WebData
     }
     public class _Section
     {
-        public int index {get; set;}
         public string line {get; set;} 
-    }
-
-    public class PageTextModel
-    {
-        public string wikitext {get; set;}
+        public string number {get; set;}
+        public int index {get; set;}
     }
 }

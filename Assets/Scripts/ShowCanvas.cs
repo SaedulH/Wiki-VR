@@ -27,6 +27,8 @@ public class ShowCanvas : MonoBehaviour
 
     public Animator Fade;
 
+    public Animator EnterNode;
+
     void Awake()
     {
         Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
@@ -44,6 +46,7 @@ public class ShowCanvas : MonoBehaviour
     IEnumerator FadeToCat()
     {
         Fade.SetTrigger("FadeOut");
+        EnterNode.SetTrigger("Enter");
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene("FDG");
@@ -59,6 +62,7 @@ public class ShowCanvas : MonoBehaviour
     IEnumerator FadeToPage()
     {
         Fade.SetTrigger("FadeOut");
+        EnterNode.SetTrigger("Enter");
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene("WikiPage");

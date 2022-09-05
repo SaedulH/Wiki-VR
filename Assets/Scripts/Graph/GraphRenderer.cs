@@ -49,7 +49,7 @@ public class GraphRenderer : MonoBehaviour
 
     public List<GraphEdge> GraphEdges;
 
-    public float MaxIterations = 0;
+    public float MaxIterations = 10;
     public float area = 0;
     public float maxDisplace = 0;
     public float k = 0;
@@ -228,32 +228,32 @@ public class GraphRenderer : MonoBehaviour
             speed = 11;
 
         }else if(GraphNodes.Count < 202){
-            area = 4000;
+            area = 5000;
             MaxIterations = 800;
             speed = 10;
 
         }else if(GraphNodes.Count < 252){
-            area = 6000;
+            area = 9000;
             MaxIterations = 1200;
             speed = 9;
 
         }else if(GraphNodes.Count < 302){
-            area = 9000;
+            area = 12000;
             MaxIterations = 1600;
             speed = 8;
 
         }else if(GraphNodes.Count < 402){
-            area = 12000;
+            area = 15000;
             speed = 7;
-            MaxIterations = 2000;
+            MaxIterations = 1000;
 
         }else if(GraphNodes.Count < 502){
-            area = 15000;
+            area = 18000;
             speed = 5;
             MaxIterations = 2200;
 
         }else{
-            area = 18000;
+            area = 20000;
             speed = 5;
             MaxIterations = 2400;
         }         

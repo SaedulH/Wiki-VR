@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1022987774682506304}
   - component: {fileID: 5045042715034869174}
   - component: {fileID: 7252801475884515590}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeText: {fileID: 7964551523193004786}
-  Range: 200
+  Range: 300
 --- !u!1 &6647849259507310958
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4922283762917439}
   - component: {fileID: 8624817243681283123}
   - component: {fileID: 7964551523193004786}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: NodeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,13 +209,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1
-  m_fontSizeBase: 1
+  m_fontSize: 1.5
+  m_fontSizeBase: 1.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 8983397156952886932}
   - component: {fileID: 7244006410097674124}
   - component: {fileID: 2626645488318134749}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: CatNodePrefab
   m_TagString: Node
   m_Icon: {fileID: 0}
@@ -358,11 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c00dbe87f3bd14abbd92179e17a87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PageMaterial: {fileID: 2100000, guid: e1a39d609e5bf094f8d8fecafe900fc1, type: 2}
-  CatMaterial: {fileID: 2100000, guid: 80cdbe75ea9c58b4fb7ae0324881f0f9, type: 2}
-  PageSelectedMaterial: {fileID: 2100000, guid: b4b91fb01e2aca94da659b30565097f3, type: 2}
-  CatSelectedMaterial: {fileID: 2100000, guid: f6acb600b44789447b93b2afa46bbe3e, type: 2}
-  graphNode: {fileID: 8201452119756403003}
   Hover: {fileID: 2626645488318134749}
 --- !u!114 &8983397156952886932
 MonoBehaviour:
@@ -419,12 +414,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7586097164423234913}
+        m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
+        m_MethodName: NodeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_LastHoverExited:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7586097164423234913}
         m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
         m_MethodName: OffHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7586097164423234913}
+        m_TargetAssemblyTypeName: NodeInteraction, Assembly-CSharp
+        m_MethodName: NodeDeselected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -528,7 +547,7 @@ GameObject:
   - component: {fileID: 7324260845117325073}
   - component: {fileID: 7332567297867441893}
   - component: {fileID: 7340960855559200143}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

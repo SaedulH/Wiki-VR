@@ -19,7 +19,7 @@ namespace WebData
         private GameObject ButtonsParent;
 
         [SerializeField]
-        [Tooltip("References the parent holding all content list buttons.")]
+        [Tooltip("References the prefab for content list buttons.")]
         private GameObject buttonTemplate; 
 
         [SerializeField]
@@ -27,7 +27,7 @@ namespace WebData
         private GameObject SavedButtonsParent;
 
         [SerializeField]
-        [Tooltip("References the parent holding all saved page buttons.")]
+        [Tooltip("References the prefab for saved page buttons.")]
         private GameObject SavedbuttonTemplate; 
 
         [SerializeField]
@@ -204,6 +204,7 @@ namespace WebData
                 if (request.result != UnityWebRequest.Result.Success) 
                 {
                     Debug.Log(request.error);
+                    Debug.Log("No Infobox image here lol");
                 }
                 else 
                 {

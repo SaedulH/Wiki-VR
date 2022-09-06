@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Graph;
 
 public class WristMenuFunctions : MonoBehaviour
 {
+
+    public static WristMenuFunctions current;
 
     public bool _Exitpressed = false;
     public bool _Menupressed = false;
@@ -62,6 +65,8 @@ public class WristMenuFunctions : MonoBehaviour
     public Animator Toggle;
 
     public Animator GraphAnim;
+
+    public Animator GraphPanelAnim;
 
 
     void Start()
@@ -206,10 +211,12 @@ public class WristMenuFunctions : MonoBehaviour
             playerIcon.transform.name = "PlayerIcon";
             
             Debug.Log("Old Position = "+ MyPosition);
-            GameObject.Find("XR Origin").transform.position = new Vector3(0,0,-80);
+            GameObject.Find("XR Origin").transform.position = new Vector3(0,0,-90);
 
             GraphAnim.SetBool("MinGraph", true);
             MinGraph = true;
+
+            GraphPanelAnim.SetBool("PanelOn", true);
         }
         else
         {
@@ -220,6 +227,8 @@ public class WristMenuFunctions : MonoBehaviour
 
             GraphAnim.SetBool("MinGraph", false);
             MinGraph = false;
+
+            GraphPanelAnim.SetBool("PanelOn", false);
         }
     }
 
@@ -240,6 +249,11 @@ public class WristMenuFunctions : MonoBehaviour
         {
             var MinScale = new Vector3(0.35F, 0.35F, edge.localScale.z);
             edge.localScale = MinScale;
+        }
+
+        if(GraphPanel.current.TopTenPages.Count == 0)
+        {
+            GenTopPages();
         }
     }   
 
@@ -262,6 +276,11 @@ public class WristMenuFunctions : MonoBehaviour
             edge.localScale = MaxScale;
         }
 
+    }
+
+    public void GenTopPages()
+    {
+        StartCoroutine(GraphPanel.current.GeneratePageList());
     }
 
 }

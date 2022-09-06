@@ -37,9 +37,12 @@ public class NodeInteraction : MonoBehaviour
         {
             if(graphNode.Node.Id == edges.FirstNode.Node.Id || graphNode.Node.Id == edges.SecondNode.Node.Id)
             {
-                
+                Animator EdgeAnim = edges.GetComponent<Animator>();
+                EdgeAnim.SetBool("Selected", true);    
+
                 if(edges.edge.Type == "SUBCAT_OF")
-                {
+                {   
+
                     edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(1,0,0,1));
                     edges.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(1,0,0,1) * 2F);
 
@@ -73,6 +76,9 @@ public class NodeInteraction : MonoBehaviour
         {
             if(graphNode.Node.Id == edges.FirstNode.Node.Id || graphNode.Node.Id == edges.SecondNode.Node.Id)
             {
+                Animator EdgeAnim = edges.GetComponent<Animator>();
+                EdgeAnim.SetBool("Selected", false); 
+
                 if(edges.edge.Type == "SUBCAT_OF")
                 {
                     edges.GetComponent<Renderer>().material.SetColor ("_Color", new Color(0.47F,0,0,1));

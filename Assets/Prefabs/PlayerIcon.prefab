@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6373472094230956203}
   - component: {fileID: 5117100706855185828}
+  - component: {fileID: 5436042988183619461}
   m_Layer: 3
   m_Name: PlayerIcon
   m_TagString: Untagged
@@ -58,6 +59,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &5436042988183619461
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6373472094230956202}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6373472095776308025
 GameObject:
   m_ObjectHideFlags: 0

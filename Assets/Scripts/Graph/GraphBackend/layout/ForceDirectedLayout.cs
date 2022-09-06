@@ -25,6 +25,7 @@ namespace Graph
                 {
                     // Do something
                     StartCoroutine(FreezeGraph());
+                    GraphPanel.current.GetAllInfo();
                 }
                 //Update the boolean variable
                 _graphReady = value;

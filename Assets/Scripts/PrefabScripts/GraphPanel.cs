@@ -149,10 +149,18 @@ namespace Graph
                 var PageViewData = Newtonsoft.Json.JsonConvert.DeserializeObject<PageViewBase>(Content);
 
                 //Debug.Log(encodedName + " : " + PageViewData.items[0].views.ToString());
-                ListofPages.Add(encodedName, PageViewData.items[0].views);  
+                if(PageViewData.items == null)
+                {
+                    //Debug.Log(encodedName);
+                    //do nothing
+                }
+                else
+                {
+                    ListofPages.Add(encodedName, PageViewData.items[0].views);  
+                }
                 //TopTenPages.Add(PageViewData.items[0].views.ToString()); 
                 //TopTenPages.Add(encodedName); 
-                Debug.Log(ListofPages.Count);
+                //Debug.Log(ListofPages.Count);
 
 
             }
@@ -174,10 +182,10 @@ namespace Graph
 
         public IEnumerator GeneratePageList()
         {
-            Debug.Log("gen page list");
+            //Debug.Log("gen page list");
             foreach(var item in ListofPages.OrderByDescending(x => x.Value))
             {
-                Debug.Log(item.Key + " : " + item.Value);
+                //Debug.Log(item.Key + " : " + item.Value);
 
                 if(TopTenPages.Count <= 10)
                 {
@@ -207,11 +215,14 @@ namespace Graph
 
         public void ReturntoGraph()
         {
+            //GameObject.Find("XR Origin").transform.Find("Camera Offset").transform.Find("Left Hand Controller").transform.Find("WristCanvas").GetComponent<WristMenuFunctions>().MaximizeGraph();
+            //GameObject.Find("XR Origin").GetComponentInChildren<WristMenuFunctions>().MaximizeGraph();
             WristMenuFunctions.current.MaximizeGraph();
         }
 
         public void SearchInCat()
-        {
+        {   
+            if(SearchCatCanvas.activeSelf == false)
             SearchCatCanvas.SetActive(true);
         }
     }

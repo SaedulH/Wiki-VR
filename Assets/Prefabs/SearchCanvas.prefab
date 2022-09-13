@@ -258,7 +258,7 @@ RectTransform:
   m_GameObject: {fileID: 1067594622782738313}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5396956576101836176}
@@ -434,7 +434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50.00039, y: 49.99926}
+  m_AnchoredPosition: {x: 50.00039, y: 50.000137}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4612111899677310071
@@ -555,8 +555,8 @@ RectTransform:
   - {fileID: 8876010935499525958}
   - {fileID: 5656623623929561993}
   - {fileID: 1525793984822897282}
-  - {fileID: 82027775308752217}
   - {fileID: 187830062397924364}
+  - {fileID: 82027775308752217}
   m_Father: {fileID: 1067594622782738316}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8782878993812859762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2056,8 +2056,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8952492423269997993}
   m_HandleRect: {fileID: 2348547383241341489}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.23717423
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2492,7 +2492,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1403656357763286174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3479,7 +3479,7 @@ RectTransform:
   - {fileID: 2207862469081494345}
   - {fileID: 122290163806273610}
   m_Father: {fileID: 7797614507351080146}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 5, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4390,7 +4390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3366063833134779316, guid: 674440a4c15fab64fba02a9c076b7e1f, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3366063833134779316, guid: 674440a4c15fab64fba02a9c076b7e1f, type: 3}
       propertyPath: m_LocalScale.x

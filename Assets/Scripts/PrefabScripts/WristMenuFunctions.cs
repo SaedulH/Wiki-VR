@@ -77,19 +77,19 @@ public class WristMenuFunctions : MonoBehaviour
     public void Exitgamepressed()
     {
         _Exitpressed = true;
-        // firstScreen.SetActive(false);
-        // secondScreen.SetActive(true);
+         firstScreen.SetActive(false);
+         secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to exit game?";
-        Toggle.SetBool("FirstScreen", false);
+        //Toggle.SetBool("FirstScreen", false);
     }
     
     public void Backtomenupressed()
     {
         _Menupressed = true;
-        // firstScreen.SetActive(false);
-        // secondScreen.SetActive(true);
+         firstScreen.SetActive(false);
+         secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to return to menu?";
-        Toggle.SetBool("FirstScreen", false);
+        //Toggle.SetBool("FirstScreen", false);
     }
 
     public void Categorypressed()
@@ -101,11 +101,11 @@ public class WristMenuFunctions : MonoBehaviour
         else
         {
         _Catpressed = true;
-        // firstScreen.SetActive(false);
-        // secondScreen.SetActive(true);
+         firstScreen.SetActive(false);
+         secondScreen.SetActive(true);
         ExitorMenu.text = "Load graph for";
         catname.text = SO.LastCat;  
-        Toggle.SetBool("FirstScreen", false);        
+        //Toggle.SetBool("FirstScreen", false);        
         }
 
     }
@@ -183,9 +183,9 @@ public class WristMenuFunctions : MonoBehaviour
         _Catpressed = false;
         _Exitpressed = false;
         _Menupressed = false;
-        // secondScreen.SetActive(false);
-        // firstScreen.SetActive(true);
-        Toggle.SetBool("FirstScreen", true);
+         secondScreen.SetActive(false);
+         firstScreen.SetActive(true);
+        //Toggle.SetBool("FirstScreen", true);
     }
 
     public void showSearch()

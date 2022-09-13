@@ -5,15 +5,16 @@ using UnityEngine.InputSystem;
 
 public class WristUI : MonoBehaviour
 {
-    
     public InputActionReference MenuReference;
 
+    [SerializeField]
+    private GameObject WristMenu;
+
     public Animator Toggle;
-    private Canvas _wristCanvas;
-    
+
     void Awake()
     {
-        _wristCanvas = GetComponent<Canvas>();
+        
         MenuReference.asset.Enable();
         MenuReference.action.performed += ToggleMenu;
     }
@@ -27,14 +28,15 @@ public class WristUI : MonoBehaviour
     public void ToggleMenu(InputAction.CallbackContext context)
     {   
 
-        if(gameObject.activeSelf == true)
+        if(WristMenu.activeSelf == true)
         {
             StartCoroutine(WristOff());
+            //Toggle.SetTrigger("TurnWristOff");
             
         }
-        else if(gameObject.activeSelf == false)
+        else if(WristMenu.activeSelf == false)
         {
-            gameObject.SetActive(true);
+            WristMenu.SetActive(true);
             //Toggle.SetTrigger("TurnWristOn");
 
         }
@@ -46,6 +48,6 @@ public class WristUI : MonoBehaviour
         Toggle.SetTrigger("TurnWristOff");
         yield return new WaitForSeconds(1);
         
-        gameObject.SetActive(false);
+        WristMenu.SetActive(false);
     }
 }

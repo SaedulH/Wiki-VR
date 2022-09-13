@@ -143,6 +143,7 @@ namespace Graph
 
         public void checkType()
         {
+            GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Forward");
             
             if(Node.Label == "Category")
             {

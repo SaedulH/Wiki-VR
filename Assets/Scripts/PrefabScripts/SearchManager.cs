@@ -50,9 +50,12 @@ namespace Search
 
         private Animator Fade;
 
+        private AudioManager Audio;
+
         void Awake()
         {
             Fade = GameObject.FindGameObjectWithTag("Fade").GetComponentInChildren<Animator>();
+            Audio = GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>();
             thissearchManager = this;
             showingPage = false;
             checkSelect();
@@ -69,6 +72,7 @@ namespace Search
 
         public void switchtoCat()
         {
+            Audio.Play("Forward");
             if(!showingPage)    //is already showing categories
             {
                 //do nothing
@@ -83,7 +87,8 @@ namespace Search
         }
 
         public void switchtoPage()  
-        {
+        {   
+            Audio.Play("Forward");
             if(showingPage)     //is already showing pages
             {
                 //do nothing
@@ -97,6 +102,37 @@ namespace Search
             searchInput();           
         }
 
+        public void switchtoGraphCat()
+        {
+            Audio.Play("Forward");
+            if(!showingPage)    //is already showing categories
+            {
+                //do nothing
+                return;
+            }
+            else
+            {
+                showingPage = false;
+            }
+            checkSelect();
+            GraphSearchInput();
+        }
+
+        public void switchtoGraphPage()  
+        {
+            Audio.Play("Forward");
+            if(showingPage)     //is already showing pages
+            {
+                //do nothing
+                return;
+            }
+            else
+            {
+                showingPage = true;
+            } 
+            checkSelect();
+            GraphSearchInput();           
+        }
         public void checkSelect()
         {    
             if(showingPage)
@@ -115,9 +151,10 @@ namespace Search
 
         public void searchInput()
         {
+            Audio.Play("Forward");
             if(inputField.text != "")
             {
-
+                
                 if(!showingPage)
                 {
                 StartCoroutine(searchListControl.SearchCat(inputField.text));    
@@ -137,6 +174,7 @@ namespace Search
 
         public void backtoSearch()
         {
+            Audio.Play("Back");
             StartCoroutine(backtoSearchCanvas());
         }
 
@@ -155,12 +193,16 @@ namespace Search
                 SO.SecondLastCat = SO.LastCat;
                 SO.LastCat = SO.Cat;
                 SO.Cat = resultText.text;
+                Audio.Play("LoadGraph");
                 //load graph for category
                 StartCoroutine(DoConfirmMade("FDG"));
+                
             }
             else
             {
                 SO.PageName = resultText.text;
+                Audio.Play("LoadPage");
+
                 //load the page
                 StartCoroutine(DoConfirmMade("WikiPage"));
             }
@@ -176,6 +218,7 @@ namespace Search
 
         public void exitCanvas()
         {
+            Audio.Play("Back");
             UIcheckerSO.showingUI = false;
             StartCoroutine(CanvasOff());
         }
@@ -192,7 +235,32 @@ namespace Search
 
         public void KeyboardOn()
         {
+            Audio.Play("Forward");
             KeyboardCanvas.SetActive(true);
         }
+
+
+        public void GraphSearchInput()
+        {
+            Audio.Play("Forward");
+            if(inputField.text != "")
+            {
+
+                if(!showingPage)
+                {
+                StartCoroutine(searchListControl.GraphSearchCat(inputField.text));    
+                }
+                else
+                {
+                StartCoroutine(searchListControl.GraphSearchPage(inputField.text));
+                }
+
+                Debug.Log("search complete"); 
+            }
+            else
+            {
+                //do nothing
+            }           
+        } 
     }
 }

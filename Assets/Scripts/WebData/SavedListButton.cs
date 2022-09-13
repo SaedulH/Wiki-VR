@@ -13,9 +13,6 @@ namespace WebData
         private TextMeshProUGUI buttonText;
 
         [SerializeField]
-        public WebCall webCall;
-
-        [SerializeField]
         private StringSO SO;
 
         public Animator Fade;

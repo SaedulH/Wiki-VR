@@ -9,6 +9,7 @@ TagManager:
   - Fade
   - Graph
   - Limiter
+  - Audio
   layers:
   - Default
   - TransparentFX

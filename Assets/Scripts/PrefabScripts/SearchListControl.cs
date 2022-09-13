@@ -75,6 +75,44 @@ namespace Search
             generateButtons(results);
         }
 
+
+        public IEnumerator GraphSearchCat(string inputfieldtext)
+        {   
+            clearButtons();
+            
+            Graph.SearchResults results = new Graph.SearchResults();
+            statusText.text = "Searching...";
+
+            foreach(GraphNode node in GraphRenderer.Current.GraphNodes.Values)
+            {
+                if(node.Node.Title.Contains(inputfieldtext) && node.Node.Label == "Category")
+                {
+                    results.results1.Add(node.Node.Title);
+                }
+            }
+            
+            yield return new WaitForSeconds(0.5f);
+            generateButtons(results);
+
+        }
+        public IEnumerator GraphSearchPage(string inputfieldtext)
+        {   
+            clearButtons();
+
+            Graph.SearchResults results = new Graph.SearchResults();
+            statusText.text = "Searching...";   
+
+            foreach(GraphNode node in GraphRenderer.Current.GraphNodes.Values)
+            {
+                if(node.Node.Title.Contains(inputfieldtext) && node.Node.Label == "Page")
+                {
+                    results.results1.Add(node.Node.Title);
+                }
+            }
+
+            yield return new WaitForSeconds(0.5f);
+            generateButtons(results);
+        }
     }
 
 }

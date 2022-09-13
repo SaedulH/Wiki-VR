@@ -26,7 +26,9 @@ namespace Search
             buttonText.text = textString;
         }
         public void selectMade()
-        {
+        {   
+            GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Forward");
+
             ConfirmPanel.SetActive(true);
             if(!SearchManager.thissearchManager.showingPage)
             {

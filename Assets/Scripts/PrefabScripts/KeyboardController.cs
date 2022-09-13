@@ -20,10 +20,12 @@ public class KeyboardController : MonoBehaviour
     public Animator Toggle;
     public bool CapsOn = true;
 
-    
+    private AudioManager Audio;
+
     // Start is called before the first frame update
     void Start()
     {
+        Audio = GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>();
         keyboardController = this;
         CapsLock();
     }
@@ -65,12 +67,15 @@ public class KeyboardController : MonoBehaviour
 
     public void ClearAll()
     {
+        Audio.Play("Back");
         searchField.text = "";
     }
 
 
     public void BackSpace()
     {
+        Audio.Play("Back");
+
         if(searchField.text != "")
         {
             searchField.text = searchField.text.Remove(searchField.text.Length -1, 1);
@@ -84,11 +89,13 @@ public class KeyboardController : MonoBehaviour
 
     public void Enter()
     {
-
+        Audio.Play("Forward");
+        StartCoroutine(closeKeyboardCanvas());
     }
 
     public void closeKeyboard()
     {
+        Audio.Play("Back");
         StartCoroutine(closeKeyboardCanvas());
         
     }

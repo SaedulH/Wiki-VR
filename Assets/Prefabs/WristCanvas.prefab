@@ -2497,7 +2497,6 @@ GameObject:
   - component: {fileID: 2751205590515952153}
   - component: {fileID: 2751205590515952152}
   - component: {fileID: 2751205590515952155}
-  - component: {fileID: 2751205590515952156}
   - component: {fileID: 2751205590515952157}
   - component: {fileID: 3296619429897082491}
   m_Layer: 5
@@ -2608,20 +2607,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
---- !u!114 &2751205590515952156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2751205590515952154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add3f4f46f785c34fb3ee17c1b5f4d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuReference: {fileID: -7051366908373790001, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  Toggle: {fileID: 3296619429897082491}
 --- !u!114 &2751205590515952157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2639,6 +2624,7 @@ MonoBehaviour:
   _Catpressed: 0
   MinGraph: 0
   MyPosition: {x: 0, y: 0, z: 0}
+  NodesParent: {fileID: 0}
   firstScreen: {fileID: 2751205590475887211}
   secondScreen: {fileID: 2751205590574019300}
   roottext: {fileID: 2751205589367256844}
@@ -2655,6 +2641,7 @@ MonoBehaviour:
   Fade: {fileID: 0}
   Toggle: {fileID: 0}
   GraphAnim: {fileID: 0}
+  GraphPanelAnim: {fileID: 0}
 --- !u!95 &3296619429897082491
 Animator:
   serializedVersion: 4

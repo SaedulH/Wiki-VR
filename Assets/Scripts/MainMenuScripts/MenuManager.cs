@@ -41,7 +41,8 @@ public class MenuManager : MonoBehaviour
     public Animator Fade;
     public Animator StartUI;
     public Animator SettingsUI;
-    public Animator ConfirmUI;    
+    public Animator ConfirmUI; 
+    public Animator RandomUI;   
     public Animator ChoicesUI;
     public Animator Toggle;
     public Animator CatAnim;
@@ -59,7 +60,7 @@ public class MenuManager : MonoBehaviour
     IEnumerator StarttoChoicesMenu()
     {
         StartUI.SetTrigger("MenuOff");
-        Categories.SetActive(true);
+        CatAnim.SetBool("CatsOn", true);
 
         yield return new WaitForSeconds(0.33F);
 
@@ -95,13 +96,13 @@ public class MenuManager : MonoBehaviour
     IEnumerator ChoicestoStartMenu()
     {
         ChoicesUI.SetTrigger("ChoicesOff");
-        CatAnim.SetTrigger("CatsOff");
+        CatAnim.SetBool("CatsOn", false);
 
         yield return new WaitForSeconds(0.5F);
         
-        Categories.SetActive(false);
         Choices.SetActive(false);
         Menu.SetActive(true);
+
     }
 
     public void SettingstoStart()
@@ -195,7 +196,7 @@ public class MenuManager : MonoBehaviour
     {
         ChoicesUI.SetTrigger("ChoicesOff");
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5F);
 
         Choices.SetActive(false);
         SearchCanvas.SetActive(true);
@@ -224,7 +225,7 @@ public class MenuManager : MonoBehaviour
     
     IEnumerator fromRandomMenu()
     {
-        ConfirmUI.SetTrigger("ConfirmOff");
+        RandomUI.SetTrigger("RandomOff");
 
         yield return new WaitForSeconds(0.5F);
 

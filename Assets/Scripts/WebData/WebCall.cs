@@ -29,6 +29,14 @@ namespace WebData
         [SerializeField]
         [Tooltip("References the prefab for saved page buttons.")]
         private GameObject SavedbuttonTemplate; 
+        [SerializeField]
+        [Tooltip("References the parent holding all saved page buttons.")]
+
+        private GameObject RelatedButtonsParent;
+
+        [SerializeField]
+        [Tooltip("References the prefab for saved page buttons.")]
+        private GameObject RelatedbuttonTemplate; 
 
         [SerializeField]
         private TextMeshProUGUI AddorRemove;
@@ -66,10 +74,14 @@ namespace WebData
 
         public List<string> ListofSaved;
 
+        public List<string> ListofRelated;
+
         private string APIintro = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=";
 
         private string APIsection = "https://en.wikipedia.org/w/api.php?format=json&action=parse&prop=wikitext&disabletoc=1&page=";
         private string GetList = "https://en.wikipedia.org/w/api.php?format=json&action=parse&prop=sections&disabletoc=1&page=";
+
+        private string GetRelated = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=links&pllimit=max&titles=";
 
         private string GetRawImage = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages&titles=";
 
@@ -94,6 +106,7 @@ namespace WebData
             StartCoroutine(GetSavedList());
             StartCoroutine(GetFeaturedArticle());
             StartCoroutine(GetRandomURL());
+            StartCoroutine(GetRelatedList());
         
         }
 
@@ -153,7 +166,14 @@ namespace WebData
                 
                     foreach(var item in contentData.parse.sections)
                     {
-                        ListofContents.Add(item.index, item.number + ": " + item.line);
+                        if(item.line.Contains("See also") || item.line.Contains("References") || item.line.Contains("Notes"))
+                        {
+                            //do nothing
+                        }
+                        else
+                        {
+                            ListofContents.Add(item.index, item.number + ": " + item.line);
+                        }
                     }
 
             }
@@ -162,6 +182,35 @@ namespace WebData
             generateContentButtons(); 
             //printList();
         }
+
+        IEnumerator GetRelatedList()
+        {
+            using(UnityWebRequest request = UnityWebRequest.Get(GetRelated+encodedName))
+            {
+                yield return request.SendWebRequest();  
+
+                string Content  = request.downloadHandler.text;
+                var pageData = Newtonsoft.Json.JsonConvert.DeserializeObject<RelatedBase>(Content);                
+                var firstKey = pageData.query.pages.First().Key;
+
+                    foreach(var item in pageData.query.pages[firstKey].links)
+                    {
+                        if(item.title.Contains("Category:") || item.title.Contains("Wikipedia:") || item.title.Contains("Template:") || item.title.Contains("Template talk:") || item.title.Contains("Help:"))
+                        {
+                            //do nothing
+                        }
+                        else
+                        {
+                            ListofRelated.Add(item.title);
+                        }
+                    }
+
+            }
+            yield return new WaitForSeconds(1); 
+
+            generateRelatedButtons(); 
+            //printList();
+        }        
 
         IEnumerator GetImageURL()
         {   
@@ -175,7 +224,7 @@ namespace WebData
 
                 var firstKey = imageData.query.pages.First().Key;
 
-                if(imageData.query.pages[firstKey].thumbnail.source == null)
+                if(imageData.query.pages[firstKey].thumbnail == null)
                 {
                     ImageCaption.text = "No Image Available";
                     ImageCanvas.SetActive(false);
@@ -248,6 +297,18 @@ namespace WebData
             Selectedfromlist("Brief Description");
         }
 
+        public void generateRelatedButtons()
+        {   
+            foreach (var page in ListofRelated)
+            {
+                GameObject button = Instantiate(RelatedbuttonTemplate, RelatedButtonsParent.transform) as GameObject;
+                button.SetActive(true);
+
+                button.GetComponent<SavedListButton>().setText(page);
+                
+            }
+        }
+
         public void generateSavedButtons()
         {   
             
@@ -261,10 +322,14 @@ namespace WebData
             }
         }
 
+
+
         public void AddorRemoveSave()
         {
             if(AddorRemove.text == "Add")
             {
+                GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Forward");
+
                 SO.AddtoSaved(pageName.text);
 
                 GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
@@ -278,6 +343,8 @@ namespace WebData
             }
             else
             {
+                GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Back");
+
                 SO.RemovefromSaved(pageName.text);
 
                 foreach (Transform savebutton in SavedButtonsParent.transform)
@@ -302,7 +369,10 @@ namespace WebData
                 string Content = request.downloadHandler.text;
 
                 var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<FeaturedBase>(Content);
-                featuredText.text = contentData.tfa.displaytitle; 
+
+                Regex regexbracket = new Regex("<[^>]+>");
+                // var ast = parser.Parse 
+                featuredText.text = regexbracket.Replace(contentData.tfa.displaytitle, "");
             }
         }
 
@@ -333,8 +403,6 @@ namespace WebData
             {
                 yield return request.SendWebRequest();
                 string Content = request.downloadHandler.text; 
-
-                Debug.Log("about to parse");
                 
                 var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<RandomBase>(Content);
                 randomPageTitle = contentData.query.random[0].title; 
@@ -367,6 +435,7 @@ namespace WebData
                 }
             }
         }
+
 
 
     }

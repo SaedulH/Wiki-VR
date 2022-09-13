@@ -29,9 +29,13 @@ public class ShowCanvas : MonoBehaviour
 
     public Animator EnterNode;
 
+    private AudioManager Audio;
+
     void Awake()
     {
         Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+        Audio = GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>();
+
     }
 
     public void loadnewCat()
@@ -40,6 +44,7 @@ public class ShowCanvas : MonoBehaviour
         SO.LastCat = SO.Cat;
         SO.Cat = ItemName.text;
         
+        Audio.Play("LoadCat");
         StartCoroutine(FadeToCat());
     }
 
@@ -55,7 +60,8 @@ public class ShowCanvas : MonoBehaviour
     public void loadnewPage()
     {
         SO.PageName = ItemName.text;
-        
+
+        Audio.Play("LoadPage");
         StartCoroutine(FadeToPage());
     }
 
@@ -71,6 +77,8 @@ public class ShowCanvas : MonoBehaviour
     public void backfromCat()
     {
         uIcheckerSO.showingUI = false;
+
+        Audio.Play("Back");
         StartCoroutine(TurnOffCat());
         
     }
@@ -85,6 +93,8 @@ public class ShowCanvas : MonoBehaviour
     public void backfromPage()
     {
         uIcheckerSO.showingUI = false;
+
+        Audio.Play("Back");
         StartCoroutine(TurnOffPage());
     }
 
@@ -96,4 +106,9 @@ public class ShowCanvas : MonoBehaviour
        Destroy(LoadPage); 
     }
 
+    public void HidePageConfirm()
+    {
+        Toggle.SetTrigger("LoadPageOff");
+        gameObject.SetActive(false);
+    }
 }

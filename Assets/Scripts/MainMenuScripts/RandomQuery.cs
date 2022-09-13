@@ -35,7 +35,7 @@ public class RandomQuery : MonoBehaviour
 
     public async void RandomNeoQuery(string RandomType)
     {
-        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "test"));;
+        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 

@@ -11,7 +11,7 @@ namespace Graph
 		
         private GraphRenderer graphComponents;
 
-        private float iterator = 0; 
+        private float iterations = 0; 
 
         public static ForceDirectedLayout currentLayout; 
         private bool _graphReady;
@@ -20,10 +20,10 @@ namespace Graph
             get { return _graphReady; }
             set
             {
-                //Check if the bloolen variable changes from false to true
+                //Check if the boolean variable changes from false to true
                 if (_graphReady == false && value == true)
                 {
-                    // Do something
+                    Debug.Log("finished!");
                     StartCoroutine(FreezeGraph());
                     GraphPanel.current.GetAllInfo();
                 }
@@ -38,71 +38,23 @@ namespace Graph
             graphReady = false;
         } 
 
-
-
         public void DoIterations()
 		{
-
-            while(iterator <= GraphRenderer.Current.MaxIterations)
+            
+            while(iterations <= GraphRenderer.Current.MaxIterations)
             {
-                iterator += Time.deltaTime * 200f;
-                
+                //iterations += 1;
+                iterations += Time.deltaTime * 200F;
                 ApplyForce();
         
             }
 
-            if(iterator >=  GraphRenderer.Current.MaxIterations)
-            {
-                
+            if(iterations >  GraphRenderer.Current.MaxIterations)
+            { 
                 graphReady = true;
-                //StartCoroutine(FreezeGraph());
-                //FreezeGraph();
+                
             }
 		}
-
-        // public void ApplyIterations()
-        // {
-        //     for(int i = 0; i <= GraphRenderer.Current.MaxIterations; i+=1)
-        //     {
-        //         if(i == GraphRenderer.Current.MaxIterations)
-        //         {
-        //             graphReady = true;
-        //             FreezeGraph();
-        //         }
-        //         else
-        //         {
-        //             ApplyForce();                    
-        //         }
-
-
-        //     }
-        // }
-
-        // public void DoIntervalIterations()
-		// {
-
-        //     if(iterator <= GraphRenderer.Current.MaxIterations)
-        //     {
-        //         iterator += Time.deltaTime * 60f;
-                
-        //         ApplyForce();
-        
-        //     }
-        //     else
-        //     {   
-        //         graphReady = true;
-        //         //StartCoroutine(FreezeGraph());
-        //         FreezeGraph();
-        //     }
-		// }
-
-        // public void cycleLayout()
-        // {
-        //     for(int i = 0; i <=200; i++)
-        //     {
-        //         ApplyForce();
-        //     }
-        // }
 
         public void InitializeForces()
         {
@@ -135,9 +87,9 @@ namespace Graph
                 
         }
         
-
-        public void ApplyForce() {
-                      
+        public void ApplyForce() 
+        {
+            // Calculate the repulsive forces between every node in the graph         
             foreach (GraphNode n1 in graphComponents.GraphNodes.Values)
             {
                 foreach (GraphNode n2 in graphComponents.GraphNodes.Values)
@@ -149,67 +101,47 @@ namespace Graph
                         float zDist = n1.transform.position.z - n2.transform.position.z;
                         float dist = Vector3.Distance(n1.transform.position, n2.transform.position);
 
-                        if (dist > 0)
-                        {
-                            if(n1.Node.Label == n2.Node.Label && n1.Node.Label == "Category"  && dist <= 100)
-                            {
-                                float repulsiveF = 4F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
-                                n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
+                        float repulsiveF = (GraphRenderer.Current.k * GraphRenderer.Current.k) / dist;
 
-                            }
-                            else
-                            {
-                                float repulsiveF = 2F* GraphRenderer.Current.k * GraphRenderer.Current.k / dist;
-                                n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF) * GraphRenderer.Current.speed);
-                            }
-
-
-                        }
+                        //n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF));
+                        Vector3 displacement = new Vector3(xDist, yDist, zDist);
+                        //n1.transform.position = n1.transform.position + ((displacement/dist) * repulsiveF);
+                        n1.Displacement += ((displacement/dist) * repulsiveF); 
+                        
                     }
                 }
             }
-
+            // Calculate the attractive forces between nodes that are connected
             foreach (GraphEdge edge in graphComponents.GraphEdges)
             {
-                Rigidbody nf = edge.sourceRb;
-                Rigidbody nt = edge.targetRb;
-
-                
-                float xDist = nf.transform.position.x - nt.transform.position.x;
-                float yDist = nf.transform.position.y - nt.transform.position.y;
-                float zDist = nf.transform.position.z - nt.transform.position.z;
-                float dist = Vector3.Distance(nf.transform.position, nt.transform.position);
+                Rigidbody startNode = edge.sourceRb;
+                Rigidbody endNode = edge.targetRb;
+ 
+                float xDist = startNode.transform.position.x - endNode.transform.position.x;
+                float yDist = startNode.transform.position.y - endNode.transform.position.y;
+                float zDist = startNode.transform.position.z - endNode.transform.position.z;
+                float dist = Vector3.Distance(startNode.transform.position, endNode.transform.position);
 
                 float attractiveF = (dist * dist)/ GraphRenderer.Current.k;
 
-                if (dist > 0)
-                {
-                    // if(iterator >= (GraphRenderer.Current.MaxIterations/2) && 
-                    if(edge.FirstNode.Node.Label != edge.SecondNode.Node.Label && dist < 100)
-                    {
-                        //do nothing, nodes are close enough
-                    }
-                    else if(edge.FirstNode.Node.Label != edge.SecondNode.Node.Label && dist >= 100)
-                    {
-                        nf.AddForce(new Vector3(-xDist * 50/ dist * attractiveF , -yDist * 50/ dist * attractiveF , -zDist * 50/ dist * attractiveF ) * GraphRenderer.Current.speed);
-                        nt.AddForce(new Vector3(xDist * 50/ dist * attractiveF , yDist * 50/ dist * attractiveF , zDist * 50/ dist * attractiveF ) * GraphRenderer.Current.speed);                             
-                    }
-                    else if(edge.FirstNode.Node.Label == edge.SecondNode.Node.Label && edge.FirstNode.Node.Label == "Category" && dist >= 200)
-                    {
-                        nf.AddForce(new Vector3(-xDist * 2/ dist * attractiveF , -yDist * 2/ dist * attractiveF , -zDist * 2/ dist * attractiveF ) * GraphRenderer.Current.speed);
-                        nt.AddForce(new Vector3(xDist * 2/ dist * attractiveF , yDist * 2/ dist * attractiveF , zDist * 2/ dist * attractiveF ) * GraphRenderer.Current.speed);                        
-                    }
-                    else
-                    {
-                        nf.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF) * GraphRenderer.Current.speed);
-                        nt.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF) * GraphRenderer.Current.speed);                         
-                    }
+                //startNode.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF));
+                //endNode.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF)); 
 
-
-                }
+                Vector3 displacement = new Vector3(xDist, yDist, zDist);
+                //startNode.transform.position = startNode.transform.position - ((displacement/dist) * attractiveF);
+                //endNode.transform.position = endNode.transform.position + ((displacement/dist) * attractiveF);
+                edge.FirstNode.Displacement -= ((displacement/dist) * attractiveF * 0.66F);
+                edge.SecondNode.Displacement += ((displacement/dist) * attractiveF * 0.66F);
             }
 
+            foreach (GraphNode node in graphComponents.GraphNodes.Values)
+            {
+                float traveldistance = node.Displacement.magnitude;
+                node.transform.position = node.transform.position + ((node.Displacement / traveldistance));
+            }
+            
         }
 	}
-}
+    }
+    
 

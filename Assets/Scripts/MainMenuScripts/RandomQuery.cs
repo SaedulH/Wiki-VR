@@ -104,10 +104,12 @@ public class RandomQuery : MonoBehaviour
     {
         if(Loadfor.text == "Load Graph for")
         {
+            SO.Cat = Title.text;
             MenuManager.current.StartTransitionCat();
         }
         else
         {
+            SO.PageName = Title.text;
             MenuManager.current.StartTransitionPage();
         }
     }

@@ -33,16 +33,11 @@ namespace Graph
             _FirstNode = firstNode;
             _SecondNode = secondNode;
             
-            
-            // Set width
-            //float width = 0.08f + 0.02f; // [0.02 -> 0.1]
-
-
             sourceRb = firstNode.GetComponent<Rigidbody>();
             targetRb = secondNode.GetComponent<Rigidbody>();
 
-            //GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color32(128,128,128,255));
 
+            //set color
             if(edge.Type == "SUBCAT_OF")
             {
                 GetComponent<Renderer>().material.color = new Color(0.47F,0,0,1);
@@ -102,13 +97,6 @@ namespace Graph
         /// The second graph node this entity is attached to.
         /// </summary>
         public GraphNode SecondNode { get { return _SecondNode; } }
-
-
-
-        /// <summary>
-        /// References the line renderer that displays the link.
-        /// </summary>
-        private LineRenderer LineRenderer;
 
         #endregion
 

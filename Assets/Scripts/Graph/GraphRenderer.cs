@@ -45,13 +45,16 @@ public class GraphRenderer : MonoBehaviour
     [Tooltip("Prefabs used for initiating edges.")]
     private GameObject CylinderEdgePrefab;
 
+
+    [SerializeField]
+    private GameObject Springy;
     public Dictionary<long, GraphNode> GraphNodes;
 
     public List<GraphEdge> GraphEdges;
 
     public float MaxIterations = 10;
     public float area = 0;
-    public float maxDisplace = 0;
+    public float maxDisplacement = 0;
     public float k = 0;
     public float speed = 10;
 
@@ -73,6 +76,7 @@ public class GraphRenderer : MonoBehaviour
 
     public static void CheckData(GraphNetwork graph1)
     {
+        Debug.Log("Graph network retrieved!");
         foreach(Nodes nodes in graph1.nodes1)
         {
             Debug.Log(nodes.Id);
@@ -83,19 +87,19 @@ public class GraphRenderer : MonoBehaviour
 
     }
 
-    private void Display(int num)
+    private void Display(int initnum)
     {
         // Clear everything
         Clear();
 
         // Display nodes
-        DisplayNodes();
+        DisplayNodes(initnum);
 
         // Display edges
         DisplayEdges();
 
         //Spread out nodes
-        InitialLayout(num);
+        //InitialLayout(num);
     }
 
     private void Clear()
@@ -111,20 +115,18 @@ public class GraphRenderer : MonoBehaviour
             GameObject.DestroyImmediate(edge.gameObject, true);
     }
 
-    private void DisplayNodes()
+    private void DisplayNodes(int initNum)
     {               
-            // For each position, create an object
+            // For each node, create a game object
         foreach (Nodes dnode in graph1?.nodes1)
         {
-            //Vector3 startingPosition = new Vector3(random.Next(-25, 25), random.Next(-25, 25), random.Next(-25, 25));
-
-            // Create a new entity instance
-
             if(dnode.Label == "Page")
             {
+                System.Random random = new System.Random();
+
                 GameObject graphNode = Instantiate(PageNodePrefab, NodesParent.transform);
                 //graphNode.transform.position = startingPosition;
-                graphNode.transform.position = Vector3.zero;
+                graphNode.transform.position = new Vector3(random.Next(0, initNum), random.Next(0, initNum), random.Next(0, initNum));
                 graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
                 graphNode.transform.name = dnode.Title;
 
@@ -138,13 +140,16 @@ public class GraphRenderer : MonoBehaviour
                 if (!GraphNodes.ContainsKey(dnode.Id))
                 {
                 GraphNodes?.Add(dnode.Id, nscript); 
-                }            
+                }
+                            
             }
             else
             {
+                System.Random random = new System.Random();
+
                 GameObject graphNode = Instantiate(CatNodePrefab, NodesParent.transform);
                 //graphNode.transform.position = startingPosition;
-                graphNode.transform.position = Vector3.zero;
+                graphNode.transform.position = new Vector3(random.Next(0, initNum), random.Next(0, initNum), random.Next(0, initNum));
                 graphNode.transform.rotation = Quaternion.Euler(Vector3.zero);
                 graphNode.transform.name = dnode.Title;      
 
@@ -159,24 +164,20 @@ public class GraphRenderer : MonoBehaviour
                 {
                 GraphNodes?.Add(dnode.Id, nscript); 
                 }
+   
             }
-
         }
-
-        // foreach(GraphNode node in GraphNodes.Values)
-        // {
-        //     Debug.Log(node.name);
-        // }
-         
+    
         getInfo();
-        maxDisplace = (float)(Mathf.Sqrt(area) / 3F);
-        k = (float)Mathf.Sqrt(area / (1 + GraphNodes.Count));
+        maxDisplacement = Mathf.Sqrt(area) / 3F;
+        k = Mathf.Sqrt(area / (GraphNodes.Count));
     }
+
 
 
     private void DisplayEdges()
     {
-            // For each position, create an object
+            // For each edge, create a game object
         foreach (Edges dedge in graph1?.edges1)
         {
             // Find graph nodes
@@ -186,13 +187,11 @@ public class GraphRenderer : MonoBehaviour
             GraphNode firstNode = GraphNodes?[dedge.StartNodeID];
             GraphNode secondNode = GraphNodes?[dedge.EndNodeID];
 
-                // Create a new entity instance
             GameObject graphEdge = Instantiate(CylinderEdgePrefab, EdgesParent.transform);
             graphEdge.transform.position = Vector3.zero;
             graphEdge.transform.localRotation = Quaternion.Euler(Vector3.zero);
             graphEdge.transform.name = dedge.StartNodeID + " -> " + dedge.EndNodeID;
-             
-            //Debug.Log(dedge.StartNodeID + " -> "+ dedge.EndNodeID);
+
             // Extract the script
             GraphEdge escript = graphEdge.GetComponent<GraphEdge>();
 
@@ -202,65 +201,59 @@ public class GraphRenderer : MonoBehaviour
             // Add to list
             GraphEdges.Add(escript);
             
-            
         }
     }
+    public void AddSpringJoint(GameObject ParentNode)
+    {
+        GameObject springjoint = Instantiate(Springy, ParentNode.transform);
+
+    }
+
+
     private void getInfo()
     {
         if(GraphNodes.Count < 12){
             area = 100;
-            MaxIterations = 50;
+            MaxIterations = 500;
             speed = 15;
 
         }else if(GraphNodes.Count < 32){
             area = 200;
-            MaxIterations = 300;
+            MaxIterations = 2000;
             speed = 13;
 
         }else if(GraphNodes.Count < 62){
             area = 500;
-            MaxIterations = 500;
+            MaxIterations = 4000;
             speed = 12;
 
         }else if(GraphNodes.Count < 102){
             area = 1000;
-            MaxIterations = 600;
+            MaxIterations = 6000;
             speed = 11;
 
         }else if(GraphNodes.Count < 202){
             area = 5000;
-            MaxIterations = 800;
+            MaxIterations = 8000;
             speed = 10;
 
         }else if(GraphNodes.Count < 252){
             area = 9000;
-            MaxIterations = 1200;
+            MaxIterations = 10000;
             speed = 9;
 
         }else if(GraphNodes.Count < 302){
-            area = 12000;
-            MaxIterations = 1600;
+            area = 20000;
+            MaxIterations = 12000;
             speed = 8;
 
         }else if(GraphNodes.Count < 402){
-            area = 15000;
+            area = 30000;
             speed = 7;
-            MaxIterations = 1000;
+            MaxIterations = 14000;
 
-        }else if(GraphNodes.Count < 502){
-            area = 18000;
-            speed = 5;
-            MaxIterations = 2200;
-
-        }else{
-            area = 20000;
-            speed = 5;
-            MaxIterations = 2400;
-        }         
-    }
-
-
-
+        }        
+    }   
 
     private void InitialLayout(int num)
     {
@@ -268,10 +261,5 @@ public class GraphRenderer : MonoBehaviour
         foreach (var node in GraphNodes.Values)
             node.ApplyInitialForces(new List<Vector3>() { new Vector3(random.Next(-num, num), random.Next(-num, num), random.Next(-num, num)) }, true);
     }
-
-    // void Update()
-    // {
-    //     graphLayout.DoIterations(1);
-    // }
 }
 }

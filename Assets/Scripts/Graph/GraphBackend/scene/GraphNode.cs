@@ -12,10 +12,6 @@ namespace Graph
 
         #region Values 
 
-        private const float MAX_VELOCITY_MAGNITUDE = 1000f;
-
-        //public Vector3 increaseSize;
-
         public static GraphNode thisNode;
 
         [SerializeField]
@@ -53,14 +49,6 @@ namespace Graph
             thisNode = this;
         }
 
-        IEnumerator wait5()
-        {       
-        yield return new WaitForSeconds(5);
-        
-            Rigidbody1.angularVelocity = Vector3.zero;
-            Rigidbody1.constraints = RigidbodyConstraints.FreezePosition; 
-        }
-
         /// <summary>
         /// Initializes the graph node.
         /// </summary>
@@ -70,13 +58,13 @@ namespace Graph
             _graph1 = graph1;
             _Node = node;
 
-            // Set title
+            //Set title
             GetComponentInChildren<TextMeshProUGUI>().text = node.ToString();
             
-            // Set size
+            //Set size
             if(node.Label == "Category")
             {
-                Vector3 increaseSize = new Vector3(0.02F, 0.02F, 0.02f);
+                Vector3 increaseSize = new Vector3(0.025F, 0.025F, 0.025f);
                 foreach(var edge in graph1.edges1)
                 {
                     if(node.Id == edge.StartNodeID || node.Id == edge.EndNodeID)
@@ -129,13 +117,9 @@ namespace Graph
 
         
         /// <summary>
-        /// Apply initial position to the node.
+        /// total displacement of node.
         /// </summary>
-		public void SetPosition(Vector3 position)
-		{
-			gameObject.transform.position = position;
-		}
-
+        public Vector3 Displacement = Vector3.zero;
 
         #endregion
 

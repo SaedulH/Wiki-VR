@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 86676614263676247}
   - component: {fileID: 4233018509640522651}
   m_Layer: 3
-  m_Name: PageNodePrefab
+  m_Name: Earlynode
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,6 @@ MonoBehaviour:
     _Label: 
     _Title: 
   Rigidbody1: {fileID: 214304860268058193}
-  Displacement: {x: 0, y: 0, z: 0}
 --- !u!114 &933148601013034938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,7 +346,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e1a39d609e5bf094f8d8fecafe900fc1, type: 2}
+  - {fileID: 2100000, guid: dc5206afe53ff044dad522bc50644bb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -388,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7126188784592515727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -398,7 +397,7 @@ RectTransform:
   m_GameObject: {fileID: 2935561496788586891}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7324386067718568676}
@@ -453,7 +452,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2573693964747016045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeText: {fileID: 807212996126603305}
-  Range: 300
+  Range: 500
 --- !u!1 &4176500651792382901
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2.09}
+  m_AnchoredPosition: {x: 0, y: -1.36}
   m_SizeDelta: {x: 10, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1298601361168533224
@@ -578,8 +577,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1.5
-  m_fontSizeBase: 1.5
+  m_fontSize: 2
+  m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

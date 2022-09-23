@@ -151,17 +151,20 @@ namespace Search
 
         public void searchInput()
         {
+            Debug.Log("Searching...");
             Audio.Play("Forward");
             if(inputField.text != "")
             {
                 
                 if(!showingPage)
                 {
-                StartCoroutine(searchListControl.SearchCat(inputField.text));    
+                    Debug.Log("Searching cat");
+                    StartCoroutine(searchListControl.SearchCat(inputField.text));    
                 }
                 else
                 {
-                StartCoroutine(searchListControl.SearchPage(inputField.text));
+                    Debug.Log("Searching page");
+                    StartCoroutine(searchListControl.SearchPage(inputField.text));
                 }
 
                 Debug.Log("search complete"); 

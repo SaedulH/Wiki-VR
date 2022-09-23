@@ -22,9 +22,17 @@ public class NeoQuery : MonoBehaviour
     [SerializeField]
     private StringSO SO;
 
+    private readonly IDriver _driver;
     public bool rootFetched = false;
     public bool isRendered = false;
+
     
+    // Aura queries use an encrypted connection using the "neo4j+s" protocol
+    private string Aurauri = "neo4j+s://a71ad590.databases.neo4j.io";
+    private string uri = "bolt://localhost:7687";
+    private string user = "neo4j";
+    private string Aurapassword = "y7oD564NL-mx9l_VSlDqYHFJXE0XdGg-ZSNaV9m-7x4";
+    private string password = "wiki"; 
     void Awake()
     {   
 
@@ -47,9 +55,10 @@ public class NeoQuery : MonoBehaviour
     {
 
         Graph.DataStructure.GraphNetwork network = new Graph.DataStructure.GraphNetwork();
+        //NeoAuraQueries queries = new NeoAuraQueries(Aurauri, user, Aurapassword);
 
-        Query(SO.Cat, network, SO.Limiter);
-        //Query("Databases", network);
+        //queries.AuraQuery(SO.Cat, network, SO.Limiter);
+        Query(SO.Cat, network, SO.Limiter, uri, user, password);
         //SampleData.MakeSampleGraphData(network);
         
         //waits for 1 second.
@@ -57,38 +66,27 @@ public class NeoQuery : MonoBehaviour
         graphRenderer.Initialize(network, SO.initialNum);
 
         graphLayout.InitializeForces();
+        Debug.Log("starting!");
         isRendered = true;
         
-        //StartCoroutine(WaitForRender());
+        
     }
 
-    IEnumerator WaitForRender()
+    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter, string uri, string user, string password) 
     {
-        yield return new WaitForSeconds(0.5f);        
-        graphLayout.DoIterations();
-    }
-    
-
-    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter) 
-    {
-        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
+        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
-
         var cypherQuery =
         @"MATCH x= (p:Category {catName: '" + Cat + "'})<-[*..2]-(s) WITH *, relationships(x) as r RETURN p, r, s LIMIT " + Limiter;
-
+        Debug.Log(cypherQuery);
         try 
         {
             IResultCursor cursor = await session.RunAsync(cypherQuery);
             var result = await cursor.ToListAsync();
-
-            //List<Edges> edges2 = new List<Edges>();
             bool rootFetched = false;
 
             foreach(var record in result)
-            {
-                
-
+            {                
                 var rootnode = record["p"].As<INode>();
                 if(!rootFetched)
                 {
@@ -102,87 +100,65 @@ public class NeoQuery : MonoBehaviour
                 {   
                     if(anedge.Count == 1)
                     {
-                    long StartNodeID = anedge[0].StartNodeId;
-                    long EndNodeID = anedge[0].EndNodeId;
-                    string Type = anedge[0].Type;
-                    
-                    Graph.DataStructure.Edges edgy0 = new Edges(Type, StartNodeID, EndNodeID); 
-                    graph.edges1.Add(edgy0);
+                        long StartNodeID = anedge[0].StartNodeId;
+                        long EndNodeID = anedge[0].EndNodeId;
+                        string Type = anedge[0].Type;
+                        
+                        Graph.DataStructure.Edges edgy0 = new Edges(Type, StartNodeID, EndNodeID); 
+                        graph.edges1.Add(edgy0);
 
-                    break;
+                        break;
                     }
                     else
-                    {
-                
-                    long StartNodeID1 = anedge[anedge.Count-1].StartNodeId;
-                    long EndNodeID1 = anedge[anedge.Count-1].EndNodeId;
-                    string Type1 = anedge[anedge.Count-1].Type;
+                    {          
+                        long StartNodeID1 = anedge[anedge.Count-1].StartNodeId;
+                        long EndNodeID1 = anedge[anedge.Count-1].EndNodeId;
+                        string Type1 = anedge[anedge.Count-1].Type;
 
-                    Graph.DataStructure.Edges edgy1 = new Edges(Type1, StartNodeID1, EndNodeID1); 
-                    graph.edges1.Add(edgy1); 
+                        Graph.DataStructure.Edges edgy1 = new Edges(Type1, StartNodeID1, EndNodeID1); 
+                        graph.edges1.Add(edgy1); 
 
-                    break;  
+                        break;  
                     }
                 }
-
-                var anode = record["s"].As<INode>();
-
-                
+                var anode = record["s"].As<INode>();     
 
                 if (anode.Labels[0] == "Category")
                 {
-
                     Graph.DataStructure.Nodes nodey = new Nodes(anode.Id, anode.Labels[0], anode.Properties["catName"].ToString());
                     if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
                     {
                         //do nothing
-                        //Debug.Log("Did not add: "+ nodey.Title);
                     }
                     else
                     {   
-                        //Debug.Log("Added: " + nodey.Title);
                         graph.nodes1.Add(nodey);
-                    }
-                        
+                    }                    
                 } 
                 else if (anode.Labels[0] == "Page")
                 {
-
                     Graph.DataStructure.Nodes nodey = new Nodes(anode.Id, anode.Labels[0], anode.Properties["pageTitle"].ToString());           
                     if(graph.nodes1.Any(Nodes => Nodes.Title == nodey.Title))
                     {
                         //do nothing
-                        //Debug.Log("Did not add: "+ nodey.Title);
                     }
                     else
                     {
-                        //Debug.Log("Added: " + nodey.Title); 
                         graph.nodes1.Add(nodey);
                     }
                 }
-
             }
-
-            // foreach(Edges edge in graph.edges1)
-            // {
-            //     Debug.Log(edge.StartNodeID + " -> " + edge.EndNodeID);
-            // }
-            //Debug.Log("Neonodes = " + graph.nodes1.Count);
-
         }
-   
         finally
         {
             await session.CloseAsync();
         } 
             await driver.CloseAsync();     
-
-
     }
 
-    public static async void searchCatQuery(string SearchValue, Graph.SearchResults results)
+    public static async void searchCatQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
     {
-        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
+        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 
@@ -215,9 +191,9 @@ public class NeoQuery : MonoBehaviour
             await driver.CloseAsync(); 
     } 
 
-    public static async void searchPageQuery(string SearchValue, Graph.SearchResults results)
+    public static async void searchPageQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
     {
-        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
+        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 

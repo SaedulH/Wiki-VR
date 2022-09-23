@@ -239,11 +239,11 @@ public class WristMenuFunctions : MonoBehaviour
         Max.SetActive(true);
         // Graph.transform.Find("NodesParent").localScale = new Vector3(0.07F,0.07F,0.07F);
 
-        foreach(Transform node in Graph.transform.Find("NodesParent").transform)
-        {
-            var MinScale = new Vector3(node.localScale.x * 1.5F, node.localScale.y * 1.5F, node.localScale.z * 1.5F);
-            node.localScale = MinScale;
-        }
+        // foreach(Transform node in Graph.transform.Find("NodesParent").transform)
+        // {
+        //     var MinScale = new Vector3(node.localScale.x * 0.6F, node.localScale.y * 0.6F, node.localScale.z * 0.6F);
+        //     node.localScale = MinScale;
+        // }
         
         foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
         {
@@ -264,11 +264,11 @@ public class WristMenuFunctions : MonoBehaviour
         Min.SetActive(true);
         // Graph.transform.Find("NodesParent").localScale = new Vector3(1F,1F,1F);
     
-        foreach(Transform node in Graph.transform.Find("NodesParent").transform)
-        {
-            var MinScale = new Vector3(node.localScale.x * 0.75F, node.localScale.y * 0.75F, node.localScale.z * 0.75F);
-            node.localScale = MinScale;
-        }
+        // foreach(Transform node in Graph.transform.Find("NodesParent").transform)
+        // {
+        //     var MinScale = new Vector3(node.localScale.x * 1.67F, node.localScale.y * 1.67F, node.localScale.z * 1.67F);
+        //     node.localScale = MinScale;
+        // }
 
         foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
         {

@@ -29,8 +29,8 @@ RectTransform:
   m_GameObject: {fileID: 5551033128277412688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4922283762917439}
   m_Father: {fileID: 7397327279115631151}
@@ -38,8 +38,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.84}
-  m_SizeDelta: {x: 20, y: 10}
+  m_AnchoredPosition: {x: 0, y: 7.45}
+  m_SizeDelta: {x: 25, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2334915206244693497
 Canvas:
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeText: {fileID: 7964551523193004786}
-  Range: 300
+  Range: 500
 --- !u!1 &6647849259507310958
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: -1.57}
   m_SizeDelta: {x: 10, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8624817243681283123
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -4.953644, y: -0.44276428, z: -4.9974976, w: 1.8316498}
+  m_margin: {x: -5.9926453, y: -0.44276428, z: -5.968465, w: 1.6692353}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -304,9 +304,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7327804403519715063}
   serializedVersion: 2
-  m_Mass: 1.1
-  m_Drag: 10
-  m_AngularDrag: 10
+  m_Mass: 1
+  m_Drag: 8
+  m_AngularDrag: 8
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -346,6 +346,7 @@ MonoBehaviour:
     _Label: 
     _Title: 
   Rigidbody1: {fileID: 7443697819437337738}
+  Displacement: {x: 0, y: 0, z: 0}
 --- !u!114 &7586097164423234913
 MonoBehaviour:
   m_ObjectHideFlags: 0

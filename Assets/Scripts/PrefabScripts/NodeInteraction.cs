@@ -14,7 +14,6 @@ public class NodeInteraction : MonoBehaviour
     public void OnHover()
     {
         Hover.SetBool("IsHovering", true);
-        GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Hover");
     }
 
     public void OffHover()

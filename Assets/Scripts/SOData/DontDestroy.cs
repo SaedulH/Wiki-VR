@@ -18,7 +18,7 @@ public class DontDestroy : MonoBehaviour
 
     public void Update()
     {
-        Music.volume = (0.5F * SO.Volume * 0.1F);
+        Music.volume = (0.4F * SO.Volume * 0.1F);
     }
 
 }

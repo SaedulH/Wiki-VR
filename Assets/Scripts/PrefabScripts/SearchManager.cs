@@ -221,10 +221,23 @@ namespace Search
             Toggle.SetTrigger("SearchCanvasOff");
             yield return new WaitForSeconds(1);
 
-            //Destroy(SearchCanvas);
-            SearchCanvas.SetActive(false);
+            Destroy(SearchCanvas);
         }
-    
+
+        public void hideCanvas()
+        {
+            Audio.Play("Back");
+            UIcheckerSO.showingUI = false;
+            StartCoroutine(Canvashidden());
+        }
+
+        IEnumerator Canvashidden()
+        {   
+            Toggle.SetTrigger("SearchCanvasOff");
+            yield return new WaitForSeconds(1);
+
+            SearchCanvas.SetActive(false);
+        }  
 
         public void KeyboardOn()
         {

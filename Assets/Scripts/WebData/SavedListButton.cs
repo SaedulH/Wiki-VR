@@ -28,6 +28,8 @@ namespace WebData
 
         IEnumerator ToSavedArticle()
         {
+            SO.PageName3 = SO.PageName2;
+            SO.PageName2 = SO.PageName;
             SO.PageName = buttonText.text;
             Fade.SetTrigger("Start");
 

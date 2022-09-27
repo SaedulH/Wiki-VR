@@ -388,6 +388,8 @@ namespace WebData
 
         IEnumerator LoadFeatured()
         {
+            SO.PageName3 = SO.PageName2;
+            SO.PageName2 = SO.PageName;
             SO.PageName = featuredText.text;
             Fade.SetTrigger("Start");
 
@@ -417,6 +419,8 @@ namespace WebData
 
         IEnumerator LoadRandomPage()
         {
+            SO.PageName3 = SO.PageName2;
+            SO.PageName2 = SO.PageName;
             SO.PageName = randomPageTitle;
             Fade.SetTrigger("Start");
 

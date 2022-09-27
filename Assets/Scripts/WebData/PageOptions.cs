@@ -17,7 +17,7 @@ public class PageOptions : MonoBehaviour
     private TextMeshProUGUI questionText;
 
     [SerializeField]
-    private TextMeshProUGUI catNameText;
+    private TextMeshProUGUI MenuText;
 
     [SerializeField]
     private StringSO SO;
@@ -43,7 +43,7 @@ public class PageOptions : MonoBehaviour
         menuPressed = true;
         optionCanvas.SetActive(true);
         questionText.text = "Are you sure you want to return to menu?";
-        catNameText.text = "";
+        MenuText.text = "";
     }
 
     public void showExitOptions()
@@ -51,15 +51,23 @@ public class PageOptions : MonoBehaviour
         exitPressed = true;
         optionCanvas.SetActive(true);
         questionText.text = "Are you sure you want to exit application";
-        catNameText.text = "";
+        MenuText.text = "";
     }
 
-    public void showCatOptions()
+    public void showPageOptions()
     {
         backtocatPressed = true;
         optionCanvas.SetActive(true);
         questionText.text = "Load graph for";
-        catNameText.text = SO.Cat;
+        if(SO.PageName2 == "")
+        {
+            MenuText.text = "No previous page available";
+        }
+        else
+        {
+            MenuText.text = SO.PageName2;
+        }
+
     }
 
     
@@ -117,8 +125,18 @@ public class PageOptions : MonoBehaviour
         }
         else if(choice == "page")
         {
-            //SO.PageName = SO.lastPage;
+            if(SO.PageName2 != "")
+            {
+            SO.PageName = SO.PageName2;
+            SO.PageName2 = SO.PageName3;
+            SO.PageName3= "";
             SceneManager.LoadScene("WikiPage");
+            }
+            else
+            {
+                //do nothing
+            }
+
         }
     }
     #endregion

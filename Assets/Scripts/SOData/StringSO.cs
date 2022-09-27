@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class StringSO : ScriptableObject
 {
+    /// Holds data for values that are to be retained when switching scenes or exiting application (indefinitely)
+
     [SerializeField]
     private string _cat;
 
@@ -40,6 +42,23 @@ public class StringSO : ScriptableObject
         set { _Pagename = value; }
     }
 
+    [SerializeField]
+    private string _Pagename2;
+
+    public string PageName2
+    {
+        get { return _Pagename2; }
+        set { _Pagename2 = value; }
+    }
+
+    [SerializeField]
+    private string _Pagename3;
+
+    public string PageName3
+    {
+        get { return _Pagename3; }
+        set { _Pagename3 = value; }
+    }
 
     [SerializeField]
     private int _Num;

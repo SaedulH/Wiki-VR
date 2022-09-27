@@ -65,7 +65,8 @@ public class MenuManager : MonoBehaviour
     {
         if(SO.Snapturn)
         {
-            //do nothing
+            snapProvider.enabled = true;
+            smoothProvider.enabled = false;
         }
         else 
         {   

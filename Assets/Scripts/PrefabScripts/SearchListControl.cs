@@ -58,7 +58,7 @@ namespace Search
             
             Graph.SearchResults results = new Graph.SearchResults();
             
-            NeoQuery.searchCatQuery(inputfieldtext, results, "bolt://localhost:7687", "user", "wiki");
+            NeoQuery.searchCatQuery(inputfieldtext, results);
             statusText.text = "Searching...";
             yield return new WaitForSeconds(0.5f);
             generateButtons(results);
@@ -71,7 +71,7 @@ namespace Search
 
             Graph.SearchResults results = new Graph.SearchResults();
             
-            NeoQuery.searchPageQuery(inputfieldtext, results, "bolt://localhost:7687", "user", "wiki");
+            NeoQuery.searchPageQuery(inputfieldtext, results);
             statusText.text = "Searching...";
             yield return new WaitForSeconds(0.5f);
             generateButtons(results);

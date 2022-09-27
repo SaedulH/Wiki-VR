@@ -110,12 +110,32 @@ public class ShowCanvas : MonoBehaviour
 
        Destroy(LoadPage); 
     }
+    #endregion
 
+    #region Graph panel confirm page
+
+    // specifically for graph panel 
     public void HidePageConfirm()
     {
         Toggle.SetTrigger("LoadPageOff");
         gameObject.SetActive(false);
     }
-            
+
+    public void GoToPage()
+    {
+        SO.PageName = ItemName.text;
+
+        Audio.Play("LoadPage");
+        StartCoroutine(ToPage());
+    }
+
+    IEnumerator ToPage()
+    {
+        Fade.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene("WikiPage");
+    }  
+        
     #endregion
 }

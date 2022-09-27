@@ -27,9 +27,6 @@ public class NeoQuery : MonoBehaviour
     private string Aurauri = "neo4j+s://a71ad590.databases.neo4j.io";
     private string Aurapassword = "y7oD564NL-mx9l_VSlDqYHFJXE0XdGg-ZSNaV9m-7x4";
     
-    private string uri = "bolt://localhost:7687";
-    private string user = "neo4j";
-    private string password = "wiki"; 
     void Awake()
     {   
         StartCoroutine(GraphDatafirst());
@@ -51,7 +48,7 @@ public class NeoQuery : MonoBehaviour
 
         //queries.AuraQuery(SO.Cat, network, SO.Limiter);
         //SampleData.MakeSampleGraphData(network);
-        Query(SO.Cat, network, SO.Limiter, uri, user, password);
+        Query(SO.Cat, network, SO.Limiter);
                 
         //waits for data to be retrieved and processed.
         yield return new WaitForSeconds(1);
@@ -65,9 +62,9 @@ public class NeoQuery : MonoBehaviour
     }
 
     // Main Cypher query to get graph data
-    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter, string uri, string user, string password) 
+    public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter) 
     {
-        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
+        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
         var cypherQuery =
         @"MATCH x= (p:Category {catName: '" + Cat + "'})<-[*..2]-(s) WITH *, relationships(x) as r RETURN p, r, s LIMIT " + Limiter;
@@ -152,9 +149,9 @@ public class NeoQuery : MonoBehaviour
     }
 
     //Cypher query to get specified Category nodes that start with the input string
-    public static async void searchCatQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
+    public static async void searchCatQuery(string SearchValue, Graph.SearchResults results)
     {
-        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
+        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 
@@ -180,9 +177,9 @@ public class NeoQuery : MonoBehaviour
             await driver.CloseAsync(); 
     } 
     //Cypher query to get specified Page nodes that start with the input string
-    public static async void searchPageQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
+    public static async void searchPageQuery(string SearchValue, Graph.SearchResults results)
     {
-        IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
+        IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
         IAsyncSession session = driver.AsyncSession(o => o.WithDatabase("neo4j"));
 
         var catQuery = 

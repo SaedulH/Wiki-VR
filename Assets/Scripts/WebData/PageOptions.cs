@@ -58,7 +58,7 @@ public class PageOptions : MonoBehaviour
     {
         backtocatPressed = true;
         optionCanvas.SetActive(true);
-        questionText.text = "Load graph for";
+        questionText.text = "Load page for";
         if(SO.PageName2 == "")
         {
             MenuText.text = "No previous page available";

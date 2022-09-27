@@ -1,30 +1,35 @@
-using System.Collections;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Graph.DataStructure{
 
-[Serializable]
-public class Edges
-{
-
-    /// Default Constructor
-    public Edges(string type, long startNode, long endNode)
+    [Serializable]
+    public class Edges
     {
-        Type = type;
-        StartNodeID = startNode;
-        EndNodeID = endNode;
+        #region Constructors
+
+        // Default Constructor
+        public Edges(string type, long startNode, long endNode)
+        {
+            Type = type;
+            StartNodeID = startNode;
+            EndNodeID = endNode;
+        }
+        // Clone Constructor
+        public Edges(Edges edge)
+            : this(edge.Type, edge.StartNodeID, edge.EndNodeID)
+        {
+        } 
+        #endregion
+
+        #region Properties
+        
+        // The type of relationship of the edge
+        public string Type;
+        // The Node ID at the first endpoint
+        public long StartNodeID;
+        // The Node ID at the second endpoint
+        public long EndNodeID;
+
+        #endregion
     }
-    /// Clone Constructor
-    public Edges(Edges edge)
-        : this(edge.Type, edge.StartNodeID, edge.EndNodeID)
-    {
-    }    
-
-    public string Type;
-    public long StartNodeID;
-    public long EndNodeID;
-
-}
 }

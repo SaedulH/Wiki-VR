@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using MwParserFromScratch;
 using System.Text.RegularExpressions;
 using TMPro;
 
 namespace WebData
 {
-
     public class PageParser : MonoBehaviour
     {   
 
@@ -17,11 +13,7 @@ namespace WebData
         [SerializeField]
         private TextMeshProUGUI New;
 
-
-        // void Start()
-        // {
-        //     parseInfobox(Old.text);
-        // }
+        // Parses Wikipedia text into plain text
         public string parseText(string content)
         {   
             Regex regexcurly = new Regex("{{[^}]+}}");
@@ -61,7 +53,8 @@ namespace WebData
             return content;
 
         }
-
+        
+        // Parses infobox to correct format (unused)
         public void parseInfobox(string infobox)
         {
             infobox = infobox.Split("\\n\\n")[0];

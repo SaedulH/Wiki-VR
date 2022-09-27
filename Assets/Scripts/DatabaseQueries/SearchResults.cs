@@ -7,17 +7,13 @@ namespace Graph
     public class SearchResults
     {
 
-        /// <summary>
-        /// Empty constructor.
-        /// </summary>    
+        // Empty constructor.   
         public SearchResults()
             : this(new List<string>())
         {
         }        
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary> 
+        // Default constructor.
         public SearchResults(List<string> results)
         {
 

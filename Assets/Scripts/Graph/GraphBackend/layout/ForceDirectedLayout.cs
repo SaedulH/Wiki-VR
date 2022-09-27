@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Graph
@@ -43,16 +42,14 @@ namespace Graph
             
             while(iterations <= GraphRenderer.Current.MaxIterations)
             {
-                //iterations += 1;
-                iterations += Time.deltaTime * 200F;
-                ApplyForce();
-        
+                iterations += 1;
+                //iterations += Time.deltaTime * 200F;
+                ApplyForce();  
             }
 
             if(iterations >  GraphRenderer.Current.MaxIterations)
             { 
-                graphReady = true;
-                
+                graphReady = true;          
             }
 		}
 
@@ -61,28 +58,23 @@ namespace Graph
             graphComponents = GetComponent<GraphRenderer>();
         }
 
+        // Freezes all nodes and edges so that no residual forces are affecting their velocity 
         IEnumerator FreezeGraph()
         {
             yield return new WaitForSeconds(5);
 
             foreach(Transform node in GraphParent.transform.Find("NodesParent").transform)
-            {
-                
+            {       
                 node.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                //node.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
                 node.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 node.transform.localRotation = Quaternion.Euler(0,0,0);
-
-
             }
 
             foreach(Transform edge in GraphParent.transform.Find("EdgesParent").transform)
             {
                 edge.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                //edge.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
                 edge.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
-
             Debug.Log("Graph frozen");
                 
         }
@@ -100,12 +92,9 @@ namespace Graph
                         float yDist = n1.transform.position.y - n2.transform.position.y;
                         float zDist = n1.transform.position.z - n2.transform.position.z;
                         float dist = Vector3.Distance(n1.transform.position, n2.transform.position);
-
                         float repulsiveF = (GraphRenderer.Current.k * GraphRenderer.Current.k) / dist;
 
-                        //n1.Rigidbody1.AddForce(new Vector3(xDist / dist * repulsiveF, yDist / dist * repulsiveF, zDist / dist * repulsiveF));
                         Vector3 displacement = new Vector3(xDist, yDist, zDist);
-                        //n1.transform.position = n1.transform.position + ((displacement/dist) * repulsiveF);
                         n1.Displacement += ((displacement/dist) * repulsiveF); 
                         
                     }
@@ -121,17 +110,11 @@ namespace Graph
                 float yDist = startNode.transform.position.y - endNode.transform.position.y;
                 float zDist = startNode.transform.position.z - endNode.transform.position.z;
                 float dist = Vector3.Distance(startNode.transform.position, endNode.transform.position);
-
                 float attractiveF = (dist * dist)/ GraphRenderer.Current.k;
 
-                //startNode.AddForce(new Vector3(-xDist / dist * attractiveF, -yDist / dist * attractiveF, -zDist / dist * attractiveF));
-                //endNode.AddForce(new Vector3(xDist / dist * attractiveF, yDist / dist * attractiveF, zDist / dist * attractiveF)); 
-
                 Vector3 displacement = new Vector3(xDist, yDist, zDist);
-                //startNode.transform.position = startNode.transform.position - ((displacement/dist) * attractiveF);
-                //endNode.transform.position = endNode.transform.position + ((displacement/dist) * attractiveF);
-                edge.FirstNode.Displacement -= ((displacement/dist) * attractiveF * 0.66F);
-                edge.SecondNode.Displacement += ((displacement/dist) * attractiveF * 0.66F);
+                edge.FirstNode.Displacement -= ((displacement/dist) * attractiveF);
+                edge.SecondNode.Displacement += ((displacement/dist) * attractiveF);
             }
 
             foreach (GraphNode node in graphComponents.GraphNodes.Values)
@@ -142,6 +125,6 @@ namespace Graph
             
         }
 	}
-    }
+}
     
 

@@ -1,12 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PageOptions : MonoBehaviour
 {   
-
+    #region Values
+        
     [SerializeField]
     private GameObject searchCanvas;
 
@@ -28,6 +28,10 @@ public class PageOptions : MonoBehaviour
     public bool backtocatPressed = false;
     public bool menuPressed = false;
     public bool exitPressed = false;
+
+    #endregion
+
+    #region Page functions 
 
     public void showSearch()
     {
@@ -117,6 +121,6 @@ public class PageOptions : MonoBehaviour
             SceneManager.LoadScene("WikiPage");
         }
     }
- 
+    #endregion
 }
 

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,17 +29,12 @@ public class WristUI : MonoBehaviour
 
         if(WristMenu.activeSelf == true)
         {
-            StartCoroutine(WristOff());
-            //Toggle.SetTrigger("TurnWristOff");
-            
+            StartCoroutine(WristOff());            
         }
         else if(WristMenu.activeSelf == false)
         {
             WristMenu.SetActive(true);
-            //Toggle.SetTrigger("TurnWristOn");
-
         }
-        //_wristCanvas.enabled = !_wristCanvas.enabled;
     }
 
     IEnumerator WristOff()

@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using Graph;
 
 
@@ -12,16 +9,12 @@ public class NodeInteraction : MonoBehaviour
 
     private float ConnectionCounter = 0;
     
-    void start()
-    {
 
-    }
 
     public void OnHover()
     {
         Hover.SetBool("IsHovering", true);
         GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>().Play("Hover");
-
     }
 
     public void OffHover()
@@ -29,6 +22,7 @@ public class NodeInteraction : MonoBehaviour
         Hover.SetBool("IsHovering", false);
     }
 
+    //Highlight every connected edge to the node
     public void NodeSelected()
     {   
         Debug.Log("Nodeselected");
@@ -62,6 +56,7 @@ public class NodeInteraction : MonoBehaviour
         Debug.Log("This node has " + ConnectionCounter + " links");
     }
 
+    // Unhighlight every connected edge to the node
     public void NodeDeselected()
     {
         StartCoroutine(DoNodeDeselected());

@@ -1,12 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
 {   
+    #region Values
     public static MenuManager current;
 
     private NeoQuery neoQuery;
@@ -27,7 +26,7 @@ public class MenuManager : MonoBehaviour
     private GameObject Confirm;
 
     [SerializeField]
-    private StringSO catNameSO;
+    private StringSO SO;
 
     [SerializeField]
     private TextMeshProUGUI confirmCat;
@@ -47,11 +46,36 @@ public class MenuManager : MonoBehaviour
     public Animator Toggle;
     public Animator CatAnim;
 
+    [SerializeField]
+    private UnityEngine.XR.Interaction.Toolkit.ActionBasedContinuousTurnProvider smoothProvider;
+
+    [SerializeField]
+    private UnityEngine.XR.Interaction.Toolkit.ActionBasedSnapTurnProvider snapProvider;
+
+    #endregion
+
     void Start()
     {
         current = this;
+        checkTurn();
     }
 
+    //checks the selected turn method
+    public void checkTurn()
+    {
+        if(SO.Snapturn)
+        {
+            //do nothing
+        }
+        else 
+        {   
+            snapProvider.enabled = false;
+            smoothProvider.enabled = true;
+        }
+        
+    }
+
+    #region MenuUI
     public void StarttoChoices()
     {
         StartCoroutine(StarttoChoicesMenu());
@@ -148,7 +172,7 @@ public class MenuManager : MonoBehaviour
         yield return new WaitForSeconds(0.33F);
         Choices.SetActive(false);
 
-        confirmCat.text = catNameSO.Cat;
+        confirmCat.text = SO.Cat;
         Confirm.SetActive(true);
 
     }
@@ -253,4 +277,5 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    #endregion
 }

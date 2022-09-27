@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -14,10 +13,14 @@ public class ExitDoor : MonoBehaviour
     private Material blueGlassHovered;
 
     [SerializeField]
+    private GameObject GlassHex;
+
+    [SerializeField]
     private TextMeshProUGUI catName;
 
     public StringSO SO;
     public Animator Fade;
+
 
     void Start()
     {
@@ -26,12 +29,12 @@ public class ExitDoor : MonoBehaviour
 
     public void OnHover()
     {
-        GetComponentInChildren<MeshRenderer>().material = blueGlassHovered;
+        GlassHex.GetComponent<MeshRenderer>().material = blueGlassHovered;
     }
 
     public void OffHover()
     {
-        GetComponentInChildren<MeshRenderer>().material = blueGlass; 
+         GlassHex.GetComponent<MeshRenderer>().material = blueGlass; 
     }
 
     public void Exited()

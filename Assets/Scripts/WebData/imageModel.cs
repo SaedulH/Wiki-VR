@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebData
 { 
@@ -24,16 +20,13 @@ namespace WebData
         public int ns { get; set; }
         public string title { get; set; }
         public _Thumbnail thumbnail { get; set; }
-
         public string pageimage {get; set;}
     }
 
     public class _Thumbnail
     {
         public string source {get; set;}
-
         public float width {get; set;}
-
         public float height {get; set;}
     }
 

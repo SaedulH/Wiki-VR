@@ -10,6 +10,7 @@ TagManager:
   - Graph
   - Limiter
   - Audio
+  - Music
   layers:
   - Default
   - TransparentFX

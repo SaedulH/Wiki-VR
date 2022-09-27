@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 namespace WebData
 {
@@ -22,7 +19,6 @@ namespace WebData
         {
             buttonText.text = textString;
         }
-
         public void onClick()
         {
             ConfirmCanvas.SetActive(true);

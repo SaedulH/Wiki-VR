@@ -1,10 +1,9 @@
-using UnityEngine.Audio;
 using UnityEngine;
 
+//Class for defining sound clips
 [System.Serializable]
 public class Sound
 {
-
     public string name;
 
     public AudioClip clip;

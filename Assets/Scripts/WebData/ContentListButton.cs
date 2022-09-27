@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
 
 namespace WebData
 {
@@ -18,7 +15,7 @@ namespace WebData
         {
             buttonText.text = textString;
         }
-
+        // Make appropriate API call on press
         public void OnButtonPress()
         {
             
@@ -39,14 +36,6 @@ namespace WebData
                     {
                         //do nothing
                     }
-
-                
-
-                // string number = new string(buttonText.text.SkipWhile(c=>!char.IsDigit(c))
-                //          .TakeWhile(c=>char.IsDigit(c))
-                //          .ToArray());
-                //     Debug.Log(buttonText.text + " to "+ number);
-                //     StartCoroutine(webCall.GetSectionRequest(number));
             }
         }
     }

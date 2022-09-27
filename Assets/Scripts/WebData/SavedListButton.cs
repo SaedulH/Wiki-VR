@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -25,7 +24,6 @@ namespace WebData
         public void OnButtonPress()
         {
             StartCoroutine(ToSavedArticle());
-            //showthesaved page
         }
 
         IEnumerator ToSavedArticle()
@@ -36,7 +34,6 @@ namespace WebData
             yield return new WaitForSeconds(0.5F);
 
             SceneManager.LoadScene("WikiPage");
-
         }
     }
 }

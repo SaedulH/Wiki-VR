@@ -696,6 +696,7 @@ GameObject:
   - component: {fileID: 341240002}
   - component: {fileID: 341240001}
   - component: {fileID: 341240000}
+  - component: {fileID: 341240003}
   - component: {fileID: 341239999}
   m_Layer: 0
   m_Name: XR Interaction Manager
@@ -842,6 +843,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActionAssets:
   - {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &341240003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341239996}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919e39492806b334982b6b84c90dd927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 0}
+  m_TurnSpeed: 60
+  m_LeftHandTurnAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Left Hand Turn
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b9ac2485-f305-451c-9106-d1d25cc235dc
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 1010738217276881514, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_RightHandTurnAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Hand Turn
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 93119ec4-ae3b-41c0-8fb4-7ff4c5e6f732
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!43 &371878219
 Mesh:
   m_ObjectHideFlags: 0
@@ -1781,13 +1820,11 @@ MonoBehaviour:
   CatNodePrefab: {fileID: 7327804403519715063, guid: 1793f1a34a5b93f4eadadb0b6a440963, type: 3}
   EdgesParent: {fileID: 272790798}
   CylinderEdgePrefab: {fileID: 6460440365847691095, guid: 3228bc94c125d4b4a959f17b8b8ea8d0, type: 3}
-  Springy: {fileID: 0}
+  Springs: {fileID: 0}
   GraphEdges: []
   MaxIterations: 0
   area: 0
-  maxDisplacement: 0
   k: 1
-  speed: 10
 --- !u!114 &748034049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3019,7 +3056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1123915734
 Transform:
   m_ObjectHideFlags: 0
@@ -4889,7 +4926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1943996270
 Transform:
   m_ObjectHideFlags: 0
@@ -7195,7 +7232,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIchecker: {fileID: 11400000, guid: e078a30526842dc4da4929b64cfa0430, type: 2}
+  SO: {fileID: 11400000, guid: deafd82957807634b8f365e6ca831c81, type: 2}
   moveProvider: {fileID: 341240001}
+  smoothProvider: {fileID: 341240003}
+  snapProvider: {fileID: 341240000}
   _body: {fileID: 2127767467}
 --- !u!136 &2127767469
 CapsuleCollider:

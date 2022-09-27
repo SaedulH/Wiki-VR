@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -14,7 +12,6 @@ public class FollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //mCamera = Camera.main;
         player = GameObject.Find("XR Origin");
         nodeText = GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -22,8 +19,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.LookAt(player.transform.position);  
-
+        //all node text to face the player model at all times
         transform.rotation = Quaternion.LookRotation(player.transform.position - transform.position);
 
         float distance = Vector3.Distance(player.transform.position, transform.position);

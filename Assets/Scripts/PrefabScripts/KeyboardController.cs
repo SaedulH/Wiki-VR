@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -37,8 +36,6 @@ public class KeyboardController : MonoBehaviour
         {
             CapsLock();
         }
-
-
     }
 
 
@@ -55,14 +52,10 @@ public class KeyboardController : MonoBehaviour
         searchField.text += key;    
         } 
 
-
         if(searchField.text.Length == 1 && CapsOn)
         {
             CapsLock();
         }
-
-
-         
     }
 
     public void ClearAll()
@@ -105,7 +98,6 @@ public class KeyboardController : MonoBehaviour
         Toggle.SetTrigger("KeyboardOff");
         
         yield return new WaitForSeconds(0.5F);
-
         Keyboard.SetActive(false);
     }
 
@@ -116,11 +108,8 @@ public class KeyboardController : MonoBehaviour
         {        
             foreach(Transform key in keys.transform)
             {   
-  
                 string keyupper = key.GetComponentInChildren<TextMeshProUGUI>().text.ToUpper();
                 key.GetComponentInChildren<TextMeshProUGUI>().text = keyupper;
-                //Debug.Log(key.GetComponentInChildren<TextMeshProUGUI>().text);
-                                
             }
             CapsOn = true;
         }
@@ -130,8 +119,6 @@ public class KeyboardController : MonoBehaviour
             { 
                 string keylower = key.GetComponentInChildren<TextMeshProUGUI>().text.ToLower();
                 key.GetComponentInChildren<TextMeshProUGUI>().text = keylower;
-                //Debug.Log(key.GetComponentInChildren<TextMeshProUGUI>().text);  
-                              
             }
             CapsOn = false;
         }

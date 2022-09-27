@@ -11,6 +11,8 @@ namespace Graph
 {
     public class GraphPanel : MonoBehaviour
     {   
+        #region Values
+
         public static GraphPanel current;
 
         [SerializeField]
@@ -50,13 +52,15 @@ namespace Graph
 
         public List<string> TopTenPages;
 
+        //References the parent holding all Top ten page buttons
         [SerializeField]
-        [Tooltip("References the parent holding all Top ten page buttons.")]
         private GameObject TopTenButtonsParent;
 
+        // References the prefab for Top ten page buttons
         [SerializeField]
-        [Tooltip("References the prefab for Top ten page buttons.")]
         private GameObject TopTenButtonsTemplate;
+                    
+        #endregion
 
         // Start is called before the first frame update
         void Awake()
@@ -65,34 +69,18 @@ namespace Graph
             current = this;
             CatName.text = SO.Cat;
             ListofPages = new Dictionary<string, int>();
-            //Debug.Log(GetDates());
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        void OnAwake()
-        {
-       
         }
 
         public void GetAllInfo()
         {
             GetStats();
             MostViewedStats();
-
         }
 
         public void GetStats()
         {
-
             foreach(Transform nodes in NodesParent.transform)
-            {
-                
-                
+            {            
                 if(nodes.GetComponent<GraphNode>().Node.Label == "Category")
                 {
                     
@@ -108,24 +96,20 @@ namespace Graph
             }
 
             TlinkCount = graphRenderer.GraphEdges.Count;
-            //Debug.Log("Total Nodes: " + TnodeCount);
-
             TNodes.text = TnodeCount.ToString();
             CNodes.text = CnodeCount.ToString();
             PNodes.text = PnodeCount.ToString();
             TLinks.text = TlinkCount.ToString();
         }
 
+        //gets every pages page view
         public void MostViewedStats()
         {      
-            //ListofPages = new Dictionary<string, string>();
             foreach(GraphNode nodes in graphRenderer.GraphNodes.Values)
             {
-                
                 if(nodes.Node.Label == "Page")
                 {
                     string encodedName = nodes.Node.Title.Replace(" ", "_");
-
                     StartCoroutine(GetViewedData(encodedName));
                 }
                 else
@@ -136,10 +120,10 @@ namespace Graph
             
         }
 
+        //gets the page view number in the past month for a page
         public IEnumerator GetViewedData(string encodedName)
         {
             string pageviewRequest = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/"+encodedName+"/monthly/"+GetDates();
-            //Debug.Log(pageviewRequest);
 
             using(UnityWebRequest request = UnityWebRequest.Get(pageviewRequest))
             {
@@ -148,21 +132,14 @@ namespace Graph
                 string Content = request.downloadHandler.text;
                 var PageViewData = Newtonsoft.Json.JsonConvert.DeserializeObject<PageViewBase>(Content);
 
-                //Debug.Log(encodedName + " : " + PageViewData.items[0].views.ToString());
                 if(PageViewData.items == null)
                 {
-                    //Debug.Log(encodedName);
                     //do nothing
                 }
                 else
                 {
                     ListofPages.Add(encodedName, PageViewData.items[0].views);  
                 }
-                //TopTenPages.Add(PageViewData.items[0].views.ToString()); 
-                //TopTenPages.Add(encodedName); 
-                //Debug.Log(ListofPages.Count);
-
-
             }
 
         }
@@ -171,22 +148,17 @@ namespace Graph
         {
             int month = System.DateTime.Now.Month - 1;
             int year = System.DateTime.Now.Year;
-            //Debug.Log("month is " + month);
-            //Debug.Log("year is " + year);
 
             string Period = year+"0"+month+"01/"+year+"0"+month+"31";
 
             return Period;
         
         }
-
+        //Ranks pages by page view, keeps top 12
         public IEnumerator GeneratePageList()
         {
-            //Debug.Log("gen page list");
             foreach(var item in ListofPages.OrderByDescending(x => x.Value))
             {
-                //Debug.Log(item.Key + " : " + item.Value);
-
                 if(TopTenPages.Count <= 10)
                 {
                     TopTenPages.Add(item.Key.Replace("_"," "));
@@ -215,8 +187,6 @@ namespace Graph
 
         public void ReturntoGraph()
         {
-            //GameObject.Find("XR Origin").transform.Find("Camera Offset").transform.Find("Left Hand Controller").transform.Find("WristCanvas").GetComponent<WristMenuFunctions>().MaximizeGraph();
-            //GameObject.Find("XR Origin").GetComponentInChildren<WristMenuFunctions>().MaximizeGraph();
             WristMenuFunctions.current.MaximizeGraph();
         }
 

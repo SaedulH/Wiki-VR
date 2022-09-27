@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
 using Graph.DataStructure;
 
 public class SampleData
 {
+    //Initial Graph nodes and edges used for testing network functionality without the need for Neo4j
     public static void MakeSampleGraphData(Graph.DataStructure.GraphNetwork graph1)
     {
         //Test graph using manually created nodes and edges//

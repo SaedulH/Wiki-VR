@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Graph;
 using TMPro;
@@ -52,6 +51,7 @@ namespace Search
                             
         }
 
+        //House Category query results in scoll rect
         public IEnumerator SearchCat(string inputfieldtext)
         {   
             clearButtons();
@@ -63,6 +63,8 @@ namespace Search
             yield return new WaitForSeconds(0.5f);
             generateButtons(results);
         }
+
+        //House Page query results in scoll rect
         public IEnumerator SearchPage(string inputfieldtext)
         {   
             clearButtons();
@@ -74,8 +76,7 @@ namespace Search
             yield return new WaitForSeconds(0.5f);
             generateButtons(results);
         }
-
-
+        //House category query results in scoll rect specific for graph
         public IEnumerator GraphSearchCat(string inputfieldtext)
         {   
             clearButtons();
@@ -95,6 +96,8 @@ namespace Search
             generateButtons(results);
 
         }
+
+        //House page query results in scoll rect specific for graph
         public IEnumerator GraphSearchPage(string inputfieldtext)
         {   
             clearButtons();

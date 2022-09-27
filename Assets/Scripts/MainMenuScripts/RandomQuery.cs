@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Neo4j.Driver;
 using TMPro;
@@ -23,7 +21,6 @@ public class RandomQuery : MonoBehaviour
     private TextMeshProUGUI Title; 
 
     private MenuManager menu;
-    // Start is called before the first frame update
 
     private bool randomReady = false;
     public void RandomConfirmtoOptions()
@@ -33,6 +30,7 @@ public class RandomQuery : MonoBehaviour
        
     } 
 
+    // Cypher query for retrieving a random node in the database
     public async void RandomNeoQuery(string RandomType)
     {
         IDriver driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "wiki"));;
@@ -83,14 +81,10 @@ public class RandomQuery : MonoBehaviour
 
         Loadfor.text = "Load Graph for";
         Title.text = SO.Cat; 
-
-
     }    
 
     public void DoRandomPageQuery()
     {
-        //WebData.WebCall webCall = new WebData.WebCall();
-        //startl.getrandomURl();
         RandomNeoQuery("Page");
 
         RandomOption.SetActive(false);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,7 +33,7 @@ public class IncreaseVertical : MonoBehaviour
             descend.DescendForce = 50F;
 
         }
-        else if(ascend.AscendForce < 150)
+        else if(ascend.AscendForce < 100)
         {
             ascend.AscendForce += value;
             descend.DescendForce += value;

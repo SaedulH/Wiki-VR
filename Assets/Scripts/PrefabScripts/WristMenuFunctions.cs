@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -7,7 +6,8 @@ using Graph;
 
 public class WristMenuFunctions : MonoBehaviour
 {
-
+    #region Values
+    
     public static WristMenuFunctions current;
 
     public bool _Exitpressed = false;
@@ -60,6 +60,10 @@ public class WristMenuFunctions : MonoBehaviour
     [Tooltip("prefab used for the search canvas.")]
     private GameObject SearchCanvas;
 
+    [SerializeField]
+    [Tooltip("prefab used for the search canvas.")]
+    private GameObject HelpCanvas;
+
     public Animator Fade;
 
     public Animator Toggle;
@@ -68,11 +72,13 @@ public class WristMenuFunctions : MonoBehaviour
 
     public Animator GraphPanelAnim;
 
-
+    #endregion
     void Start()
     {
         rootcatname.text = SO.Cat;
     }
+
+    #region Wrist Menu functions
 
     public void Exitgamepressed()
     {
@@ -80,7 +86,6 @@ public class WristMenuFunctions : MonoBehaviour
          firstScreen.SetActive(false);
          secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to exit game?";
-        //Toggle.SetBool("FirstScreen", false);
     }
     
     public void Backtomenupressed()
@@ -89,7 +94,6 @@ public class WristMenuFunctions : MonoBehaviour
          firstScreen.SetActive(false);
          secondScreen.SetActive(true);
         ExitorMenu.text = "Are you sure you want to return to menu?";
-        //Toggle.SetBool("FirstScreen", false);
     }
 
     public void Categorypressed()
@@ -105,7 +109,6 @@ public class WristMenuFunctions : MonoBehaviour
          secondScreen.SetActive(true);
         ExitorMenu.text = "Load graph for";
         catname.text = SO.LastCat;  
-        //Toggle.SetBool("FirstScreen", false);        
         }
 
     }
@@ -124,6 +127,12 @@ public class WristMenuFunctions : MonoBehaviour
 
         StartCoroutine(WristOff());
         showSearch();
+    }
+
+    public void Helppressed()
+    {
+        StartCoroutine(WristOff());
+        showHelp();
     }
 
     IEnumerator WristOff()
@@ -185,7 +194,6 @@ public class WristMenuFunctions : MonoBehaviour
         _Menupressed = false;
          secondScreen.SetActive(false);
          firstScreen.SetActive(true);
-        //Toggle.SetBool("FirstScreen", true);
     }
 
     public void showSearch()
@@ -197,6 +205,16 @@ public class WristMenuFunctions : MonoBehaviour
         searchCanvas.transform.rotation = Camera.main.transform.rotation;
         Debug.Log("showing search canvas");
     } 
+
+    public void showHelp()
+    {
+        uIcheckerSO.showingUI = true;
+        GameObject helpCanvas = Instantiate(HelpCanvas, new Vector3(0, 0, 0), Quaternion.identity);
+
+        helpCanvas.transform.position = Camera.main.transform.position + Camera.main.transform.forward*2.5f;
+        helpCanvas.transform.rotation = Camera.main.transform.rotation;
+        Debug.Log("showing help canvas");
+    }     
 
     public void ExpandPressed()
     {
@@ -237,13 +255,6 @@ public class WristMenuFunctions : MonoBehaviour
         uIcheckerSO.showingUI = true;
         Min.SetActive(false);
         Max.SetActive(true);
-        // Graph.transform.Find("NodesParent").localScale = new Vector3(0.07F,0.07F,0.07F);
-
-        // foreach(Transform node in Graph.transform.Find("NodesParent").transform)
-        // {
-        //     var MinScale = new Vector3(node.localScale.x * 0.6F, node.localScale.y * 0.6F, node.localScale.z * 0.6F);
-        //     node.localScale = MinScale;
-        // }
         
         foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
         {
@@ -262,13 +273,6 @@ public class WristMenuFunctions : MonoBehaviour
         uIcheckerSO.showingUI = false;
         Max.SetActive(false);
         Min.SetActive(true);
-        // Graph.transform.Find("NodesParent").localScale = new Vector3(1F,1F,1F);
-    
-        // foreach(Transform node in Graph.transform.Find("NodesParent").transform)
-        // {
-        //     var MinScale = new Vector3(node.localScale.x * 1.67F, node.localScale.y * 1.67F, node.localScale.z * 1.67F);
-        //     node.localScale = MinScale;
-        // }
 
         foreach(Transform edge in Graph.transform.Find("EdgesParent").transform)
         {
@@ -282,5 +286,5 @@ public class WristMenuFunctions : MonoBehaviour
     {
         StartCoroutine(GraphPanel.current.GeneratePageList());
     }
-
+    #endregion
 }

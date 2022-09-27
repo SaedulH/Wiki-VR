@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -59,16 +58,7 @@ namespace Search
             thissearchManager = this;
             showingPage = false;
             checkSelect();
-            //inputField.text = "Databases";
-            //searchInput();
-            //Debug.Log(showingPage);
         }
-
-
-        // public void switchResults()
-        // {
-        //     showingPage = !showingPage;
-        // }
 
         public void switchtoCat()
         {

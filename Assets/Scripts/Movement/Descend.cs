@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +27,6 @@ public class Descend : MonoBehaviour
 
     public void OnDescend(float Dvalue)
     {
-
         if(Dvalue == 1)
         {
             _Dbody.AddForce(Vector3.down * DescendForce);

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -19,6 +18,7 @@ public class EdgeInfoManager : MonoBehaviour
 
     public Animator EdgeInfoUI;
 
+    // displays end points for edge (now unused)
     public void InitializeEdgeCanvas(Graph.GraphEdge graphEdge)
     {
         EdgeStart.text = graphEdge.FirstNode.Node.Title;
@@ -32,16 +32,6 @@ public class EdgeInfoManager : MonoBehaviour
         {
             EdgeType.text = "In category:";
         }
-    }
-
-    public void StartNodePressed()
-    {
-        //teleport to node
-    }
-
-    public void EndNodePressed()
-    {
-        //teleport to node  
     }
 
     public void ExitPressed()

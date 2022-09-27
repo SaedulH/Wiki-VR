@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Graph.DataStructure;
 using TMPro;
 
@@ -21,16 +19,13 @@ namespace Graph
         private UIcheckerSO uIcheckerSO;
     
         [SerializeField]
-        [Tooltip("prefab used for the loadcat canvas.")]
         private GameObject LoadCat;
 
         [SerializeField]
-        [Tooltip("prefab used for the loadpage canvas.")] 
         private GameObject LoadPage; 
 
         
         [SerializeField]
-        [Tooltip("The graph data being displayed.")]
         private Graph.DataStructure.GraphNetwork _graph1;
 
         public Graph.DataStructure.GraphNetwork graph1 { get { return _graph1; } }
@@ -39,9 +34,6 @@ namespace Graph
 
         #region Initialization
 
-        /// <summary>
-        /// Executes once on start.
-        /// </summary>
         private void Awake()
         {   
             
@@ -49,10 +41,7 @@ namespace Graph
             thisNode = this;
         }
 
-        /// <summary>
-        /// Initializes the graph node.
-        /// </summary>
-        /// <param name="node">The node being presented.</param>
+        // Initializes the graph node.
         public void InitializeNode(Nodes node, Graph.DataStructure.GraphNetwork graph1)
         {
             _graph1 = graph1;
@@ -69,13 +58,10 @@ namespace Graph
                 {
                     if(node.Id == edge.StartNodeID || node.Id == edge.EndNodeID)
                     {
-                        //Debug.Log(node.Id + " to " + edge.Type);
                         transform.GetComponentInChildren<Transform>().localScale += increaseSize;
-                        
                     }
                 }
             }
-
         }
 
         #endregion
@@ -83,29 +69,21 @@ namespace Graph
         #region Fields/Properties
 
         [SerializeField]
-        [Tooltip("The node being presented.")]
         private Nodes _Node;
 
         public Nodes Node { get { return _Node; } }
 
-        /// <summary>
-        /// References the rigid body that handles the movements of the node.
-        /// </summary>
+        // References the rigid body that handles the movements of the node.
         public Rigidbody Rigidbody1;
 
-
-        /// <summary>
-        /// List of all forces to apply.
-        /// </summary>
+        // List of all forces to apply. (no longer used)
         private List<Vector3> Forces;
 
         #endregion
 
         #region Movement
 
-        /// <summary>
-        /// Apply forces to the node.
-        /// </summary>
+        // Apply forces to the node. (no longer used)
         public void ApplyInitialForces(List<Vector3> forces, bool applyImmediately = false)
         {
             if (applyImmediately)
@@ -115,10 +93,7 @@ namespace Graph
                 Forces = forces;
         }         
 
-        
-        /// <summary>
-        /// total displacement of node.
-        /// </summary>
+        // total displacement of node.
         public Vector3 Displacement = Vector3.zero;
 
         #endregion
@@ -131,7 +106,6 @@ namespace Graph
             
             if(Node.Label == "Category")
             {
-        
                 Debug.Log("this is the category: "+Node.Title);
                 showLoad("Category");
             }
@@ -143,6 +117,7 @@ namespace Graph
             }
         }
 
+        // spawn confirm canvas for either page or category
         public void showLoad(string type)
         {
             uIcheckerSO.showingUI = true;
@@ -173,23 +148,7 @@ namespace Graph
             }
 
         }
-
-        // public void showPage()
-        // {   
-
-        //     GameObject PageCanvas = Instantiate(HexaPage, new Vector3(-150, 0, -150), Quaternion.identity);
-        //     var Pagename = PageCanvas.transform.Find("Pagename");
-        //     Pagename.GetComponent<TextMeshProUGUI>().text = SO.PageName;
-            
-        //     Camera.main.transform.position = new Vector3(-150, 2, -150);
-
-        //     Debug.Log("Show page canvas");
-            
-        // }
-        
-            #endregion
-        }
-
-        
+        #endregion
+    }       
 }
 

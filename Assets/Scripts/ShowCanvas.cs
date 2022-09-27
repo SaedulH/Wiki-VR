@@ -1,17 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class ShowCanvas : MonoBehaviour
 {
+    #region Values
+
+    // Prefab for load category canvas
     [SerializeField]
-    [Tooltip("prefab used for the cat canvas.")]
     private GameObject LoadCat;
 
+    // Prefab for load page canvas
     [SerializeField]
-    [Tooltip("prefab used for the page canvas.")] 
     private GameObject LoadPage;  
 
     [SerializeField]
@@ -30,6 +31,8 @@ public class ShowCanvas : MonoBehaviour
     public Animator EnterNode;
 
     private AudioManager Audio;
+            
+    #endregion
 
     void Awake()
     {
@@ -37,6 +40,8 @@ public class ShowCanvas : MonoBehaviour
         Audio = GameObject.FindGameObjectWithTag("Audio").GetComponentInChildren<AudioManager>();
 
     }
+
+    #region Canvas functions
 
     public void loadnewCat()
     {
@@ -111,4 +116,6 @@ public class ShowCanvas : MonoBehaviour
         Toggle.SetTrigger("LoadPageOff");
         gameObject.SetActive(false);
     }
+            
+    #endregion
 }

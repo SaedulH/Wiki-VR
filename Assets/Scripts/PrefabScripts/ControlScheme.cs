@@ -1,39 +1,28 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ControlScheme : MonoBehaviour
 {
 
-    private GameObject player;
+    public Animator Controls;
 
-    public Animator Toggle;
+    public UIcheckerSO uIcheckerSO;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        player = GameObject.Find("XR Origin");
-        StartCoroutine(turnOffControls());
+        uIcheckerSO.showingUI = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void turnOff()
     {
-
-        transform.rotation = Quaternion.LookRotation(player.transform.position - transform.position);
-
-        float distance = Vector3.Distance(player.transform.position, transform.position);     
-    
+        StartCoroutine(turnOffControls());
     }
 
     IEnumerator turnOffControls()
     {
-        yield return new WaitForSeconds(15);
-
-        Toggle.SetTrigger("ControlsOff");
+        Controls.SetTrigger("ControlsOff");
 
         yield return new WaitForSeconds(1);
-
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+        uIcheckerSO.showingUI = false;
     }
 }

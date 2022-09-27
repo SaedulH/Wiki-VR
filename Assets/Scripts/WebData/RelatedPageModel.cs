@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace WebData
 { 
@@ -9,7 +7,6 @@ namespace WebData
     {
         public _RelatedQuery query {get; set;}
     }
-
     public class _RelatedQuery
     {
         public Dictionary<string, _RelatedPages>  pages { get; set; }
@@ -22,7 +19,6 @@ namespace WebData
         public string title { get; set; }
         public _Links[] links { get; set; }
     }
-
 
     public class _Links
     {

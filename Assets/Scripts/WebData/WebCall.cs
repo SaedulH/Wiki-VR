@@ -9,10 +9,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WebData
-{
-        
+{     
     public class WebCall : MonoBehaviour
     {
+        #region Values
 
         [SerializeField]
         [Tooltip("References the parent holding all content list buttons.")]
@@ -55,11 +55,13 @@ namespace WebData
 
         [SerializeField]
         private TextMeshProUGUI ImageCaption;
+
+        [SerializeField]
+        private GameObject CaptionBorder;
+
         [SerializeField]
         private TextMeshProUGUI featuredText;
 
-
-        
         [SerializeField]
         private StringSO SO;
 
@@ -91,6 +93,8 @@ namespace WebData
 
         private string GetInfoBox = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=jsonfm&rvsection=0&titles=";
 
+        #endregion
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -100,21 +104,34 @@ namespace WebData
             pageName.text = SO.PageName;
             encodedName = pageName.text.Replace(" ", "%20"); 
 
+            StartCoroutine(SequenceStart());
+        
+        }
+
+        //Get intro and check for redirect title
+        IEnumerator SequenceStart()
+        {
+            yield return StartCoroutine(GetIntroRequest());
+            yield return ConcurrentAPIs();
+        }
+
+        //Get the rest of the page
+        public IEnumerator ConcurrentAPIs()
+        {   
+            yield return new WaitForEndOfFrame();
+
             StartCoroutine(GetContentList());
-            StartCoroutine(GetIntroRequest());
             StartCoroutine(GetImageURL());
             StartCoroutine(GetSavedList());
             StartCoroutine(GetFeaturedArticle());
             StartCoroutine(GetRandomURL());
             StartCoroutine(GetRelatedList());
-        
-        }
-
+        }        
 
         public IEnumerator GetIntroRequest()
         {   
             pageText.text = "Loading...";
-            //Debug.Log(APIintro+encodedName); 
+            Debug.Log(APIintro+encodedName); 
             using(UnityWebRequest request = UnityWebRequest.Get(APIintro+encodedName))
             {
                 yield return request.SendWebRequest();  
@@ -127,6 +144,12 @@ namespace WebData
                 // var ast = parser.Parse(pageData.query.pages[firstKey].extract);
                 // pageText.text =  ast.Lines.ToString();
                 pageText.text = pageData.query.pages[firstKey].extract.Replace("\n", "\n\n");
+
+                if(pageData.query.redirects != null)
+                {
+                Debug.Log(pageData.query.redirects[0].to);
+                encodedName = pageData.query.redirects[0].to;    
+                }
                 
                 
             }
@@ -137,7 +160,6 @@ namespace WebData
         {
             pageText.text = "Loading...";
             string sectionRequest = APIsection+encodedName+"&section="+sectionNum.ToString();
-            //Debug.Log(sectionRequest);
 
             using(UnityWebRequest request = UnityWebRequest.Get(sectionRequest))
             {
@@ -149,8 +171,6 @@ namespace WebData
                 WebData.PageParser pageParser = new PageParser();
 
                 pageText.text = pageParser.parseText(pageData.parse.wikitext.ToString());
-                //pageText.text = pageData.parse.wikitext.ToString();
-
             }
             Debug.Log("got section");
         }
@@ -180,7 +200,6 @@ namespace WebData
             yield return new WaitForSeconds(1); 
 
             generateContentButtons(); 
-            //printList();
         }
 
         IEnumerator GetRelatedList()
@@ -209,12 +228,11 @@ namespace WebData
             yield return new WaitForSeconds(1); 
 
             generateRelatedButtons(); 
-            //printList();
         }        
 
         IEnumerator GetImageURL()
         {   
-            Debug.Log(GetRawImage+encodedName);
+            //Debug.Log(GetRawImage+encodedName);
             using(UnityWebRequest request = UnityWebRequest.Get(GetRawImage+encodedName))
             {
                 yield return request.SendWebRequest();
@@ -226,21 +244,18 @@ namespace WebData
 
                 if(imageData.query.pages[firstKey].thumbnail == null)
                 {
+                    CaptionBorder.SetActive(true);
                     ImageCaption.text = "No Image Available";
                     ImageCanvas.SetActive(false);
                 }
                 else
                 {
                     var ImageURL = imageData.query.pages[firstKey].thumbnail.source;
-
                     var HDImageURL = Regex.Replace(ImageURL, @"/([\w-]+)px", "/400px");
 
-                    //Debug.Log(HDImageURL);
                     StartCoroutine(GetImage(HDImageURL));
                 }
 
-                //https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.jpg/37px-Hitler_portrait_crop.jpg
-                //https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hitler_portrait_crop.400-Hitler_portrait_crop.jpg
             } 
         }
 
@@ -305,7 +320,6 @@ namespace WebData
                 button.SetActive(true);
 
                 button.GetComponent<SavedListButton>().setText(page);
-                
             }
         }
 
@@ -316,13 +330,10 @@ namespace WebData
             {
                 GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
                 button.SetActive(true);
-
                 button.GetComponent<SavedListButton>().setText(page);
                 
             }
         }
-
-
 
         public void AddorRemoveSave()
         {
@@ -334,12 +345,9 @@ namespace WebData
 
                 GameObject button = Instantiate(SavedbuttonTemplate, SavedButtonsParent.transform) as GameObject;
                 button.SetActive(true);
-
                 button.GetComponent<SavedListButton>().setText(pageName.text);
 
                 AddorRemove.text = "Remove";
-                
-
             }
             else
             {
@@ -356,11 +364,9 @@ namespace WebData
                 }
                 AddorRemove.text = "Add";
             }
-        
-            //StartCoroutine(GetSavedList());
-            
         }
 
+        // Get today's featured article on Wikipedia
         IEnumerator GetFeaturedArticle()
         {
             using(UnityWebRequest request = UnityWebRequest.Get(GetFeatured + System.DateTime.Now.ToString("yyyy/MM/dd")))
@@ -371,7 +377,6 @@ namespace WebData
                 var contentData = Newtonsoft.Json.JsonConvert.DeserializeObject<FeaturedBase>(Content);
 
                 Regex regexbracket = new Regex("<[^>]+>");
-                // var ast = parser.Parse 
                 featuredText.text = regexbracket.Replace(contentData.tfa.displaytitle, "");
             }
         }
@@ -389,9 +394,9 @@ namespace WebData
             yield return new WaitForSeconds(0.5F);
 
             SceneManager.LoadScene("WikiPage");
-
         }
 
+        // Pull a random page title from Wikipedia
         public void GetRandomPage()
         {
             StartCoroutine(LoadRandomPage());
@@ -435,8 +440,5 @@ namespace WebData
                 }
             }
         }
-
-
-
     }
 }

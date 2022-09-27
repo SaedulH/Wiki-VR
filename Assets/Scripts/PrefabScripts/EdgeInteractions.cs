@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Graph;
-using TMPro;
 
 public class EdgeInteractions : MonoBehaviour
 {   
@@ -22,6 +19,7 @@ public class EdgeInteractions : MonoBehaviour
         graphEdge = GetComponent<GraphEdge>();
     }
 
+    //spawn Edge info prefab (now unused)
     public void EdgePressed()
     {   
         UIcheckerSO.showingUI = true;
@@ -36,6 +34,7 @@ public class EdgeInteractions : MonoBehaviour
         Edgescript.InitializeEdgeCanvas(graphEdge);
 
     }
+    // Highlight edge on hover
     public void EdgeSelected()
     {   
         if(graphEdge.edge.Type == "SUBCAT_OF")
@@ -49,7 +48,7 @@ public class EdgeInteractions : MonoBehaviour
             gameObject.GetComponent<Renderer>().material.SetColor ("_EmissionColor", new Color(0.78F,1,0,1) * 2F);
         }      
     }
-
+    // Unhighlight edge off hover      
     public void EdgeDeselected()
     {   
         if(UIcheckerSO.showingUI == false)

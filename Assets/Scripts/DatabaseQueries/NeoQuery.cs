@@ -9,13 +9,11 @@ using System.Linq;
 public class NeoQuery : MonoBehaviour
 {
 
-    /// <summary>
-    /// The graph displaying the network.
-    /// </summary>
+    // The graph data for displaying the network.
     [SerializeField]
-    [Tooltip("The graph displaying the network.")]
     private GraphRenderer graphRenderer;
 
+    // The Algorithm for the graph layout.
     [SerializeField]
     private ForceDirectedLayout graphLayout;
 
@@ -26,28 +24,22 @@ public class NeoQuery : MonoBehaviour
     public bool rootFetched = false;
     public bool isRendered = false;
 
-    
-    // Aura queries use an encrypted connection using the "neo4j+s" protocol
     private string Aurauri = "neo4j+s://a71ad590.databases.neo4j.io";
+    private string Aurapassword = "y7oD564NL-mx9l_VSlDqYHFJXE0XdGg-ZSNaV9m-7x4";
+    
     private string uri = "bolt://localhost:7687";
     private string user = "neo4j";
-    private string Aurapassword = "y7oD564NL-mx9l_VSlDqYHFJXE0XdGg-ZSNaV9m-7x4";
     private string password = "wiki"; 
     void Awake()
     {   
-
         StartCoroutine(GraphDatafirst());
-        
-        //StartCoroutine(SearchPage());
     }
 
     void Update()
     {
         if(isRendered)
         {
-            
             graphLayout.DoIterations();
-
         }
     }
 
@@ -58,10 +50,10 @@ public class NeoQuery : MonoBehaviour
         //NeoAuraQueries queries = new NeoAuraQueries(Aurauri, user, Aurapassword);
 
         //queries.AuraQuery(SO.Cat, network, SO.Limiter);
-        Query(SO.Cat, network, SO.Limiter, uri, user, password);
         //SampleData.MakeSampleGraphData(network);
-        
-        //waits for 1 second.
+        Query(SO.Cat, network, SO.Limiter, uri, user, password);
+                
+        //waits for data to be retrieved and processed.
         yield return new WaitForSeconds(1);
         graphRenderer.Initialize(network, SO.initialNum);
 
@@ -72,6 +64,7 @@ public class NeoQuery : MonoBehaviour
         
     }
 
+    // Main Cypher query to get graph data
     public static async void Query(string Cat, Graph.DataStructure.GraphNetwork graph, float Limiter, string uri, string user, string password) 
     {
         IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
@@ -86,7 +79,8 @@ public class NeoQuery : MonoBehaviour
             bool rootFetched = false;
 
             foreach(var record in result)
-            {                
+            {    
+                //Add the root category to Nodes list            
                 var rootnode = record["p"].As<INode>();
                 if(!rootFetched)
                 {
@@ -95,6 +89,7 @@ public class NeoQuery : MonoBehaviour
                     rootFetched = true;
                 }
 
+                //Add every relationship in query result to Edges list
                 var anedge = record["r"].As<List<IRelationship>>();
                 for(int i = 0; i<anedge.Count ;)
                 {   
@@ -121,8 +116,8 @@ public class NeoQuery : MonoBehaviour
                         break;  
                     }
                 }
+                //Add every node in query result to Nodes list
                 var anode = record["s"].As<INode>();     
-
                 if (anode.Labels[0] == "Category")
                 {
                     Graph.DataStructure.Nodes nodey = new Nodes(anode.Id, anode.Labels[0], anode.Properties["catName"].ToString());
@@ -156,6 +151,7 @@ public class NeoQuery : MonoBehaviour
             await driver.CloseAsync();     
     }
 
+    //Cypher query to get specified Category nodes that start with the input string
     public static async void searchCatQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
     {
         IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
@@ -175,13 +171,6 @@ public class NeoQuery : MonoBehaviour
                 
                 results.results1.Add(search);
             }
-
-
-            // foreach(var item in results.results1)
-            // {
-            //     Debug.Log(item);
-            // }
-
         }
 
         finally
@@ -190,7 +179,7 @@ public class NeoQuery : MonoBehaviour
         } 
             await driver.CloseAsync(); 
     } 
-
+    //Cypher query to get specified Page nodes that start with the input string
     public static async void searchPageQuery(string SearchValue, Graph.SearchResults results, string uri, string user, string password)
     {
         IDriver driver = GraphDatabase.Driver(uri, AuthTokens.Basic(user, password));;
@@ -210,13 +199,6 @@ public class NeoQuery : MonoBehaviour
                 
                 results.results1.Add(search);
             }
-
-
-            // foreach(var item in results.results1)
-            // {
-            //     Debug.Log(item);
-            // }
-
         }
 
         finally

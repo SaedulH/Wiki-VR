@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace WebData{
+namespace WebData
+{
 
     public class PageViewBase
     {
